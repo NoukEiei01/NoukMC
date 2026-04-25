@@ -29,7 +29,7 @@ public final class NsylLogoOtf extends OtherFeature
 		new ColorSetting("Text", "Text color.", Color.BLACK);
 	
 	private final EnumSetting<Visibility> visibility =
-		new EnumSetting<>("Visibility", Visibility.values(), Visibility.ALWAYS);
+		new EnumSetting<>("Visibility", Visibility.values(), Visibility.HIDDEN);
 	
 	public NsylLogoOtf()
 	{
