@@ -11,6 +11,6 @@
     ]
   },
   "mixins": [
-    "wurst_testmod.mixins.json"
+    "nsyl_testmod.mixins.json"
   ]
 }

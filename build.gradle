@@ -65,7 +65,7 @@ fabricApi.configureTests {
 }
 
 loom {
-	accessWidenerPath = file("src/main/resources/wurst.accesswidener")
+	accessWidenerPath = file("src/main/resources/nsyl.accesswidener")
 	
 	runs {
 		clientWithMods {

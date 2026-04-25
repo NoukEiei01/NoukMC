@@ -43,7 +43,7 @@ public final class EditColorScreen extends Screen
 	private Button doneButton;
 	
 	private final ResourceLocation paletteIdentifier =
-		ResourceLocation.fromNamespaceAndPath("wurst", "colorpalette.png");
+		ResourceLocation.fromNamespaceAndPath("nsyl", "colorpalette.png");
 	private BufferedImage paletteAsBufferedImage;
 	
 	private int paletteX = 0;

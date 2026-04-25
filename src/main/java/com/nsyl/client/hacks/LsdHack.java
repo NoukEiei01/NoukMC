@@ -35,7 +35,7 @@ public final class LsdHack extends Hack
 			MC.gameRenderer.clearPostEffect();
 		
 		MC.gameRenderer.setPostEffect(
-			ResourceLocation.fromNamespaceAndPath("wurst", "lsd"));
+			ResourceLocation.fromNamespaceAndPath("nsyl", "lsd"));
 	}
 	
 	@Override

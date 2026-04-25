@@ -19,7 +19,7 @@ public final class NsylLogo
 {
 	private static final NsylClient WURST = NsylClient.INSTANCE;
 	private static final ResourceLocation LOGO_TEXTURE =
-		ResourceLocation.fromNamespaceAndPath("wurst", "wurst_128.png");
+		ResourceLocation.fromNamespaceAndPath("nsyl", "nsyl_logo.png");
 	
 	public void render(GuiGraphics context)
 	{

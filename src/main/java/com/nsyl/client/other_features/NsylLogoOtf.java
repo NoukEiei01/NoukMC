@@ -33,7 +33,7 @@ public final class NsylLogoOtf extends OtherFeature
 	
 	public NsylLogoOtf()
 	{
-		super("NsylLogo", "Shows the Wurst logo and version on the screen.");
+		super("NsylLogo", "Shows the NSYL Client logo and version on the screen.");
 		addSetting(bgColor);
 		addSetting(txtColor);
 		addSetting(visibility);
@@ -59,7 +59,9 @@ public final class NsylLogoOtf extends OtherFeature
 		ALWAYS("Always", () -> true),
 		
 		ONLY_OUTDATED("Only when outdated",
-			() -> WURST.getUpdater().isOutdated());
+			() -> WURST.getUpdater().isOutdated()),
+		
+		HIDDEN("Hidden", () -> false);
 		
 		private final String name;
 		private final BooleanSupplier visible;

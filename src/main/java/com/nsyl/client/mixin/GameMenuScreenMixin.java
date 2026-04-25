@@ -37,7 +37,7 @@ public abstract class GameMenuScreenMixin extends Screen
 {
 	@Unique
 	private static final ResourceLocation WURST_TEXTURE =
-		ResourceLocation.fromNamespaceAndPath("wurst", "wurst_128.png");
+		ResourceLocation.fromNamespaceAndPath("nsyl", "nsyl_logo.png");
 	
 	@Unique
 	private Button wurstOptionsButton;

@@ -4,7 +4,7 @@
   },
   "passes": [
     {
-      "program": "wurst:lsd",
+      "program": "nsyl:lsd",
       "inputs": [
         {
           "sampler_name": "Diffuse",

@@ -1,6 +1,6 @@
 {
   "vertex": "minecraft:post/sobel",
-  "fragment": "wurst:post/lsd",
+  "fragment": "nsyl:post/lsd",
   "samplers": [
     {
       "name": "DiffuseSampler"

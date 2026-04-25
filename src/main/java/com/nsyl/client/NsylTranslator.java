@@ -188,7 +188,7 @@ public class NsylTranslator implements ResourceManagerReloadListener
 		{
 			String langFilePath = "translations/" + langCode + ".json";
 			ResourceLocation langId =
-				ResourceLocation.fromNamespaceAndPath("wurst", langFilePath);
+				ResourceLocation.fromNamespaceAndPath("nsyl", langFilePath);
 			
 			// IMPORTANT: Exceptions thrown by Language.loadFromJson() must
 			// be caught to prevent mod detection vulnerabilities using
