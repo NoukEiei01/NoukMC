@@ -1,17 +1,13 @@
 {
   "schemaVersion": 1,
-  "id": "wurst",
+  "id": "nsyl",
   "version": "${version}",
-  "name": "Wurst Client",
-  "description": "Wurst Wurst Wurst!",
+  "name": "NSYL Client",
+  "description": "NSYL Client for Minecraft",
   "authors": [
-    "Alexander01998"
+    "NSYL"
   ],
-  "contact": {
-    "homepage": "https://www.wurstclient.net/modmenu-homepage/",
-    "sources": "https://www.wurstclient.net/modmenu-sources/",
-    "issues": "https://www.wurstclient.net/modmenu-issues/"
-  },
+  "contact": {},
   "license": "GPL-3.0-or-later",
   "icon": "assets/wurst/icon.png",
   "environment": "client",
@@ -37,15 +33,5 @@
     "wi_zoom": "*",
     "wi-zoom": "*",
     "vulkanmod": "*"
-  },
-  "custom": {
-    "modmenu": {
-      "links": {
-        "modmenu.donate": "https://www.wurstclient.net/modmenu-donate/",
-        "modmenu.twitter": "https://www.wurstclient.net/modmenu-twitter/",
-        "modmenu.wiki": "https://www.wurstclient.net/modmenu-wiki/",
-        "Forum": "https://www.wurstclient.net/modmenu-forum/"
-      }
-    }
   }
 }

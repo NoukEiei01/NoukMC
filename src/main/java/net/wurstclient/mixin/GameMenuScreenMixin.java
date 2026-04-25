@@ -107,11 +107,11 @@ public abstract class GameMenuScreenMixin extends Screen
 			}
 		}
 		
-		// Clear required space for Wurst Options
+		// Clear required space for NSYL Options
 		hideFeedbackReportAndServerLinksButtons();
 		ensureSpaceAvailable(buttonX, buttonY, buttonWidth, buttonHeight);
 		
-		// Create Wurst Options button
+		// Create NSYL Options button
 		MutableComponent buttonText = Component.literal("            Options");
 		wurstOptionsButton = Button.builder(buttonText, b -> openWurstOptions())
 			.bounds(buttonX, buttonY, buttonWidth, buttonHeight).build();

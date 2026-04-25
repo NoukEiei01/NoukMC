@@ -121,10 +121,10 @@ public class WurstOptionsScreen extends Screen
 			"§n§lWurstClient.net",
 			b -> os.openUri("https://www.wurstclient.net/options-website/"));
 		
-		new WurstOptionsButton(54, 48, () -> "Wurst Wiki", "§n§lWurst.Wiki",
+		new WurstOptionsButton(54, 48, () -> "NSYL Wiki", "",
 			b -> os.openUri("https://www.wurstclient.net/options-wiki/"));
 		
-		new WurstOptionsButton(54, 72, () -> "WurstForum", "§n§lWurstForum.net",
+		new WurstOptionsButton(54, 72, () -> "", "",
 			b -> os.openUri("https://www.wurstclient.net/options-forum/"));
 		
 		new WurstOptionsButton(54, 96, () -> "Twitter", "@Wurst_Imperium",
@@ -165,7 +165,7 @@ public class WurstOptionsScreen extends Screen
 		int y1 = 40;
 		int y2 = height / 4 + 24 - 28;
 		
-		context.drawCenteredString(tr, "Wurst Options", middleX, y1, 0xffffff);
+		context.drawCenteredString(tr, "NSYL Options", middleX, y1, 0xffffff);
 		
 		context.drawCenteredString(tr, "Settings", middleX - 104, y2, 0xcccccc);
 		context.drawCenteredString(tr, "Managers", middleX, y2, 0xcccccc);

@@ -51,7 +51,7 @@ public final class ZoomOtf extends OtherFeature implements MouseScrollListener
 	{
 		super("Zoom", "Allows you to zoom in.\n"
 			+ "By default, the zoom is activated by pressing the \u00a7lV\u00a7r key.\n"
-			+ "Go to Wurst Options -> Zoom to change this keybind.");
+			+ "Go to NSYL Options -> Zoom to change this keybind.");
 		addSetting(level);
 		addSetting(scroll);
 		addSetting(zoomInScreens);

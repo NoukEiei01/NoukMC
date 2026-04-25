@@ -31,7 +31,7 @@ public final class WurstUpdater implements UpdateListener
 	{
 		if(thread == null)
 		{
-			thread = new Thread(this::checkForUpdates, "WurstUpdater");
+			thread = new Thread(this::checkForUpdates, "NSYLUpdater");
 			thread.start();
 			return;
 		}
@@ -84,12 +84,12 @@ public final class WurstUpdater implements UpdateListener
 		}
 		
 		String currentVersionEncoded = URLEncoder.encode(
-			"Wurst " + currentVersion + " MC" + WurstClient.MC_VERSION,
+			"NSYL Client " + currentVersion,
 			StandardCharsets.UTF_8);
 		
-		String baseUrl = "https://www.wurstclient.net/download/";
-		String utmSource = "Wurst+Client";
-		String utmMedium = "WurstUpdater+chat+message";
+		String baseUrl = "https://github.com/";
+		String utmSource = "NSYL+Client";
+		String utmMedium = "NSYLUpdater+chat+message";
 		
 		if(latestVersion == null || latestVersion.isInvalid())
 		{
@@ -105,7 +105,7 @@ public final class WurstUpdater implements UpdateListener
 		if(!outdated)
 			return;
 		
-		String text = "Wurst " + latestVersion
+		String text = "NSYL Client " + latestVersion
 			+ " is now available for Minecraft " + WurstClient.MC_VERSION
 			+ ". \u00a7nUpdate now\u00a7r to benefit from new features and/or bugfixes!";
 		String utmContent = currentVersionEncoded + "+update+chat+message";

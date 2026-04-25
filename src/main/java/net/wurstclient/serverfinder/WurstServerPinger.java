@@ -31,7 +31,7 @@ public class WurstServerPinger
 		server = new ServerData("", ip + ":" + port, Type.OTHER);
 		
 		new Thread(() -> pingInCurrentThread(ip, port),
-			"Wurst Server Pinger #" + threadNumber.incrementAndGet()).start();
+			"NSYL Server Pinger #" + threadNumber.incrementAndGet()).start();
 	}
 	
 	private void pingInCurrentThread(String ip, int port)

@@ -49,7 +49,7 @@ public final class PlausibleAnalytics
 	
 	private static final String MOD_ID = "wurst";
 	private static final URI API_ENDPOINT =
-		URI.create("https://plausible.wurstclient.net/api/event");
+		URI.create("https://localhost/disabled");
 	
 	private final HttpClient httpClient =
 		HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(5)).build();

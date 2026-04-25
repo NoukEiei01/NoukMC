@@ -50,7 +50,7 @@ public enum WurstClient
 	public static Minecraft MC;
 	public static IMinecraftClient IMC;
 	
-	public static final String VERSION = "7.51.2";
+	public static final String VERSION = "1.0.0";
 	public static final String MC_VERSION = "1.21.4";
 	
 	private PlausibleAnalytics plausible;
@@ -146,7 +146,7 @@ public enum WurstClient
 	private Path createWurstFolder()
 	{
 		Path dotMinecraftFolder = MC.gameDirectory.toPath().normalize();
-		Path wurstFolder = dotMinecraftFolder.resolve("wurst");
+		Path wurstFolder = dotMinecraftFolder.resolve("nsyl");
 		
 		try
 		{

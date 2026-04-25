@@ -48,8 +48,8 @@ public final class WurstLogo
 	
 	private String getVersionString()
 	{
-		String version = "v" + WurstClient.VERSION;
-		version += " MC" + WurstClient.MC_VERSION;
+		String version = "NSYL Client v" + WurstClient.VERSION;
+		
 		
 		if(WURST.getUpdater().isOutdated())
 			version += " (outdated)";
