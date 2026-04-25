@@ -13,7 +13,7 @@
   "environment": "client",
   "entrypoints": {
     "main": [
-      "net.wurstclient.WurstInitializer"
+      "com.nsyl.client.NsylInitializer"
     ]
   },
   "mixins": [
