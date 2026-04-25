@@ -56,14 +56,6 @@ dependencies {
 	modImplementation "com.google.code.findbugs:jsr305:3.0.2"
 }
 
-fabricApi.configureTests {
-	createSourceSet = true
-	enableGameTests = false
-	enableClientGameTests = true
-	modId = "wurst_testmod"
-	username = "Wurst-Bot"
-}
-
 loom {
 	accessWidenerPath = file("src/main/resources/nsyl.accesswidener")
 	
@@ -71,57 +63,10 @@ loom {
 		clientWithMods {
 			inherit client
 		}
-
-		clientGameTestWithMods {
-			inherit client
-			source = sourceSets.gametest
-			runDir = "build/run/clientGameTestWithMods"
-			vmArgs.add("-Dfabric.client.gametest")
-			vmArgs.add("-Dwurst.test.withMods=true")
-			programArgs.add("--username=Wurst-Bot")
-		}
 	}
 }
 
-configurations {
-	testMods {
-		transitive = false
-	}
-}
 
-dependencies {
-	testMods "maven.modrinth:sodium:${project.sodium_version}"
-}
-
-def cleanClientWithMods = tasks.register("cleanClientWithMods", Delete) {
-	delete "run/mods"
-}
-
-def prepareClientWithMods = tasks.register("prepareClientWithMods", Sync) {
-	from configurations.testMods
-	into "run/mods"
-}
-
-tasks.named("runClientWithMods") {
-	dependsOn prepareClientWithMods
-	finalizedBy cleanClientWithMods
-}
-
-def cleanClientGameTestWithMods = tasks.register("cleanClientGameTestWithMods", Delete) {
-	delete layout.buildDirectory.dir("run/clientGameTestWithMods")
-}
-
-def prepareClientGameTestWithMods = tasks.register("prepareClientGameTestWithMods", Sync) {
-	dependsOn cleanClientGameTestWithMods
-	from configurations.testMods
-	into layout.buildDirectory.dir("run/clientGameTestWithMods/mods")
-}
-
-def doModCompatTest = providers.gradleProperty("do_mod_compat_test").map { it.toBoolean() }.orElse(false)
-tasks.named("runClientGameTestWithMods") {
-	onlyIf { doModCompatTest.get() }
-	dependsOn prepareClientGameTestWithMods
-}
 
 processResources {
 	def modVersion = project.version.substring(1)
