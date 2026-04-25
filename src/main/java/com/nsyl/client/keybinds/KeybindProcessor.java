@@ -14,6 +14,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.gui.screens.Screen;
 import com.nsyl.client.NsylClient;
 import com.nsyl.client.clickgui.screens.ClickGuiScreen;
+import com.nsyl.client.navigator.NavigatorMainScreen;
 import com.nsyl.client.command.CmdProcessor;
 import com.nsyl.client.events.KeyPressListener;
 import com.nsyl.client.hack.Hack;
@@ -45,7 +46,8 @@ public final class KeybindProcessor implements KeyPressListener
 			return;
 		
 		Screen screen = NsylClient.MC.screen;
-		if(screen != null && !(screen instanceof ClickGuiScreen))
+		if(screen != null && !(screen instanceof ClickGuiScreen)
+			&& !(screen instanceof NavigatorMainScreen))
 			return;
 		
 		String keyName = getKeyName(event);
