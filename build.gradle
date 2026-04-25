@@ -6,7 +6,7 @@ buildscript {
 
 plugins {
 	id "fabric-loom" version "${loom_version}"
-	id "com.diffplug.spotless" version "8.1.0"
+
 }
 
 def ENV = System.getenv()
@@ -158,26 +158,7 @@ jar {
 	exclude("intentionally_untranslated.json")
 }
 
-import com.diffplug.spotless.generic.LicenseHeaderStep
-spotless {
-	lineEndings = "WINDOWS"
-	java {
-		removeUnusedImports()
-		leadingSpacesToTabs()
-		trimTrailingWhitespace()
-		eclipse().configFile(file("codestyle/formatter.xml"))
-	}
-	format("licenseHeader") {
-		target("src/*/java/**/*.java")
-		def header_file = file("codestyle/license_header.txt")
-		def delimiter = LicenseHeaderStep.DEFAULT_JAVA_HEADER_DELIMITER
-		licenseHeaderFile(header_file, delimiter).updateYearWithLatest(true)
-	}
-	json {
-		target("src/**/*.json", "src/**/*.mcmeta")
-		gson().indentWithSpaces(2).version("2.11.0")
-	}
-}
+
 
 test {
 	useJUnitPlatform()
