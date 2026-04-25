@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -17,7 +17,6 @@ import net.wurstclient.command.CmdException;
 import net.wurstclient.command.CmdSyntaxError;
 import net.wurstclient.command.Command;
 import net.wurstclient.hacks.FollowHack;
-import net.wurstclient.util.EntityUtils;
 import net.wurstclient.util.FakePlayerEntity;
 
 public final class FollowCmd extends Command
@@ -45,7 +44,7 @@ public final class FollowCmd extends Command
 			.filter(e -> e != MC.player)
 			.filter(e -> !(e instanceof FakePlayerEntity))
 			.filter(e -> args[0].equalsIgnoreCase(e.getName().getString()))
-			.min(Comparator.comparingDouble(EntityUtils::distanceToHitboxSq))
+			.min(Comparator.comparingDouble(e -> MC.player.distanceToSqr(e)))
 			.orElse(null);
 		
 		if(entity == null)

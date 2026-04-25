@@ -13,7 +13,7 @@ def update_gradle_properties(mc_version, fabric_loader, fapi_version):
 	replacements = {
 		"minecraft_version": lambda v: mc_version,
 		"loader_version": lambda v: fabric_loader,
-		"fabric_api_version": lambda v: fapi_version,
+		"fabric_version": lambda v: fapi_version,
 		"mod_version": lambda v: v[: v.index("MC") + 2] + mc_version,
 	}
 
@@ -56,7 +56,7 @@ def update_mc_version_constant(mc_version):
 			break
 
 	# Save modified WurstClient.java
-	with open("src/main/java/net/wurstclient/WurstClient.java", "w", newline='\r\n') as f:
+	with open("src/main/java/net/wurstclient/WurstClient.java", "w") as f:
 		f.writelines(lines)
 
 	if found:

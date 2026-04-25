@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -19,7 +19,7 @@ import net.wurstclient.SearchTags;
 import net.wurstclient.events.HandleBlockBreakingListener;
 import net.wurstclient.events.UpdateListener;
 import net.wurstclient.hack.Hack;
-import net.wurstclient.mixinterface.IKeyMapping;
+import net.wurstclient.mixinterface.IKeyBinding;
 import net.wurstclient.settings.CheckboxSetting;
 
 @SearchTags({"auto mine", "AutoBreak", "auto break"})
@@ -59,7 +59,7 @@ public final class AutoMineHack extends Hack
 	{
 		EVENTS.remove(UpdateListener.class, this);
 		EVENTS.remove(HandleBlockBreakingListener.class, this);
-		IKeyMapping.get(MC.options.keyAttack).resetPressedState();
+		IKeyBinding.get(MC.options.keyAttack).resetPressedState();
 		MC.gameMode.stopDestroyBlock();
 	}
 	
@@ -105,7 +105,7 @@ public final class AutoMineHack extends Hack
 		
 		if(im.continueDestroyBlock(pos, side))
 		{
-			MC.level.addBreakingBlockEffect(pos, side);
+			MC.particleEngine.crack(pos, side);
 			MC.player.swing(InteractionHand.MAIN_HAND);
 			MC.options.keyAttack.setDown(true);
 		}

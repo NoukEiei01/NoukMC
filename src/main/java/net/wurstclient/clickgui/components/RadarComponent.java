@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -7,16 +7,18 @@
  */
 package net.wurstclient.clickgui.components;
 
-import org.joml.Matrix3x2fStack;
+import org.joml.Quaternionf;
 
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import com.mojang.blaze3d.vertex.PoseStack;
+
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ambient.AmbientCreature;
 import net.minecraft.world.entity.animal.AgeableWaterCreature;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.fish.WaterAnimal;
+import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
@@ -39,7 +41,7 @@ public final class RadarComponent extends Component
 	}
 	
 	@Override
-	public void render(GuiGraphicsExtractor context, int mouseX, int mouseY,
+	public void render(GuiGraphics context, int mouseX, int mouseY,
 		float partialTicks)
 	{
 		// Can't make this a field because RadarComponent is initialized earlier
@@ -61,18 +63,19 @@ public final class RadarComponent extends Component
 		context.fill(x1, y1, x2, y2,
 			RenderUtils.toIntColor(gui.getBgColor(), gui.getOpacity()));
 		
-		Matrix3x2fStack matrixStack = context.pose();
-		matrixStack.pushMatrix();
-		matrixStack.translate(middleX, middleY);
+		PoseStack matrixStack = context.pose();
+		matrixStack.pushPose();
+		matrixStack.translate(middleX, middleY, 0);
 		
 		LocalPlayer player = MC.player;
 		if(!hack.isRotateEnabled())
-			matrixStack.rotate((180 + player.getYRot()) * Mth.DEG_TO_RAD);
+			matrixStack.mulPose(new Quaternionf()
+				.rotationZ((180 + player.getYRot()) * Mth.DEG_TO_RAD));
 		
 		// arrow
 		ClickGuiIcons.drawRadarArrow(context, -2, -2, 2, 2);
 		
-		matrixStack.popMatrix();
+		matrixStack.popPose();
 		Vec3 lerpedPlayerPos = EntityUtils.getLerpedPos(player, partialTicks);
 		
 		// points

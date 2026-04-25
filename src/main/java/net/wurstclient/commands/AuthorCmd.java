@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -33,7 +33,7 @@ public final class AuthorCmd extends Command
 		if(!MC.player.getAbilities().instabuild)
 			throw new CmdError("Creative mode only.");
 		
-		ItemStack heldStack = MC.player.getInventory().getSelectedItem();
+		ItemStack heldStack = MC.player.getInventory().getSelected();
 		if(!heldStack.is(Items.WRITTEN_BOOK))
 			throw new CmdError(
 				"You must hold a written book in your main hand.");

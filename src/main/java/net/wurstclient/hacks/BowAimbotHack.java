@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -16,7 +16,7 @@ import java.util.stream.StreamSupport;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -106,7 +106,7 @@ public final class BowAimbotHack extends Hack
 		LocalPlayer player = MC.player;
 		
 		// check if item is ranged weapon
-		ItemStack stack = MC.player.getInventory().getSelectedItem();
+		ItemStack stack = MC.player.getInventory().getSelected();
 		Item item = stack.getItem();
 		if(!(item instanceof BowItem || item instanceof CrossbowItem))
 		{
@@ -202,7 +202,7 @@ public final class BowAimbotHack extends Hack
 	}
 	
 	@Override
-	public void onRenderGUI(GuiGraphicsExtractor context, float partialTicks)
+	public void onRenderGUI(GuiGraphics context, float partialTicks)
 	{
 		if(target == null)
 			return;
@@ -225,12 +225,13 @@ public final class BowAimbotHack extends Hack
 		context.fill(msgX1, msgY1, msgX2, msgY2, 0x80000000);
 		
 		// text
-		context.text(tr, message, msgX1 + 2, msgY1 + 1, 0xFFFFFFFF, false);
+		context.drawString(tr, message, msgX1 + 2, msgY1 + 1, 0xFFFFFFFF,
+			false);
 	}
 	
 	private enum Priority
 	{
-		DISTANCE("Distance", EntityUtils::distanceToHitboxSq),
+		DISTANCE("Distance", e -> MC.player.distanceToSqr(e)),
 		
 		ANGLE("Angle",
 			e -> RotationUtils
@@ -240,7 +241,7 @@ public final class BowAimbotHack extends Hack
 			e -> Math
 				.pow(RotationUtils
 					.getAngleToLookVec(e.getBoundingBox().getCenter()), 2)
-				+ EntityUtils.distanceToHitboxSq(e)),
+				+ MC.player.distanceToSqr(e)),
 		
 		HEALTH("Health", e -> e instanceof LivingEntity
 			? ((LivingEntity)e).getHealth() : Integer.MAX_VALUE);

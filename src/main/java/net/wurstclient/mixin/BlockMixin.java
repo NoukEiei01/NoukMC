@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -20,7 +20,7 @@ import net.wurstclient.hack.HackList;
 @Mixin(Block.class)
 public abstract class BlockMixin implements ItemLike
 {
-	@Inject(method = "getSpeedFactor()F", at = @At("HEAD"), cancellable = true)
+	@Inject(at = @At("HEAD"), method = "getSpeedFactor()F", cancellable = true)
 	private void onGetVelocityMultiplier(CallbackInfoReturnable<Float> cir)
 	{
 		HackList hax = WurstClient.INSTANCE.getHax();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -20,7 +20,7 @@ public record RegionPos(int x, int z)
 	
 	public static RegionPos of(ChunkPos pos)
 	{
-		return new RegionPos(pos.x() >> 5 << 9, pos.z() >> 5 << 9);
+		return new RegionPos(pos.x >> 5 << 9, pos.z >> 5 << 9);
 	}
 	
 	public RegionPos negate()

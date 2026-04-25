@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -18,7 +18,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Items;
@@ -31,19 +30,17 @@ import net.wurstclient.SearchTags;
 import net.wurstclient.events.UpdateListener;
 import net.wurstclient.hack.Hack;
 import net.wurstclient.settings.CheckboxSetting;
+import net.wurstclient.settings.EnumSetting;
 import net.wurstclient.settings.FaceTargetSetting;
 import net.wurstclient.settings.FaceTargetSetting.FaceTarget;
 import net.wurstclient.settings.SliderSetting;
 import net.wurstclient.settings.SliderSetting.ValueDisplay;
 import net.wurstclient.settings.SwingHandSetting;
 import net.wurstclient.settings.SwingHandSetting.SwingHand;
-import net.wurstclient.settings.TakeItemsFromSetting;
-import net.wurstclient.settings.TakeItemsFromSetting.TakeItemsFrom;
 import net.wurstclient.settings.filterlists.AnchorAuraFilterList;
 import net.wurstclient.settings.filterlists.EntityFilterList;
 import net.wurstclient.util.BlockUtils;
 import net.wurstclient.util.ChatUtils;
-import net.wurstclient.util.EntityUtils;
 import net.wurstclient.util.FakePlayerEntity;
 import net.wurstclient.util.InventoryUtils;
 import net.wurstclient.util.RotationUtils;
@@ -69,8 +66,10 @@ public final class AnchorAuraHack extends Hack implements UpdateListener
 	private final SwingHandSetting swingHand =
 		new SwingHandSetting(this, SwingHand.CLIENT);
 	
-	private final TakeItemsFromSetting takeItemsFrom =
-		TakeItemsFromSetting.withoutHands(this, TakeItemsFrom.INVENTORY);
+	private final EnumSetting<TakeItemsFrom> takeItemsFrom =
+		new EnumSetting<>("Take items from",
+			"description.wurst.setting.anchoraura.take_items_from",
+			TakeItemsFrom.values(), TakeItemsFrom.INVENTORY);
 	
 	private final EntityFilterList entityFilters =
 		AnchorAuraFilterList.create();
@@ -105,8 +104,7 @@ public final class AnchorAuraHack extends Hack implements UpdateListener
 	@Override
 	public void onUpdate()
 	{
-		if(MC.level.dimensionType().attributes()
-			.applyModifier(EnvironmentAttributes.RESPAWN_ANCHOR_WORKS, false))
+		if(MC.level.dimensionType().respawnAnchorWorks())
 		{
 			ChatUtils.error("Respawn anchors don't explode in this dimension.");
 			setEnabled(false);
@@ -127,7 +125,7 @@ public final class AnchorAuraHack extends Hack implements UpdateListener
 			return;
 		}
 		
-		int maxInvSlot = takeItemsFrom.getMaxInvSlot();
+		int maxInvSlot = takeItemsFrom.getSelected().maxInvSlot;
 		
 		if(!unchargedAnchors.isEmpty()
 			&& InventoryUtils.indexOf(Items.GLOWSTONE, maxInvSlot) >= 0)
@@ -138,15 +136,15 @@ public final class AnchorAuraHack extends Hack implements UpdateListener
 			return;
 		}
 		
-		if(!autoPlace.isChecked() || InventoryUtils
-			.indexOf(Items.RESPAWN_ANCHOR, takeItemsFrom.getMaxInvSlot()) == -1)
+		if(!autoPlace.isChecked()
+			|| InventoryUtils.indexOf(Items.RESPAWN_ANCHOR, maxInvSlot) == -1)
 			return;
 		
 		ArrayList<Entity> targets = getNearbyTargets();
 		ArrayList<BlockPos> newAnchors = placeAnchorsNear(targets);
 		
-		if(!newAnchors.isEmpty() && InventoryUtils.indexOf(Items.GLOWSTONE,
-			takeItemsFrom.getMaxInvSlot()) >= 0)
+		if(!newAnchors.isEmpty()
+			&& InventoryUtils.indexOf(Items.GLOWSTONE, maxInvSlot) >= 0)
 		{
 			// TODO: option to wait until next tick?
 			charge(newAnchors);
@@ -186,7 +184,7 @@ public final class AnchorAuraHack extends Hack implements UpdateListener
 			return;
 		
 		InventoryUtils.selectItem(stack -> !stack.is(Items.GLOWSTONE),
-			takeItemsFrom.getMaxInvSlot());
+			takeItemsFrom.getSelected().maxInvSlot);
 		if(MC.player.isHolding(Items.GLOWSTONE))
 			return;
 		
@@ -206,7 +204,7 @@ public final class AnchorAuraHack extends Hack implements UpdateListener
 			return;
 		
 		InventoryUtils.selectItem(Items.GLOWSTONE,
-			takeItemsFrom.getMaxInvSlot());
+			takeItemsFrom.getSelected().maxInvSlot);
 		if(!MC.player.isHolding(Items.GLOWSTONE))
 			return;
 		
@@ -286,7 +284,7 @@ public final class AnchorAuraHack extends Hack implements UpdateListener
 				continue;
 			
 			InventoryUtils.selectItem(Items.RESPAWN_ANCHOR,
-				takeItemsFrom.getMaxInvSlot());
+				takeItemsFrom.getSelected().maxInvSlot);
 			if(!MC.player.isHolding(Items.RESPAWN_ANCHOR))
 				return false;
 			
@@ -326,7 +324,7 @@ public final class AnchorAuraHack extends Hack implements UpdateListener
 		double rangeSq = range.getValueSq();
 		
 		Comparator<Entity> furthestFromPlayer =
-			Comparator.<Entity> comparingDouble(EntityUtils::distanceToHitboxSq)
+			Comparator.<Entity> comparingDouble(e -> MC.player.distanceToSqr(e))
 				.reversed();
 		
 		Stream<Entity> stream = StreamSupport
@@ -337,7 +335,7 @@ public final class AnchorAuraHack extends Hack implements UpdateListener
 			.filter(e -> e != MC.player)
 			.filter(e -> !(e instanceof FakePlayerEntity))
 			.filter(e -> !WURST.getFriends().contains(e.getName().getString()))
-			.filter(e -> EntityUtils.distanceToHitboxSq(e) <= rangeSq);
+			.filter(e -> MC.player.distanceToSqr(e) <= rangeSq);
 		
 		stream = entityFilters.applyTo(stream);
 		
@@ -400,5 +398,27 @@ public final class AnchorAuraHack extends Hack implements UpdateListener
 	{
 		return MC.player.isShiftKeyDown()
 			|| WURST.getHax().sneakHack.isEnabled();
+	}
+	
+	private enum TakeItemsFrom
+	{
+		HOTBAR("Hotbar", 9),
+		
+		INVENTORY("Inventory", 36);
+		
+		private final String name;
+		private final int maxInvSlot;
+		
+		private TakeItemsFrom(String name, int maxInvSlot)
+		{
+			this.name = name;
+			this.maxInvSlot = maxInvSlot;
+		}
+		
+		@Override
+		public String toString()
+		{
+			return name;
+		}
 	}
 }

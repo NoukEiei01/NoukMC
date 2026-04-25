@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -16,7 +16,9 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.player.RemotePlayer;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.wurstclient.WurstClient;
 
 public class FakePlayerEntity extends RemotePlayer
@@ -32,8 +34,9 @@ public class FakePlayerEntity extends RemotePlayer
 		copyPosition(player);
 		
 		copyInventory();
-		getAttributes().assignAllValues(player.getAttributes());
+		copyPlayerModel(player, this);
 		copyRotation();
+		resetCapeMovement();
 		
 		spawn();
 	}
@@ -43,7 +46,7 @@ public class FakePlayerEntity extends RemotePlayer
 	{
 		if(playerListEntry == null)
 			playerListEntry = Minecraft.getInstance().getConnection()
-				.getPlayerInfo(getGameProfile().id());
+				.getPlayerInfo(getGameProfile().getId());
 		
 		return playerListEntry;
 	}
@@ -59,10 +62,26 @@ public class FakePlayerEntity extends RemotePlayer
 		getInventory().replaceWith(player.getInventory());
 	}
 	
+	private void copyPlayerModel(Entity from, Entity to)
+	{
+		SynchedEntityData fromTracker = from.getEntityData();
+		SynchedEntityData toTracker = to.getEntityData();
+		Byte playerModel =
+			fromTracker.get(Player.DATA_PLAYER_MODE_CUSTOMISATION);
+		toTracker.set(Player.DATA_PLAYER_MODE_CUSTOMISATION, playerModel);
+	}
+	
 	private void copyRotation()
 	{
 		yHeadRot = player.yHeadRot;
 		yBodyRot = player.yBodyRot;
+	}
+	
+	private void resetCapeMovement()
+	{
+		xCloak = getX();
+		yCloak = getY();
+		zCloak = getZ();
 	}
 	
 	private void spawn()
@@ -77,6 +96,6 @@ public class FakePlayerEntity extends RemotePlayer
 	
 	public void resetPlayerPosition()
 	{
-		player.snapTo(getX(), getY(), getZ(), getYRot(), getXRot());
+		player.moveTo(getX(), getY(), getZ(), getYRot(), getXRot());
 	}
 }

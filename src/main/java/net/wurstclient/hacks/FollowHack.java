@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -17,7 +17,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.vehicle.minecart.AbstractMinecart;
+import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.phys.Vec3;
 import net.wurstclient.Category;
 import net.wurstclient.ai.PathFinder;
@@ -34,7 +34,6 @@ import net.wurstclient.settings.SliderSetting.ValueDisplay;
 import net.wurstclient.settings.filterlists.EntityFilterList;
 import net.wurstclient.settings.filterlists.FollowFilterList;
 import net.wurstclient.util.ChatUtils;
-import net.wurstclient.util.EntityUtils;
 import net.wurstclient.util.FakePlayerEntity;
 
 @DontSaveState
@@ -96,7 +95,7 @@ public final class FollowHack extends Hack
 			
 			entity = stream
 				.min(
-					Comparator.comparingDouble(EntityUtils::distanceToHitboxSq))
+					Comparator.comparingDouble(e -> MC.player.distanceToSqr(e)))
 				.orElse(null);
 			
 			if(entity == null)
@@ -157,7 +156,7 @@ public final class FollowHack extends Hack
 				.filter(e -> entity.getName().getString()
 					.equalsIgnoreCase(e.getName().getString()))
 				.min(
-					Comparator.comparingDouble(EntityUtils::distanceToHitboxSq))
+					Comparator.comparingDouble(e -> MC.player.distanceToSqr(e)))
 				.orElse(null);
 			
 			if(entity == null)
@@ -233,7 +232,7 @@ public final class FollowHack extends Hack
 			// follow entity
 			WURST.getRotationFaker()
 				.faceVectorClient(entity.getBoundingBox().getCenter());
-			double distanceSq = distance.getValueSq();
+			double distanceSq = Math.pow(distance.getValue(), 2);
 			MC.options.keyUp.setDown(MC.player.distanceToSqr(entity.getX(),
 				MC.player.getY(), entity.getZ()) > distanceSq);
 		}

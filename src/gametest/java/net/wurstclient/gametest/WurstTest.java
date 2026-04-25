@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -19,15 +19,14 @@ import org.spongepowered.asm.mixin.MixinEnvironment;
 import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
 import net.fabricmc.fabric.api.client.gametest.v1.TestInput;
 import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
-import net.fabricmc.fabric.api.client.gametest.v1.context.TestClientLevelContext;
+import net.fabricmc.fabric.api.client.gametest.v1.context.TestClientWorldContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
 import net.fabricmc.fabric.api.client.gametest.v1.world.TestWorldBuilder;
-import net.fabricmc.fabric.impl.client.gametest.TestSystemProperties;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.levelgen.FlatLevelSource;
 import net.minecraft.world.level.levelgen.flat.FlatLayerInfo;
 import net.minecraft.world.level.levelgen.flat.FlatLevelGeneratorSettings;
@@ -43,27 +42,24 @@ public class WurstTest implements FabricClientGameTest
 	@Override
 	public void runTest(ClientGameTestContext context)
 	{
-		if(!TestSystemProperties.DISABLE_NETWORK_SYNCHRONIZER)
-			throw new RuntimeException("Network synchronizer is not disabled");
-		
 		LOGGER.info("Starting Wurst Client GameTest");
 		hideSplashTexts(context);
 		waitForTitleScreenFade(context);
 		
 		LOGGER.info("Reached title screen");
 		assertScreenshotEquals(context, "title_screen",
-			"https://i.imgur.com/xSAHDXr.png");
+			"https://i.imgur.com/4fSJRpd.png");
 		
 		AltManagerTest.testAltManagerButton(context);
 		
 		LOGGER.info("Creating test world");
 		TestWorldBuilder worldBuilder = context.worldBuilder();
 		worldBuilder.adjustSettings(creator -> {
-			String mcVersion = SharedConstants.getCurrentVersion().name();
+			String mcVersion = SharedConstants.getCurrentVersion().getName();
 			creator.setName("E2E Test " + mcVersion);
 			creator.setGameMode(WorldCreationUiState.SelectedGameMode.CREATIVE);
-			creator.getGameRules().set(GameRules.SEND_COMMAND_FEEDBACK, false,
-				null);
+			creator.getGameRules().getRule(GameRules.RULE_SENDCOMMANDFEEDBACK)
+				.set(false, null);
 			applyFlatPresetWithSmoothStone(creator);
 		});
 		
@@ -80,11 +76,8 @@ public class WurstTest implements FabricClientGameTest
 		TestSingleplayerContext spContext)
 	{
 		TestInput input = context.getInput();
-		TestClientLevelContext world = spContext.getClientLevel();
+		TestClientWorldContext world = spContext.getClientWorld();
 		TestServerContext server = spContext.getServer();
-		
-		// Disable chunk fade
-		context.runOnClient(mc -> mc.options.chunkSectionFadeInTime().set(0.0));
 		
 		runCommand(server, "time set noon");
 		runCommand(server, "tp 0 -57 0");
@@ -96,7 +89,8 @@ public class WurstTest implements FabricClientGameTest
 		world.waitForChunksRender();
 		
 		assertScreenshotEquals(context, "in_game",
-			"https://i.imgur.com/EfzN9Cd.png");
+			IS_MOD_COMPAT_TEST ? "https://i.imgur.com/VxbGFrb.png"
+				: "https://i.imgur.com/2UvurYl.png");
 		
 		LOGGER.info("Recording debug menu");
 		input.pressKey(GLFW.GLFW_KEY_F3);
@@ -112,30 +106,35 @@ public class WurstTest implements FabricClientGameTest
 			"https://i.imgur.com/LyQ5FSD.png");
 		input.pressKey(GLFW.GLFW_KEY_ESCAPE);
 		
+		LOGGER.info("Opening game menu");
+		input.pressKey(GLFW.GLFW_KEY_ESCAPE);
+		assertScreenshotEquals(context, "game_menu",
+			"https://i.imgur.com/L58HCGj.png");
+		input.pressKey(GLFW.GLFW_KEY_ESCAPE);
+		
 		runWurstCommand(context,
 			"setmode WurstLogo visibility only_when_outdated");
 		runWurstCommand(context, "setcheckbox HackList animations off");
 		
-		new InGameMenuTest(context, spContext).run();
-		
 		// TODO: Open ClickGUI and Navigator
 		
 		// Test Wurst hacks
-		new AutoMineHackTest(context, spContext).run();
-		new FreecamHackTest(context, spContext).run();
-		new NoFallHackTest(context, spContext).run();
-		new NoWeatherHackTest(context, spContext).run();
-		new XRayHackTest(context, spContext).run();
+		AutoMineHackTest.testAutoMineHack(context, spContext);
+		FreecamHackTest.testFreecamHack(context, spContext);
+		NoFallHackTest.testNoFallHack(context, spContext);
+		XRayHackTest.testXRayHack(context, spContext);
 		
 		// Test Wurst commands
-		new CopyItemCmdTest(context, spContext).run();
-		new GiveCmdTest(context, spContext).run();
-		new ModifyCmdTest(context, spContext).run();
+		CopyItemCmdTest.testCopyItemCmd(context, spContext);
+		GiveCmdTest.testGiveCmd(context, spContext);
+		ModifyCmdTest.testModifyCmd(context, spContext);
 		
 		// TODO: Test more Wurst features
 		
 		// Test special cases
-		new PistonTest(context, spContext).run();
+		PistonTest.testPistonDoesntCrash(context, spContext);
+		
+		// TODO: Check Wurst Options
 	}
 	
 	// because the grass texture is randomized and smooth stone isn't

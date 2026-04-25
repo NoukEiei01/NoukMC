@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -15,19 +15,16 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.TreeMap;
 
-import org.joml.Matrix3x2fStack;
 import org.lwjgl.glfw.GLFW;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+
 import net.fabricmc.fabric.api.client.screen.v1.Screens;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.input.KeyEvent;
-import net.minecraft.client.input.MouseButtonEvent;
-import net.minecraft.client.input.MouseButtonInfo;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.CommonColors;
 import net.minecraft.util.Mth;
 import net.wurstclient.Feature;
 import net.wurstclient.WurstClient;
@@ -42,7 +39,6 @@ import net.wurstclient.keybinds.PossibleKeybind;
 import net.wurstclient.settings.Setting;
 import net.wurstclient.util.ChatUtils;
 import net.wurstclient.util.RenderUtils;
-import net.wurstclient.util.WurstColors;
 
 public final class NavigatorFeatureScreen extends NavigatorScreen
 {
@@ -72,7 +68,6 @@ public final class NavigatorFeatureScreen extends NavigatorScreen
 		
 		window.setWidth(308);
 		window.setFixedWidth(true);
-		window.setPositionClampingEnabled(false);
 		window.pack();
 	}
 	
@@ -232,24 +227,19 @@ public final class NavigatorFeatureScreen extends NavigatorScreen
 	}
 	
 	@Override
-	protected void onKeyPress(KeyEvent context)
+	protected void onKeyPress(int keyCode, int scanCode, int int_3)
 	{
-		int keyCode = context.key();
-		
 		if(keyCode == GLFW.GLFW_KEY_ESCAPE
 			|| keyCode == GLFW.GLFW_KEY_BACKSPACE)
 			goBack();
 	}
 	
 	@Override
-	protected void onMouseClick(MouseButtonEvent context)
+	protected void onMouseClick(double x, double y, int button)
 	{
-		double x = context.x();
-		double y = context.y();
-		int button = context.button();
-		
 		// popups
-		if(WurstClient.INSTANCE.getGui().handlePopupMouseClick(x, y, button))
+		if(WurstClient.INSTANCE.getGui().handleNavigatorPopupClick(x, y,
+			button))
 			return;
 		
 		// back button
@@ -259,7 +249,7 @@ public final class NavigatorFeatureScreen extends NavigatorScreen
 			return;
 		}
 		
-		boolean noButtons = Screens.getWidgets(this).isEmpty();
+		boolean noButtons = Screens.getButtons(this).isEmpty();
 		Rectangle area = new Rectangle(width / 2 - 154, 60, 308,
 			height - 60 - (noButtons ? 43 : 67));
 		if(!area.contains(x, y))
@@ -279,7 +269,7 @@ public final class NavigatorFeatureScreen extends NavigatorScreen
 		// component settings
 		WurstClient.INSTANCE.getGui().handleNavigatorMouseClick(
 			x - middleX + 154, y - 60 - scroll - windowComponentY, button,
-			window, context);
+			window);
 	}
 	
 	private void goBack()
@@ -310,16 +300,16 @@ public final class NavigatorFeatureScreen extends NavigatorScreen
 	}
 	
 	@Override
-	protected void onRender(GuiGraphicsExtractor context, int mouseX,
-		int mouseY, float partialTicks)
+	protected void onRender(GuiGraphics context, int mouseX, int mouseY,
+		float partialTicks)
 	{
-		Matrix3x2fStack matrixStack = context.pose();
+		PoseStack matrixStack = context.pose();
 		ClickGui gui = WurstClient.INSTANCE.getGui();
 		int txtColor = gui.getTxtColor();
 		
 		// title bar
-		context.centeredText(minecraft.font, feature.getName(), middleX, 32,
-			txtColor);
+		context.drawCenteredString(minecraft.font, feature.getName(), middleX,
+			32, txtColor);
 		
 		// background
 		int bgx1 = middleX - 154;
@@ -327,7 +317,7 @@ public final class NavigatorFeatureScreen extends NavigatorScreen
 		int bgx2 = middleX + 154;
 		int bgy1 = 60;
 		int bgy2 = height - 43;
-		boolean noButtons = Screens.getWidgets(this).isEmpty();
+		boolean noButtons = Screens.getButtons(this).isEmpty();
 		int bgy3 = bgy2 - (noButtons ? 0 : 24);
 		int windowY1 = bgy1 + scroll + windowComponentY;
 		int windowY2 = windowY1 + window.getInnerHeight();
@@ -345,8 +335,8 @@ public final class NavigatorFeatureScreen extends NavigatorScreen
 		window.validate();
 		
 		window.setY(windowY1 - 13);
-		matrixStack.pushMatrix();
-		matrixStack.translate(bgx1, windowY1);
+		matrixStack.pushPose();
+		matrixStack.translate(bgx1, windowY1, 0);
 		
 		{
 			int x1 = 0;
@@ -405,7 +395,7 @@ public final class NavigatorFeatureScreen extends NavigatorScreen
 			child.render(context, mouseX - bgx1, mouseY - windowY1,
 				partialTicks);
 		}
-		matrixStack.popMatrix();
+		matrixStack.popPose();
 		
 		// buttons
 		activeButton = null;
@@ -435,19 +425,16 @@ public final class NavigatorFeatureScreen extends NavigatorScreen
 				RenderUtils.toIntColor(rgb, alpha));
 			
 			// text
-			context.guiRenderState.up();
-			context.centeredText(minecraft.font, buttonData.buttonText,
+			context.drawCenteredString(minecraft.font, buttonData.buttonText,
 				(x1 + x2) / 2, y1 + (buttonData.height - 10) / 2 + 1,
-				buttonData.isLocked() ? WurstColors.VERY_LIGHT_GRAY
-					: buttonData.textColor);
+				buttonData.isLocked() ? 0xaaaaaa : buttonData.textColor);
 		}
 		
 		// text
 		int textY = bgy1 + scroll + 2;
-		context.guiRenderState.up();
 		for(String line : text.split("\n"))
 		{
-			context.text(minecraft.font, line, bgx1 + 2, textY, txtColor,
+			context.drawString(minecraft.font, line, bgx1 + 2, textY, txtColor,
 				false);
 			textY += minecraft.font.lineHeight;
 		}
@@ -455,7 +442,7 @@ public final class NavigatorFeatureScreen extends NavigatorScreen
 		context.disableScissor();
 		
 		// buttons below scissor box
-		for(AbstractWidget button : Screens.getWidgets(this))
+		for(AbstractWidget button : Screens.getButtons(this))
 		{
 			// positions
 			int x1 = button.getX();
@@ -477,14 +464,12 @@ public final class NavigatorFeatureScreen extends NavigatorScreen
 			
 			// text
 			String buttonText = button.getMessage().getString();
-			context.guiRenderState.up();
-			context.text(minecraft.font, buttonText,
+			context.drawString(minecraft.font, buttonText,
 				(x1 + x2 - minecraft.font.width(buttonText)) / 2, y1 + 5,
 				txtColor, false);
 		}
 		
 		// popups & tooltip
-		gui.closePopupsOutsideArea(window, bgx1, bgy1, bgx2, bgy3);
 		gui.renderPopups(context, mouseX, mouseY);
 		gui.renderTooltip(context, mouseX, mouseY);
 	}
@@ -493,8 +478,8 @@ public final class NavigatorFeatureScreen extends NavigatorScreen
 	public void onClose()
 	{
 		window.close();
-		WurstClient.INSTANCE.getGui().handleMouseClick(new MouseButtonEvent(
-			Double.MIN_VALUE, Double.MIN_VALUE, new MouseButtonInfo(0, 0)));
+		WurstClient.INSTANCE.getGui().handleMouseClick(Integer.MIN_VALUE,
+			Integer.MIN_VALUE, 0);
 	}
 	
 	public Feature getFeature()
@@ -521,7 +506,7 @@ public final class NavigatorFeatureScreen extends NavigatorScreen
 	{
 		public String buttonText;
 		public Color color;
-		public int textColor = CommonColors.WHITE;
+		public int textColor = 0xffffff;
 		
 		public ButtonData(int x, int y, int width, int height,
 			String buttonText, int color)

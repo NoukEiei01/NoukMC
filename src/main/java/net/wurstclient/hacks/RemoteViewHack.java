@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -24,7 +24,6 @@ import net.wurstclient.hack.Hack;
 import net.wurstclient.settings.filterlists.EntityFilterList;
 import net.wurstclient.settings.filterlists.RemoteViewFilterList;
 import net.wurstclient.util.ChatUtils;
-import net.wurstclient.util.EntityUtils;
 import net.wurstclient.util.FakePlayerEntity;
 
 @SearchTags({"remote view"})
@@ -65,7 +64,7 @@ public final class RemoteViewHack extends Hack
 			
 			entity = stream
 				.min(
-					Comparator.comparingDouble(EntityUtils::distanceToHitboxSq))
+					Comparator.comparingDouble(e -> MC.player.distanceToSqr(e)))
 				.orElse(null);
 			
 			// check if entity was found
@@ -135,7 +134,7 @@ public final class RemoteViewHack extends Hack
 				.filter(e -> !(e instanceof FakePlayerEntity))
 				.filter(e -> viewName.equalsIgnoreCase(e.getName().getString()))
 				.min(
-					Comparator.comparingDouble(EntityUtils::distanceToHitboxSq))
+					Comparator.comparingDouble(e -> MC.player.distanceToSqr(e)))
 				.orElse(null);
 			
 			if(entity == null)

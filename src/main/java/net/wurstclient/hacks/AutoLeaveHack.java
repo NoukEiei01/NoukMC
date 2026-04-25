@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -7,8 +7,7 @@
  */
 package net.wurstclient.hacks;
 
-import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.network.protocol.game.ServerboundAttackPacket;
+import net.minecraft.network.protocol.game.ServerboundInteractPacket;
 import net.minecraft.world.item.Items;
 import net.wurstclient.Category;
 import net.wurstclient.SearchTags;
@@ -112,13 +111,13 @@ public final class AutoLeaveHack extends Hack implements UpdateListener
 	
 	public static enum Mode
 	{
-		QUIT("Quit",
-			() -> MC.level.disconnect(ClientLevel.DEFAULT_QUIT_MESSAGE)),
+		QUIT("Quit", () -> MC.level.disconnect()),
 		
 		CHARS("Chars", () -> MC.getConnection().sendChat("\u00a7")),
 		
-		SELFHURT("SelfHurt", () -> MC.getConnection()
-			.send(new ServerboundAttackPacket(MC.player.getId())));
+		SELFHURT("SelfHurt",
+			() -> MC.getConnection().send(ServerboundInteractPacket
+				.createAttackPacket(MC.player, MC.player.isShiftKeyDown())));
 		
 		private final String name;
 		private final Runnable leave;

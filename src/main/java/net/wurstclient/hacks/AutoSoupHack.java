@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -12,7 +12,7 @@ import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.entity.npc.villager.Villager;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -101,10 +101,10 @@ public final class AutoSoupHack extends Hack implements UpdateListener
 			
 			// save old slot
 			if(oldSlot == -1)
-				oldSlot = MC.player.getInventory().getSelectedSlot();
+				oldSlot = MC.player.getInventory().selected;
 			
 			// set slot
-			MC.player.getInventory().setSelectedSlot(soupInHotbar);
+			MC.player.getInventory().selected = soupInHotbar;
 			
 			// eat soup
 			MC.options.keyUse.setDown(true);
@@ -188,7 +188,7 @@ public final class AutoSoupHack extends Hack implements UpdateListener
 		MC.options.keyUse.setDown(false);
 		
 		// reset slot
-		MC.player.getInventory().setSelectedSlot(oldSlot);
+		MC.player.getInventory().selected = oldSlot;
 		oldSlot = -1;
 	}
 }

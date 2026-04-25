@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -20,7 +20,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.equine.AbstractHorse;
+import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
@@ -109,11 +109,12 @@ public final class FeedAuraHack extends Hack
 	@Override
 	public void onUpdate()
 	{
-		ItemStack heldStack = MC.player.getInventory().getSelectedItem();
+		LocalPlayer player = MC.player;
+		ItemStack heldStack = player.getInventory().getSelected();
 		
 		double rangeSq = range.getValueSq();
 		Stream<Animal> stream = EntityUtils.getValidAnimals()
-			.filter(e -> EntityUtils.distanceToHitboxSq(e) <= rangeSq)
+			.filter(e -> player.distanceToSqr(e) <= rangeSq)
 			.filter(e -> e.isFood(heldStack)).filter(Animal::canFallInLove);
 		
 		if(filterBabies.isChecked())
@@ -162,7 +163,10 @@ public final class FeedAuraHack extends Hack
 		EntityHitResult hitResult = new EntityHitResult(target, hitVec);
 		
 		InteractionResult actionResult =
-			im.interact(player, target, hitResult, hand);
+			im.interactAt(player, target, hitResult, hand);
+		
+		if(!actionResult.consumesAction())
+			actionResult = im.interact(player, target, hand);
 		
 		if(actionResult instanceof InteractionResult.Success success
 			&& success.swingSource() == InteractionResult.SwingSource.CLIENT)

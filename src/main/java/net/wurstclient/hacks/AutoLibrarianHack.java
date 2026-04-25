@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -26,9 +26,9 @@ import net.minecraft.core.Holder;
 import net.minecraft.network.protocol.game.ServerboundSelectTradePacket;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.npc.villager.Villager;
-import net.minecraft.world.entity.npc.villager.VillagerProfession;
-import net.minecraft.world.inventory.ContainerInput;
+import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.VillagerProfession;
+import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -46,7 +46,7 @@ import net.wurstclient.events.UpdateListener;
 import net.wurstclient.hack.Hack;
 import net.wurstclient.hacks.autolibrarian.BookOffer;
 import net.wurstclient.hacks.autolibrarian.UpdateBooksSetting;
-import net.wurstclient.mixinterface.IKeyMapping;
+import net.wurstclient.mixinterface.IKeyBinding;
 import net.wurstclient.settings.BookOffersSetting;
 import net.wurstclient.settings.CheckboxSetting;
 import net.wurstclient.settings.FaceTargetSetting;
@@ -244,8 +244,9 @@ public final class AutoLibrarianHack extends Hack
 			MC.getConnection().send(new ServerboundSelectTradePacket(0));
 			
 			// buy whatever the villager is selling
-			MC.gameMode.handleContainerInput(tradeScreen.getMenu().containerId,
-				2, 0, ContainerInput.PICKUP, MC.player);
+			MC.gameMode.handleInventoryMouseClick(
+				tradeScreen.getMenu().containerId, 2, 0, ClickType.PICKUP,
+				MC.player);
 			
 			// close the trade screen
 			closeTradeScreen();
@@ -324,7 +325,7 @@ public final class AutoLibrarianHack extends Hack
 			? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
 		
 		// sneak-place to avoid activating trapdoors/chests/etc.
-		IKeyMapping sneakKey = IKeyMapping.get(MC.options.keyShift);
+		IKeyBinding sneakKey = IKeyBinding.get(MC.options.keyShift);
 		sneakKey.setDown(true);
 		if(!MC.player.isShiftKeyDown())
 			return;
@@ -361,7 +362,7 @@ public final class AutoLibrarianHack extends Hack
 		MultiPlayerGameMode im = MC.gameMode;
 		LocalPlayer player = MC.player;
 		
-		if(EntityUtils.distanceToHitboxSq(villager) > range.getValueSq())
+		if(player.distanceToSqr(villager) > range.getValueSq())
 		{
 			ChatUtils.error("Villager is out of range. Consider trapping"
 				+ " the villager so it doesn't wander away.");
@@ -382,7 +383,10 @@ public final class AutoLibrarianHack extends Hack
 		// click on villager
 		InteractionHand hand = InteractionHand.MAIN_HAND;
 		InteractionResult actionResult =
-			im.interact(player, villager, hitResult, hand);
+			im.interactAt(player, villager, hitResult, hand);
+		
+		if(!actionResult.consumesAction())
+			im.interact(player, villager, hand);
 		
 		// swing hand
 		if(actionResult instanceof InteractionResult.Success success
@@ -435,21 +439,22 @@ public final class AutoLibrarianHack extends Hack
 	
 	private void setTargetVillager()
 	{
+		LocalPlayer player = MC.player;
 		double rangeSq = range.getValueSq();
 		
 		Stream<Villager> stream = StreamSupport
 			.stream(MC.level.entitiesForRendering().spliterator(), true)
 			.filter(e -> !e.isRemoved()).filter(Villager.class::isInstance)
 			.map(e -> (Villager)e).filter(e -> e.getHealth() > 0)
-			.filter(e -> EntityUtils.distanceToHitboxSq(e) <= rangeSq)
-			.filter(e -> e.getVillagerData().profession().unwrapKey()
-				.orElse(null) == VillagerProfession.LIBRARIAN)
-			.filter(e -> e.getVillagerData().level() == 1)
+			.filter(e -> player.distanceToSqr(e) <= rangeSq)
+			.filter(e -> e.getVillagerData()
+				.getProfession() == VillagerProfession.LIBRARIAN)
+			.filter(e -> e.getVillagerData().getLevel() == 1)
 			.filter(e -> !experiencedVillagers.contains(e));
 		
-		villager = stream
-			.min(Comparator.comparingDouble(EntityUtils::distanceToHitboxSq))
-			.orElse(null);
+		villager =
+			stream.min(Comparator.comparingDouble(e -> player.distanceToSqr(e)))
+				.orElse(null);
 		
 		if(villager == null)
 		{

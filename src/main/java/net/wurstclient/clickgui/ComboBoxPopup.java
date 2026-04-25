@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -10,7 +10,7 @@ package net.wurstclient.clickgui;
 import org.lwjgl.glfw.GLFW;
 
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.wurstclient.WurstClient;
 import net.wurstclient.settings.EnumSetting;
 import net.wurstclient.util.RenderUtils;
@@ -62,7 +62,7 @@ public final class ComboBoxPopup<T extends Enum<T>> extends Popup
 	}
 	
 	@Override
-	public void render(GuiGraphicsExtractor context, int mouseX, int mouseY)
+	public void render(GuiGraphics context, int mouseX, int mouseY)
 	{
 		int x1 = getX();
 		int x2 = x1 + getWidth();
@@ -90,8 +90,7 @@ public final class ComboBoxPopup<T extends Enum<T>> extends Popup
 			context.fill(x1, yi1, x2, yi2, RenderUtils.toIntColor(
 				GUI.getBgColor(), GUI.getOpacity() * (hValue ? 1.5F : 1)));
 			
-			context.guiRenderState.up();
-			context.text(TR, value.toString(), x1 + 2, yi1 + 2,
+			context.drawString(TR, value.toString(), x1 + 2, yi1 + 2,
 				GUI.getTxtColor(), false);
 		}
 	}

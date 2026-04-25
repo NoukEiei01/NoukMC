@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -110,7 +110,7 @@ public final class ZoomOtf extends OtherFeature implements MouseScrollListener
 			level.getMaximum());
 	}
 	
-	public boolean isControllingScrollEvents()
+	public boolean shouldPreventHotbarScrolling()
 	{
 		return isZoomKeyPressed() && scroll.isChecked();
 	}
@@ -130,7 +130,7 @@ public final class ZoomOtf extends OtherFeature implements MouseScrollListener
 		if(MC.screen != null && !zoomInScreens.isChecked())
 			return false;
 		
-		return InputConstants.isKeyDown(MC.getWindow(),
+		return InputConstants.isKeyDown(MC.getWindow().getWindow(),
 			InputConstants.getKey(keybind.getValue()).getValue());
 	}
 	

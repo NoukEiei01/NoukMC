@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -74,7 +74,7 @@ public final class GiveCmd extends Command
 		if(nbt != null)
 			try
 			{
-				CompoundTag tag = TagParser.parseCompoundFully(nbt);
+				CompoundTag tag = TagParser.parseTag(nbt);
 				CustomData.set(DataComponents.CUSTOM_DATA, stack, tag);
 				
 			}catch(CommandSyntaxException e)

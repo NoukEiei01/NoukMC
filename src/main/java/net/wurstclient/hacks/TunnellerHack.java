@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -47,7 +47,13 @@ import net.wurstclient.settings.EnumSetting;
 import net.wurstclient.settings.SliderSetting;
 import net.wurstclient.settings.SliderSetting.ValueDisplay;
 import net.wurstclient.settings.SwingHandSetting.SwingHand;
-import net.wurstclient.util.*;
+import net.wurstclient.util.BlockUtils;
+import net.wurstclient.util.ChatUtils;
+import net.wurstclient.util.EasyVertexBuffer;
+import net.wurstclient.util.OverlayRenderer;
+import net.wurstclient.util.RegionPos;
+import net.wurstclient.util.RenderUtils;
+import net.wurstclient.util.RotationUtils;
 
 @DontSaveState
 public final class TunnellerHack extends Hack
@@ -163,7 +169,7 @@ public final class TunnellerHack extends Hack
 		for(Hack hack : incompatibleHax)
 			hack.setEnabled(false);
 		
-		if(hax.freecamHack.isMovingCamera() || hax.remoteViewHack.isEnabled())
+		if(hax.freecamHack.isEnabled() || hax.remoteViewHack.isEnabled())
 			return;
 		
 		Options gs = MC.options;
@@ -217,7 +223,7 @@ public final class TunnellerHack extends Hack
 		Vec3 arrowEnd = dirVec.scale(Math.max(0.5, length)).add(offset);
 		
 		vertexBuffers[0] = EasyVertexBuffer.createAndUpload(Mode.LINES,
-			DefaultVertexFormat.POSITION_COLOR_NORMAL_LINE_WIDTH, buffer -> {
+			DefaultVertexFormat.POSITION_COLOR_NORMAL, buffer -> {
 				RenderUtils.drawNode(buffer, nodeBox, cyan);
 				RenderUtils.drawArrow(buffer, arrowStart, arrowEnd, cyan, 0.1F);
 			});
@@ -341,8 +347,7 @@ public final class TunnellerHack extends Hack
 			int green = 0x8000FF00;
 			if(!boxes.isEmpty())
 				vertexBuffers[1] = EasyVertexBuffer.createAndUpload(Mode.LINES,
-					DefaultVertexFormat.POSITION_COLOR_NORMAL_LINE_WIDTH,
-					buffer -> {
+					DefaultVertexFormat.POSITION_COLOR_NORMAL, buffer -> {
 						for(AABB box : boxes)
 							RenderUtils.drawOutlinedBox(buffer, box, green);
 					});
@@ -432,8 +437,7 @@ public final class TunnellerHack extends Hack
 				
 				int yellow = 0x80FFFF00;
 				vertexBuffers[2] = EasyVertexBuffer.createAndUpload(Mode.LINES,
-					DefaultVertexFormat.POSITION_COLOR_NORMAL_LINE_WIDTH,
-					buffer -> {
+					DefaultVertexFormat.POSITION_COLOR_NORMAL, buffer -> {
 						for(BlockPos pos : blocks)
 							RenderUtils.drawOutlinedBox(buffer, box.move(pos),
 								yellow);
@@ -504,7 +508,7 @@ public final class TunnellerHack extends Hack
 					&& FallingBlock.isFree(BlockUtils.getState(pos.below())))
 					continue;
 				
-				MC.player.getInventory().setSelectedSlot(slot);
+				MC.player.getInventory().selected = slot;
 				return true;
 			}
 			
@@ -578,8 +582,7 @@ public final class TunnellerHack extends Hack
 				
 				int red = 0x80FF0000;
 				vertexBuffers[3] = EasyVertexBuffer.createAndUpload(Mode.LINES,
-					DefaultVertexFormat.POSITION_COLOR_NORMAL_LINE_WIDTH,
-					buffer -> {
+					DefaultVertexFormat.POSITION_COLOR_NORMAL, buffer -> {
 						for(BlockPos pos : liquids)
 							RenderUtils.drawOutlinedBox(buffer, box.move(pos),
 								red);
@@ -669,8 +672,7 @@ public final class TunnellerHack extends Hack
 			
 			int yellow = 0x80FFFF00;
 			vertexBuffers[4] = EasyVertexBuffer.createAndUpload(Mode.LINES,
-				DefaultVertexFormat.POSITION_COLOR_NORMAL_LINE_WIDTH,
-				buffer -> {
+				DefaultVertexFormat.POSITION_COLOR_NORMAL, buffer -> {
 					RenderUtils.drawArrow(buffer, torchVec,
 						torchVec.add(0, 0.5, 0), yellow, 0.1F);
 				});
@@ -715,7 +717,7 @@ public final class TunnellerHack extends Hack
 				if(!(block instanceof TorchBlock))
 					continue;
 				
-				MC.player.getInventory().setSelectedSlot(slot);
+				MC.player.getInventory().selected = slot;
 				return true;
 			}
 			
@@ -732,7 +734,7 @@ public final class TunnellerHack extends Hack
 			return StreamSupport
 				.stream(MC.level.entitiesForRendering().spliterator(), false)
 				.filter(FallingBlockEntity.class::isInstance)
-				.anyMatch(e -> EntityUtils.distanceToHitboxSq(e) < 36);
+				.anyMatch(e -> MC.player.distanceToSqr(e) < 36);
 		}
 		
 		@Override

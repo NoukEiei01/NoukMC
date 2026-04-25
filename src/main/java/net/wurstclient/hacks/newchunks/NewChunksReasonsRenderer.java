@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -11,7 +11,7 @@ import java.util.List;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
-import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.phys.AABB;
@@ -31,14 +31,13 @@ public final class NewChunksReasonsRenderer
 	
 	public void buildBuffer(VertexConsumer buffer, List<BlockPos> reasons)
 	{
-		ChunkPos camChunkPos =
-			ChunkPos.containing(RenderUtils.getCameraBlockPos());
+		ChunkPos camChunkPos = new ChunkPos(RenderUtils.getCameraBlockPos());
 		RegionPos region = RegionPos.of(camChunkPos);
 		int drawDistance = this.drawDistance.getValueI();
 		
 		for(BlockPos pos : reasons)
 		{
-			ChunkPos chunkPos = ChunkPos.containing(pos);
+			ChunkPos chunkPos = new ChunkPos(pos);
 			if(chunkPos.getChessboardDistance(camChunkPos) > drawDistance)
 				continue;
 			

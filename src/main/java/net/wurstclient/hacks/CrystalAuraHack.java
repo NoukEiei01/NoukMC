@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -29,18 +30,16 @@ import net.wurstclient.SearchTags;
 import net.wurstclient.events.UpdateListener;
 import net.wurstclient.hack.Hack;
 import net.wurstclient.settings.CheckboxSetting;
+import net.wurstclient.settings.EnumSetting;
 import net.wurstclient.settings.FaceTargetSetting;
 import net.wurstclient.settings.FaceTargetSetting.FaceTarget;
 import net.wurstclient.settings.SliderSetting;
 import net.wurstclient.settings.SliderSetting.ValueDisplay;
 import net.wurstclient.settings.SwingHandSetting;
 import net.wurstclient.settings.SwingHandSetting.SwingHand;
-import net.wurstclient.settings.TakeItemsFromSetting;
-import net.wurstclient.settings.TakeItemsFromSetting.TakeItemsFrom;
 import net.wurstclient.settings.filterlists.CrystalAuraFilterList;
 import net.wurstclient.settings.filterlists.EntityFilterList;
 import net.wurstclient.util.BlockUtils;
-import net.wurstclient.util.EntityUtils;
 import net.wurstclient.util.FakePlayerEntity;
 import net.wurstclient.util.InventoryUtils;
 import net.wurstclient.util.RotationUtils;
@@ -70,8 +69,9 @@ public final class CrystalAuraHack extends Hack implements UpdateListener
 	private final SwingHandSetting swingHand =
 		new SwingHandSetting(this, SwingHand.CLIENT);
 	
-	private final TakeItemsFromSetting takeItemsFrom =
-		TakeItemsFromSetting.withoutHands(this, TakeItemsFrom.INVENTORY);
+	private final EnumSetting<TakeItemsFrom> takeItemsFrom =
+		new EnumSetting<>("Take items from", "Where to look for end crystals.",
+			TakeItemsFrom.values(), TakeItemsFrom.INVENTORY);
 	
 	private final EntityFilterList entityFilters =
 		CrystalAuraFilterList.create();
@@ -129,7 +129,7 @@ public final class CrystalAuraHack extends Hack implements UpdateListener
 			return;
 		
 		if(InventoryUtils.indexOf(Items.END_CRYSTAL,
-			takeItemsFrom.getMaxInvSlot()) == -1)
+			takeItemsFrom.getSelected().maxInvSlot) == -1)
 			return;
 		
 		ArrayList<Entity> targets = getNearbyTargets();
@@ -205,7 +205,7 @@ public final class CrystalAuraHack extends Hack implements UpdateListener
 				continue;
 			
 			InventoryUtils.selectItem(Items.END_CRYSTAL,
-				takeItemsFrom.getMaxInvSlot());
+				takeItemsFrom.getSelected().maxInvSlot);
 			if(!MC.player.isHolding(Items.END_CRYSTAL))
 				return false;
 			
@@ -223,16 +223,17 @@ public final class CrystalAuraHack extends Hack implements UpdateListener
 	
 	private ArrayList<Entity> getNearbyCrystals()
 	{
+		LocalPlayer player = MC.player;
 		double rangeSq = Math.pow(range.getValue(), 2);
 		
 		Comparator<Entity> furthestFromPlayer =
-			Comparator.<Entity> comparingDouble(EntityUtils::distanceToHitboxSq)
+			Comparator.<Entity> comparingDouble(e -> MC.player.distanceToSqr(e))
 				.reversed();
 		
 		return StreamSupport
 			.stream(MC.level.entitiesForRendering().spliterator(), true)
 			.filter(EndCrystal.class::isInstance).filter(e -> !e.isRemoved())
-			.filter(e -> EntityUtils.distanceToHitboxSq(e) <= rangeSq)
+			.filter(e -> player.distanceToSqr(e) <= rangeSq)
 			.sorted(furthestFromPlayer)
 			.collect(Collectors.toCollection(ArrayList::new));
 	}
@@ -242,7 +243,7 @@ public final class CrystalAuraHack extends Hack implements UpdateListener
 		double rangeSq = Math.pow(range.getValue(), 2);
 		
 		Comparator<Entity> furthestFromPlayer =
-			Comparator.<Entity> comparingDouble(EntityUtils::distanceToHitboxSq)
+			Comparator.<Entity> comparingDouble(e -> MC.player.distanceToSqr(e))
 				.reversed();
 		
 		Stream<Entity> stream = StreamSupport
@@ -253,7 +254,7 @@ public final class CrystalAuraHack extends Hack implements UpdateListener
 			.filter(e -> e != MC.player)
 			.filter(e -> !(e instanceof FakePlayerEntity))
 			.filter(e -> !WURST.getFriends().contains(e.getName().getString()))
-			.filter(e -> EntityUtils.distanceToHitboxSq(e) <= rangeSq);
+			.filter(e -> MC.player.distanceToSqr(e) <= rangeSq);
 		
 		stream = entityFilters.applyTo(stream);
 		
@@ -303,5 +304,27 @@ public final class CrystalAuraHack extends Hack implements UpdateListener
 	{
 		return BlockUtils.canBeClicked(pos)
 			&& !BlockUtils.getState(pos).canBeReplaced();
+	}
+	
+	private enum TakeItemsFrom
+	{
+		HOTBAR("Hotbar", 9),
+		
+		INVENTORY("Inventory", 36);
+		
+		private final String name;
+		private final int maxInvSlot;
+		
+		private TakeItemsFrom(String name, int maxInvSlot)
+		{
+			this.name = name;
+			this.maxInvSlot = maxInvSlot;
+		}
+		
+		@Override
+		public String toString()
+		{
+			return name;
+		}
 	}
 }

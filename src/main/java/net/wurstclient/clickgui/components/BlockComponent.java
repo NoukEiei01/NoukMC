@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -10,8 +10,7 @@ package net.wurstclient.clickgui.components;
 import org.lwjgl.glfw.GLFW;
 
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -21,7 +20,6 @@ import net.wurstclient.clickgui.Window;
 import net.wurstclient.clickgui.screens.EditBlockScreen;
 import net.wurstclient.settings.BlockSetting;
 import net.wurstclient.util.RenderUtils;
-import net.wurstclient.util.text.WText;
 
 public final class BlockComponent extends Component
 {
@@ -39,8 +37,7 @@ public final class BlockComponent extends Component
 	}
 	
 	@Override
-	public void handleMouseClick(double mouseX, double mouseY, int mouseButton,
-		MouseButtonEvent context)
+	public void handleMouseClick(double mouseX, double mouseY, int mouseButton)
 	{
 		if(mouseX < getX() + getWidth() - BLOCK_WIDTH)
 			return;
@@ -58,7 +55,7 @@ public final class BlockComponent extends Component
 	}
 	
 	@Override
-	public void render(GuiGraphicsExtractor context, int mouseX, int mouseY,
+	public void render(GuiGraphics context, int mouseX, int mouseY,
 		float partialTicks)
 	{
 		int x1 = getX();
@@ -82,11 +79,9 @@ public final class BlockComponent extends Component
 			RenderUtils.toIntColor(GUI.getBgColor(), GUI.getOpacity());
 		context.fill(x1, y1, x2, y2, bgColor);
 		
-		context.guiRenderState.up();
-		
 		// text
 		String name = setting.getName() + ":";
-		context.text(TR, name, x1, y1 + 2, GUI.getTxtColor(), false);
+		context.drawString(TR, name, x1, y1 + 2, GUI.getTxtColor(), false);
 		
 		// block
 		ItemStack stack = new ItemStack(setting.getBlock());
@@ -110,8 +105,7 @@ public final class BlockComponent extends Component
 		BlockState state = block.defaultBlockState();
 		ItemStack stack = new ItemStack(block);
 		
-		String translatedName = stack.isEmpty()
-			? WText.translated("gui.wurst.generic.unknown_block").toString()
+		String translatedName = stack.isEmpty() ? "\u00a7ounknown block\u00a7r"
 			: stack.getHoverName().getString();
 		String tooltip = "\u00a76Name:\u00a7r " + translatedName;
 		
@@ -121,10 +115,8 @@ public final class BlockComponent extends Component
 		int blockNumber = Block.getId(state);
 		tooltip += "\n\u00a76Block #:\u00a7r " + blockNumber;
 		
-		tooltip +=
-			"\n\n" + WText.translated("gui.wurst.generic.left_click_to_edit");
-		tooltip +=
-			"\n" + WText.translated("gui.wurst.generic.right_click_to_reset");
+		tooltip += "\n\n\u00a7e[left-click]\u00a7r to edit";
+		tooltip += "\n\u00a7e[right-click]\u00a7r to reset";
 		
 		return tooltip;
 	}

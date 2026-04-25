@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -9,10 +9,11 @@ package net.wurstclient.hacks.newchunks;
 
 import java.util.function.Consumer;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
-import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.RenderType;
 import net.wurstclient.settings.ColorSetting;
 import net.wurstclient.settings.SliderSetting;
 import net.wurstclient.util.BufferWithLayer;
@@ -72,14 +73,18 @@ public final class NewChunksRenderer
 			if(i == 0 || i == 2)
 				matrixStack.translate(0, altitudeD, 0);
 			
-			float[] rgb =
-				i < 2 ? newChunksColor.getColorF() : oldChunksColor.getColorF();
+			if(i < 2)
+				newChunksColor.setAsShaderColor(alpha);
+			else
+				oldChunksColor.setAsShaderColor(alpha);
 			
-			buffer.draw(matrixStack, rgb, alpha);
+			buffer.draw(matrixStack);
 			
 			matrixStack.popPose();
 		}
 		
 		matrixStack.popPose();
+		
+		RenderSystem.setShaderColor(1, 1, 1, 1);
 	}
 }

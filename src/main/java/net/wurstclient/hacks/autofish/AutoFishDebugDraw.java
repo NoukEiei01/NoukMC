@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -10,6 +10,8 @@ package net.wurstclient.hacks.autofish;
 import java.awt.Color;
 import java.util.stream.Stream;
 
+import com.mojang.blaze3d.platform.GlConst;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
@@ -117,6 +119,7 @@ public final class AutoFishDebugDraw
 		
 		int color = ddColor.getColorI(0xC0);
 		
+		RenderSystem.depthFunc(GlConst.GL_ALWAYS);
 		MultiBufferSource.BufferSource vcp = RenderUtils.getVCP();
 		Vec3 camPos = RenderUtils.getCameraPos();
 		

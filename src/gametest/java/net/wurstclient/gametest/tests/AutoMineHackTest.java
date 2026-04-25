@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -7,41 +7,44 @@
  */
 package net.wurstclient.gametest.tests;
 
+import static net.wurstclient.gametest.WurstClientTestHelper.*;
+
 import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
+import net.fabricmc.fabric.api.client.gametest.v1.context.TestClientWorldContext;
+import net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
 import net.minecraft.world.level.block.Blocks;
-import net.wurstclient.gametest.SingleplayerTest;
+import net.wurstclient.gametest.WurstTest;
 
-public final class AutoMineHackTest extends SingleplayerTest
+public enum AutoMineHackTest
 {
-	public AutoMineHackTest(ClientGameTestContext context,
+	;
+	
+	public static void testAutoMineHack(ClientGameTestContext context,
 		TestSingleplayerContext spContext)
 	{
-		super(context, spContext);
-	}
-	
-	@Override
-	protected void runImpl()
-	{
-		logger.info("Testing AutoMine hack");
-		runCommand("gamemode survival");
+		WurstTest.LOGGER.info("Testing AutoMine hack");
+		TestClientWorldContext world = spContext.getClientWorld();
+		TestServerContext server = spContext.getServer();
+		runCommand(server, "gamemode survival");
 		
 		// Break a dirt block in survival mode
-		runCommand("setblock ~ ~1 ~2 minecraft:dirt");
-		waitForBlock(0, 1, 2, Blocks.DIRT);
-		runWurstCommand("t AutoMine on");
-		waitForBlock(0, 1, 2, Blocks.AIR);
+		runCommand(server, "setblock ~ ~1 ~2 minecraft:dirt");
+		waitForBlock(context, 0, 1, 2, Blocks.DIRT);
+		runWurstCommand(context, "t AutoMine on");
+		waitForBlock(context, 0, 1, 2, Blocks.AIR);
 		context.waitTick();
 		world.waitForChunksRender();
 		context.takeScreenshot("automine_survival");
 		
 		// Clean up
-		runWurstCommand("t AutoMine off");
-		runCommand("gamemode creative");
-		runCommand("kill @e[type=item]");
-		clearInventory();
-		clearParticles();
-		clearChat();
+		runWurstCommand(context, "t AutoMine off");
+		runCommand(server, "gamemode creative");
+		runCommand(server, "kill @e[type=item]");
+		clearInventory(context);
+		context.waitTick();
+		clearParticles(context);
+		clearChat(context);
 		context.waitTick();
 	}
 }

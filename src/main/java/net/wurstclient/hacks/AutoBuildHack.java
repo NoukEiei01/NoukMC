@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -31,13 +31,9 @@ import net.wurstclient.events.RightClickListener;
 import net.wurstclient.events.UpdateListener;
 import net.wurstclient.hack.Hack;
 import net.wurstclient.settings.CheckboxSetting;
-import net.wurstclient.settings.FaceTargetSetting;
-import net.wurstclient.settings.FaceTargetSetting.FaceTarget;
 import net.wurstclient.settings.FileSetting;
 import net.wurstclient.settings.SliderSetting;
 import net.wurstclient.settings.SliderSetting.ValueDisplay;
-import net.wurstclient.settings.SwingHandSetting;
-import net.wurstclient.settings.SwingHandSetting.SwingHand;
 import net.wurstclient.util.*;
 import net.wurstclient.util.BlockPlacer.BlockPlacingParams;
 import net.wurstclient.util.json.JsonException;
@@ -71,12 +67,6 @@ public final class AutoBuildHack extends Hack
 			+ " from whatever block you are holding.",
 		true);
 	
-	private final FaceTargetSetting faceTarget =
-		FaceTargetSetting.withoutPacketSpam(this, FaceTarget.SERVER);
-	
-	private final SwingHandSetting swingHand =
-		new SwingHandSetting(this, SwingHand.SERVER);
-	
 	private final CheckboxSetting fastPlace =
 		new CheckboxSetting("Always FastPlace",
 			"Builds as if FastPlace was enabled, even if it's not.", true);
@@ -100,8 +90,6 @@ public final class AutoBuildHack extends Hack
 		addSetting(range);
 		addSetting(checkLOS);
 		addSetting(useSavedBlocks);
-		addSetting(faceTarget);
-		addSetting(swingHand);
 		addSetting(fastPlace);
 		addSetting(strictBuildOrder);
 	}
@@ -253,7 +241,6 @@ public final class AutoBuildHack extends Hack
 			
 			BlockPlacingParams params = BlockPlacer.getBlockPlacingParams(pos);
 			if(params == null || params.distanceSq() > rangeSq
-				|| params.requiresSneaking()
 				|| checkLOS.isChecked() && !params.lineOfSight())
 				if(strictBuildOrder.isChecked())
 					return;
@@ -268,9 +255,9 @@ public final class AutoBuildHack extends Hack
 			}
 			
 			MC.rightClickDelay = 4;
-			faceTarget.face(params.hitVec());
-			InteractionSimulator.rightClickBlock(params.toHitResult(),
-				swingHand.getSelected());
+			RotationUtils.getNeededRotations(params.hitVec())
+				.sendPlayerLookPacket();
+			InteractionSimulator.rightClickBlock(params.toHitResult());
 			return;
 		}
 	}
@@ -286,7 +273,7 @@ public final class AutoBuildHack extends Hack
 		Inventory inventory = MC.player.getInventory();
 		int slot = inventory.getFreeSlot();
 		if(slot < 0)
-			slot = inventory.getSelectedSlot();
+			slot = inventory.selected;
 		
 		ItemStack stack = new ItemStack(item);
 		InventoryUtils.setCreativeStack(slot, stack);

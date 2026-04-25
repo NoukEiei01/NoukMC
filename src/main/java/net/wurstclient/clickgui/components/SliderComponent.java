@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -9,15 +9,16 @@ package net.wurstclient.clickgui.components;
 
 import org.lwjgl.glfw.GLFW;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.Screen;
 import net.wurstclient.clickgui.ClickGui;
 import net.wurstclient.clickgui.Component;
 import net.wurstclient.clickgui.screens.EditSliderScreen;
 import net.wurstclient.settings.SliderSetting;
 import net.wurstclient.util.RenderUtils;
-import net.wurstclient.util.text.WText;
 
 public final class SliderComponent extends Component
 {
@@ -36,17 +37,15 @@ public final class SliderComponent extends Component
 	}
 	
 	@Override
-	public void handleMouseClick(double mouseX, double mouseY, int mouseButton,
-		MouseButtonEvent context)
+	public void handleMouseClick(double mouseX, double mouseY, int mouseButton)
 	{
-		boolean hasControlDown = context.hasControlDown();
 		if(mouseY < getY() + 11)
 			return;
 		
 		switch(mouseButton)
 		{
 			case GLFW.GLFW_MOUSE_BUTTON_LEFT:
-			if(hasControlDown)
+			if(Screen.hasControlDown())
 				MC.setScreen(new EditSliderScreen(MC.screen, setting));
 			else
 				dragging = true;
@@ -81,7 +80,7 @@ public final class SliderComponent extends Component
 	}
 	
 	@Override
-	public void render(GuiGraphicsExtractor context, int mouseX, int mouseY,
+	public void render(GuiGraphics context, int mouseX, int mouseY,
 		float partialTicks)
 	{
 		int x1 = getX();
@@ -117,10 +116,10 @@ public final class SliderComponent extends Component
 		
 		// background (around the rail)
 		int bgColor = RenderUtils.toIntColor(GUI.getBgColor(), opacity);
-		RenderUtils.fill2D(context, x1, y1, x2, y4, bgColor);
-		RenderUtils.fill2D(context, x1, y5, x2, y2, bgColor);
-		RenderUtils.fill2D(context, x1, y4, x3, y5, bgColor);
-		RenderUtils.fill2D(context, x4, y4, x2, y5, bgColor);
+		float[][] bgVertices = {{x1, y1}, {x1, y4}, {x2, y4}, {x2, y1},
+			{x1, y5}, {x1, y2}, {x2, y2}, {x2, y5}, {x1, y4}, {x1, y5},
+			{x3, y5}, {x3, y4}, {x4, y4}, {x4, y5}, {x2, y5}, {x2, y4}};
+		RenderUtils.fillQuads2D(context, bgVertices, bgColor);
 		
 		// limit
 		float xl1 = x3;
@@ -133,17 +132,20 @@ public final class SliderComponent extends Component
 			
 			int limitColor =
 				RenderUtils.toIntColor(new float[]{1, 0, 0}, railOpacity);
-			RenderUtils.fill2D(context, x3, y4, xl1, y5, limitColor);
-			RenderUtils.fill2D(context, xl2, y4, x4, y5, limitColor);
+			float[][] limitVertices = {{x3, y4}, {x3, y5}, {xl1, y5}, {xl1, y4},
+				{xl2, y4}, {xl2, y5}, {x4, y5}, {x4, y4}};
+			RenderUtils.fillQuads2D(context, limitVertices, limitColor);
 		}
 		
 		// rail
 		RenderUtils.fill2D(context, xl1, y4, xl2, y5,
 			RenderUtils.toIntColor(GUI.getBgColor(), railOpacity));
-		RenderUtils.drawBorder2D(context, x3, y4, x4, y5,
+		RenderUtils.drawBorder2D(context, xl1, y4, xl2, y5,
 			RenderUtils.toIntColor(GUI.getAcColor(), 0.5F));
 		
-		context.guiRenderState.up();
+		PoseStack matrices = context.pose();
+		matrices.pushPose();
+		matrices.translate(0, 0, 2);
 		
 		// knob
 		float xk1 = x1 + (x2 - x1 - 8) * (float)setting.getPercentage();
@@ -155,13 +157,15 @@ public final class SliderComponent extends Component
 		RenderUtils.fill2D(context, xk1, yk1, xk2, yk2, knobColor);
 		RenderUtils.drawBorder2D(context, xk1, yk1, xk2, yk2, 0x80101010);
 		
+		matrices.popPose();
+		
 		// text
 		String name = setting.getName();
 		String value = setting.getValueString();
 		int valueWidth = TR.width(value);
 		int txtColor = GUI.getTxtColor();
-		context.text(TR, name, x1, y1 + 2, txtColor, false);
-		context.text(TR, value, x2 - valueWidth, y1 + 2, txtColor, false);
+		context.drawString(TR, name, x1, y1 + 2, txtColor, false);
+		context.drawString(TR, value, x2 - valueWidth, y1 + 2, txtColor, false);
 	}
 	
 	private String getTextTooltip()
@@ -181,19 +185,18 @@ public final class SliderComponent extends Component
 	
 	private String getSliderTooltip()
 	{
-		return WText
-			.translated("gui.wurst.generic.ctrl_left_click_for_precise_input")
-			.append(WText.literal("\n"))
-			.append(WText.translated("gui.wurst.generic.right_click_to_reset"))
-			.toString();
+		String tooltip =
+			"\u00a7e[ctrl]\u00a7r+\u00a7e[left-click]\u00a7r for precise input\n";
+		tooltip += "\u00a7e[right-click]\u00a7r to reset";
+		return tooltip;
 	}
 	
 	@Override
 	public int getDefaultWidth()
 	{
-		int nameWidth = TR.width(setting.getName());
+		int nameWitdh = TR.width(setting.getName());
 		int valueWidth = TR.width(setting.getValueString());
-		return nameWidth + valueWidth + 6;
+		return nameWitdh + valueWidth + 6;
 	}
 	
 	@Override

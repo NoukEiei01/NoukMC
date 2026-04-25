@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -21,7 +21,7 @@ import net.wurstclient.Category;
 import net.wurstclient.SearchTags;
 import net.wurstclient.events.UpdateListener;
 import net.wurstclient.hack.Hack;
-import net.wurstclient.mixinterface.IMultiPlayerGameMode;
+import net.wurstclient.mixinterface.IClientPlayerInteractionManager;
 import net.wurstclient.settings.ItemListSetting;
 import net.wurstclient.settings.SliderSetting;
 import net.wurstclient.settings.SliderSetting.ValueDisplay;
@@ -86,11 +86,11 @@ public final class RestockHack extends Hack implements UpdateListener
 			return;
 		
 		Inventory inv = MC.player.getInventory();
-		IMultiPlayerGameMode im = IMC.getInteractionManager();
+		IClientPlayerInteractionManager im = IMC.getInteractionManager();
 		
 		int hotbarSlot = restockSlot.getValueI();
 		if(hotbarSlot == -1)
-			hotbarSlot = inv.getSelectedSlot();
+			hotbarSlot = inv.selected;
 		else if(hotbarSlot == 9)
 			hotbarSlot = OFFHAND_ID;
 		

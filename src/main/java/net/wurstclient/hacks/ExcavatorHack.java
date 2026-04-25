@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -20,9 +20,8 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.CommonColors;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
@@ -216,7 +215,7 @@ public final class ExcavatorHack extends Hack
 	}
 	
 	@Override
-	public void onRenderGUI(GuiGraphicsExtractor context, float partialTicks)
+	public void onRenderGUI(GuiGraphics context, float partialTicks)
 	{
 		String message;
 		if(step.selectPos && step.pos != null)
@@ -236,7 +235,7 @@ public final class ExcavatorHack extends Hack
 		context.fill(msgX1, msgY1, msgX2, msgY2, 0x80000000);
 		
 		// text
-		context.text(tr, message, msgX1 + 2, msgY1 + 1, CommonColors.WHITE,
+		context.drawString(tr, message, msgX1 + 2, msgY1 + 1, 0xFFFFFFFF,
 			false);
 	}
 	
@@ -251,8 +250,8 @@ public final class ExcavatorHack extends Hack
 	private void handlePositionSelection()
 	{
 		// continue with next step
-		if(step.pos != null
-			&& InputConstants.isKeyDown(MC.getWindow(), GLFW.GLFW_KEY_ENTER))
+		if(step.pos != null && InputConstants
+			.isKeyDown(MC.getWindow().getWindow(), GLFW.GLFW_KEY_ENTER))
 		{
 			step = Step.values()[step.ordinal() + 1];
 			
@@ -373,7 +372,7 @@ public final class ExcavatorHack extends Hack
 		overlay.updateProgress();
 		
 		// get remaining blocks
-		Predicate<BlockPos> pBreakable = MC.player.getAbilities().instabuild
+		Predicate<BlockPos> pBreakable = MC.player.isCreative()
 			? BlockUtils::canBeClicked : pos -> BlockUtils.canBeClicked(pos)
 				&& !BlockUtils.isUnbreakable(pos);
 		area.remainingBlocks =

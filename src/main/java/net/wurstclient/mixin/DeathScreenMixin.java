@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -29,13 +29,13 @@ public abstract class DeathScreenMixin extends Screen
 		super(title);
 	}
 	
-	@Inject(method = "tick()V", at = @At("TAIL"))
+	@Inject(at = @At("TAIL"), method = "tick()V")
 	private void onTick(CallbackInfo ci)
 	{
 		EventManager.fire(DeathEvent.INSTANCE);
 	}
 	
-	@Inject(method = "init()V", at = @At("TAIL"))
+	@Inject(at = @At("TAIL"), method = "init()V")
 	private void onInit(CallbackInfo ci)
 	{
 		AutoRespawnHack autoRespawn =

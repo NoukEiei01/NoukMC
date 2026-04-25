@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -88,13 +88,13 @@ public final class ScaffoldWalkHack extends Hack implements UpdateListener
 			return;
 		
 		// set slot
-		int oldSlot = MC.player.getInventory().getSelectedSlot();
-		MC.player.getInventory().setSelectedSlot(newSlot);
+		int oldSlot = MC.player.getInventory().selected;
+		MC.player.getInventory().selected = newSlot;
 		
 		scaffoldTo(belowPlayer);
 		
 		// reset slot
-		MC.player.getInventory().setSelectedSlot(oldSlot);
+		MC.player.getInventory().selected = oldSlot;
 	}
 	
 	private void scaffoldTo(BlockPos belowPlayer)

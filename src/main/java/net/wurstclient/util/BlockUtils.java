@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -11,17 +11,17 @@ import java.util.ArrayList;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import net.minecraft.IdentifierException;
+import net.minecraft.ResourceLocationException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.CollisionGetter;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -63,7 +63,8 @@ public enum BlockUtils
 	
 	/**
 	 * @param name
-	 *            a String containing the block's name ({@link Identifier})
+	 *            a String containing the block's name
+	 *            ({@link ResourceLocation})
 	 * @return the requested block, or <code>minecraft:air</code> if the block
 	 *         doesn't exist.
 	 */
@@ -71,9 +72,10 @@ public enum BlockUtils
 	{
 		try
 		{
-			return BuiltInRegistries.BLOCK.getValue(Identifier.parse(name));
+			return BuiltInRegistries.BLOCK
+				.getValue(ResourceLocation.parse(name));
 			
-		}catch(IdentifierException e)
+		}catch(ResourceLocationException e)
 		{
 			return Blocks.AIR;
 		}
@@ -81,7 +83,8 @@ public enum BlockUtils
 	
 	/**
 	 * @param nameOrId
-	 *            a String containing the block's name ({@link Identifier}) or
+	 *            a String containing the block's name
+	 *            ({@link ResourceLocation}) or
 	 *            numeric ID.
 	 * @return the requested block, or null if the block doesn't exist.
 	 */
@@ -99,13 +102,13 @@ public enum BlockUtils
 		
 		try
 		{
-			Identifier id = Identifier.parse(nameOrId);
+			ResourceLocation id = ResourceLocation.parse(nameOrId);
 			if(!BuiltInRegistries.BLOCK.containsKey(id))
 				return null;
 			
 			return BuiltInRegistries.BLOCK.getValue(id);
 			
-		}catch(IdentifierException e)
+		}catch(ResourceLocationException e)
 		{
 			return null;
 		}
@@ -252,60 +255,5 @@ public enum BlockUtils
 	{
 		return getAllInBoxStream(center.offset(-range, -range, -range),
 			center.offset(range, range, range));
-	}
-	
-	/**
-	 * Checks if the given block state opens a UI screen when right-clicked.
-	 * Returns false for null input.
-	 *
-	 * <p>
-	 * Note: Some blocks can change their interactivity: lectern only with
-	 * book, command/structure/jigsaw blocks only with OP.
-	 */
-	public static boolean isInteractive(BlockState state)
-	{
-		if(state == null)
-			return false;
-		
-		Block block = state.getBlock();
-		
-		// Containers
-		if(block instanceof AbstractChestBlock || block instanceof BarrelBlock
-			|| block instanceof ShulkerBoxBlock)
-			return true;
-		
-		// Workstations
-		if(block instanceof AnvilBlock || block instanceof CartographyTableBlock
-			|| block instanceof CraftingTableBlock
-			|| block instanceof EnchantingTableBlock
-			|| block instanceof GrindstoneBlock || block instanceof LoomBlock
-			|| block instanceof StonecutterBlock)
-			return true;
-		
-		// Machines
-		if(block instanceof AbstractFurnaceBlock
-			|| block instanceof BrewingStandBlock
-			|| block instanceof DispenserBlock || block instanceof HopperBlock
-			|| block instanceof CrafterBlock)
-			return true;
-		
-		// Beacons
-		if(block instanceof BeaconBlock)
-			return true;
-		
-		// Signs
-		if(block instanceof SignBlock)
-			return true;
-		
-		// Special case: Lectern only opens UI when it has a book
-		if(block instanceof LecternBlock)
-			return state.getValue(BlockStateProperties.HAS_BOOK);
-		
-		// Special case: OP-only blocks
-		if(block instanceof CommandBlock || block instanceof StructureBlock
-			|| block instanceof JigsawBlock)
-			return MC.player.canUseGameMasterBlocks();
-		
-		return false;
 	}
 }

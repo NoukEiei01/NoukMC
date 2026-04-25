@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -58,7 +58,7 @@ public final class AntiAfkHack extends Hack
 			"description.wurst.setting.antiafk.show_wait_time", true);
 	
 	private int timer;
-	private RandomSource random = RandomSource.createThreadLocalInstance();
+	private RandomSource random = RandomSource.createNewThreadLocalInstance();
 	private BlockPos start;
 	private BlockPos nextBlock;
 	

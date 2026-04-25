@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -13,8 +13,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.ServerData.Type;
 import net.minecraft.client.multiplayer.ServerStatusPinger;
-import net.minecraft.server.network.EventLoopGroupHolder;
-import net.wurstclient.WurstClient;
 
 public class WurstServerPinger
 {
@@ -43,8 +41,7 @@ public class WurstServerPinger
 		
 		try
 		{
-			pinger.pingServer(server, () -> {}, () -> {}, EventLoopGroupHolder
-				.remote(WurstClient.MC.options.useNativeTransport()));
+			pinger.pingServer(server, () -> {}, () -> {});
 			System.out.println("Ping successful: " + ip + ":" + port);
 			
 		}catch(UnknownHostException e)

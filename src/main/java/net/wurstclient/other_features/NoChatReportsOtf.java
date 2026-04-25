@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -7,14 +7,12 @@
  */
 package net.wurstclient.other_features;
 
-import java.net.URI;
-
 import net.fabricmc.fabric.api.client.networking.v1.ClientLoginConnectionEvents;
+import net.minecraft.client.GuiMessageTag;
+import net.minecraft.client.GuiMessageTag.Icon;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientHandshakePacketListenerImpl;
 import net.minecraft.client.multiplayer.ClientPacketListener;
-import net.minecraft.client.multiplayer.chat.GuiMessageTag;
-import net.minecraft.client.multiplayer.chat.GuiMessageTag.Icon;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
@@ -95,9 +93,9 @@ public final class NoChatReportsOtf extends OtherFeature
 		
 		event.cancel();
 		
-		ClickEvent clickEvent = new ClickEvent.OpenUrl(
-			URI.create("https://www.wurstclient.net/chat-disabled-mpk/"));
-		HoverEvent hoverEvent = new HoverEvent.ShowText(
+		ClickEvent clickEvent = new ClickEvent(ClickEvent.Action.OPEN_URL,
+			"https://www.wurstclient.net/chat-disabled-mpk/");
+		HoverEvent hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT,
 			Component.literal("Original message: ").append(originalText));
 		
 		ChatUtils.component(Component.literal(
@@ -159,6 +157,6 @@ public final class NoChatReportsOtf extends OtherFeature
 		return Category.CHAT;
 	}
 	
-	// See ChatComponentMixin, ClientPacketListenerMixin.onOnGameJoin(),
-	// MinecraftMixin.onGetProfileKeys()
+	// See ChatHudMixin, ClientPlayNetworkHandlerMixin.onOnServerMetadata(),
+	// MinecraftClientMixin.onGetProfileKeys()
 }

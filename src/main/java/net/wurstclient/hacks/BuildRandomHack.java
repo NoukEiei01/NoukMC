@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -125,6 +125,9 @@ public final class BuildRandomHack extends Hack
 	{
 		lastPos = null;
 		
+		if(WURST.getHax().freecamHack.isEnabled())
+			return;
+		
 		if(!fastPlace.isChecked() && MC.rightClickDelay > 0)
 			return;
 		
@@ -162,8 +165,7 @@ public final class BuildRandomHack extends Hack
 			return false;
 		
 		BlockPlacingParams params = BlockPlacer.getBlockPlacingParams(pos);
-		if(params == null || params.distanceSq() > range.getValueSq()
-			|| params.requiresSneaking())
+		if(params == null || params.distanceSq() > range.getValueSq())
 			return false;
 		if(checkLOS.isChecked() && !params.lineOfSight())
 			return false;

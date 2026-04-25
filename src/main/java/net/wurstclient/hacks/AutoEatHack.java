@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -20,7 +20,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.entity.npc.villager.Villager;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.food.FoodData;
 import net.minecraft.world.food.FoodProperties;
@@ -40,10 +40,9 @@ import net.wurstclient.SearchTags;
 import net.wurstclient.events.UpdateListener;
 import net.wurstclient.hack.Hack;
 import net.wurstclient.settings.CheckboxSetting;
+import net.wurstclient.settings.EnumSetting;
 import net.wurstclient.settings.SliderSetting;
 import net.wurstclient.settings.SliderSetting.ValueDisplay;
-import net.wurstclient.settings.TakeItemsFromSetting;
-import net.wurstclient.settings.TakeItemsFromSetting.TakeItemsFrom;
 import net.wurstclient.util.InventoryUtils;
 
 @SearchTags({"auto eat", "AutoFood", "auto food", "AutoFeeder", "auto feeder",
@@ -67,8 +66,9 @@ public final class AutoEatHack extends Hack implements UpdateListener
 			"description.wurst.setting.autoeat.injury_threshold", 1.5, 0.5, 10,
 			0.5, ValueDisplay.DECIMAL);
 	
-	private final TakeItemsFromSetting takeItemsFrom =
-		TakeItemsFromSetting.withHands(this, TakeItemsFrom.HOTBAR);
+	private final EnumSetting<TakeItemsFrom> takeItemsFrom = new EnumSetting<>(
+		"Take items from", "description.wurst.setting.autoeat.take_items_from",
+		TakeItemsFrom.values(), TakeItemsFrom.HOTBAR);
 	
 	private final CheckboxSetting allowOffhand =
 		new CheckboxSetting("Allow offhand", true);
@@ -181,14 +181,14 @@ public final class AutoEatHack extends Hack implements UpdateListener
 		if(foodSlot < 9)
 		{
 			if(!isEating())
-				oldSlot = inventory.getSelectedSlot();
+				oldSlot = inventory.selected;
 			
-			inventory.setSelectedSlot(foodSlot);
+			inventory.selected = foodSlot;
 			
 		}else if(foodSlot == 40)
 		{
 			if(!isEating())
-				oldSlot = inventory.getSelectedSlot();
+				oldSlot = inventory.selected;
 			
 			// off-hand slot, no need to select anything
 			
@@ -209,11 +209,11 @@ public final class AutoEatHack extends Hack implements UpdateListener
 		FoodProperties bestFood = null;
 		int bestSlot = -1;
 		
-		int maxInvSlot = takeItemsFrom.getMaxInvSlot();
+		int maxInvSlot = takeItemsFrom.getSelected().maxInvSlot;
 		
 		ArrayList<Integer> slots = new ArrayList<>();
 		if(maxInvSlot == 0)
-			slots.add(inventory.getSelectedSlot());
+			slots.add(inventory.selected);
 		if(allowOffhand.isChecked())
 			slots.add(40);
 		Stream.iterate(0, i -> i < maxInvSlot, i -> i + 1)
@@ -269,7 +269,7 @@ public final class AutoEatHack extends Hack implements UpdateListener
 	private void stopEating()
 	{
 		MC.options.keyUse.setDown(false);
-		MC.player.getInventory().setSelectedSlot(oldSlot);
+		MC.player.getInventory().selected = oldSlot;
 		oldSlot = -1;
 	}
 	
@@ -334,5 +334,29 @@ public final class AutoEatHack extends Hack implements UpdateListener
 	{
 		int injuryThresholdI = (int)(injuryThreshold.getValue() * 2);
 		return player.getHealth() < player.getMaxHealth() - injuryThresholdI;
+	}
+	
+	private enum TakeItemsFrom
+	{
+		HANDS("Hands", 0),
+		
+		HOTBAR("Hotbar", 9),
+		
+		INVENTORY("Inventory", 36);
+		
+		private final String name;
+		private final int maxInvSlot;
+		
+		private TakeItemsFrom(String name, int maxInvSlot)
+		{
+			this.name = name;
+			this.maxInvSlot = maxInvSlot;
+		}
+		
+		@Override
+		public String toString()
+		{
+			return name;
+		}
 	}
 }

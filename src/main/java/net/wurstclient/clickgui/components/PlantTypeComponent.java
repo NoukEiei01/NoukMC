@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -10,8 +10,7 @@ package net.wurstclient.clickgui.components;
 import org.lwjgl.glfw.GLFW;
 
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.wurstclient.clickgui.ClickGui;
 import net.wurstclient.clickgui.ClickGuiIcons;
 import net.wurstclient.clickgui.Component;
@@ -38,8 +37,7 @@ public final class PlantTypeComponent extends Component
 	}
 	
 	@Override
-	public void handleMouseClick(double mouseX, double mouseY, int mouseButton,
-		MouseButtonEvent context)
+	public void handleMouseClick(double mouseX, double mouseY, int mouseButton)
 	{
 		if(mouseX < getX() + ICON_SIZE)
 			return;
@@ -69,7 +67,7 @@ public final class PlantTypeComponent extends Component
 	}
 	
 	@Override
-	public void render(GuiGraphicsExtractor context, int mouseX, int mouseY,
+	public void render(GuiGraphics context, int mouseX, int mouseY,
 		float partialTicks)
 	{
 		int harvestWidth = TR.width(HARVEST);
@@ -125,9 +123,11 @@ public final class PlantTypeComponent extends Component
 		
 		// text
 		String name = setting.getName();
-		context.text(TR, name, x3 + 2, y1 + 3, GUI.getTxtColor(), false);
-		context.text(TR, HARVEST, x4 + 2, y3 + 2, GUI.getTxtColor(), false);
-		context.text(TR, REPLANT, x6 + 2, y3 + 2, GUI.getTxtColor(), false);
+		context.drawString(TR, name, x3 + 2, y1 + 3, GUI.getTxtColor(), false);
+		context.drawString(TR, HARVEST, x4 + 2, y3 + 2, GUI.getTxtColor(),
+			false);
+		context.drawString(TR, REPLANT, x6 + 2, y3 + 2, GUI.getTxtColor(),
+			false);
 	}
 	
 	private int getFillColor(boolean hovering)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -16,18 +16,15 @@ import java.nio.file.StandardCopyOption;
 
 import org.lwjgl.glfw.GLFW;
 
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.Util;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.input.KeyEvent;
-import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.util.CommonColors;
 import net.minecraft.util.FormattedCharSequence;
-import net.minecraft.util.Util;
 import net.wurstclient.WurstClient;
 import net.wurstclient.altmanager.AltRenderer;
 import net.wurstclient.altmanager.NameGenerator;
@@ -68,8 +65,12 @@ public abstract class AltEditorScreen extends Screen
 		passwordBox = new EditBox(font, width / 2 - 100, 100, 200, 20,
 			Component.literal(""));
 		passwordBox.setValue(getDefaultPassword());
-		passwordBox.addFormatter((text, startIndex) -> FormattedCharSequence
-			.forward("*".repeat(text.length()), Style.EMPTY));
+		passwordBox.setFormatter((text, int_1) -> {
+			String stars = "";
+			for(int i = 0; i < text.length(); i++)
+				stars += "*";
+			return FormattedCharSequence.forward(stars, Style.EMPTY);
+		});
 		passwordBox.setMaxLength(256);
 		addWidget(passwordBox);
 		
@@ -198,36 +199,38 @@ public abstract class AltEditorScreen extends Screen
 	}
 	
 	@Override
-	public boolean keyPressed(KeyEvent context)
+	public boolean keyPressed(int keyCode, int scanCode, int int_3)
 	{
-		if(context.key() == GLFW.GLFW_KEY_ENTER)
-			doneButton.onPress(context);
+		if(keyCode == GLFW.GLFW_KEY_ENTER)
+			doneButton.onPress();
 		
-		return super.keyPressed(context);
+		return super.keyPressed(keyCode, scanCode, int_3);
 	}
 	
 	@Override
-	public boolean mouseClicked(MouseButtonEvent context, boolean doubleClick)
+	public boolean mouseClicked(double x, double y, int button)
 	{
-		nameOrEmailBox.mouseClicked(context, doubleClick);
-		passwordBox.mouseClicked(context, doubleClick);
+		nameOrEmailBox.mouseClicked(x, y, button);
+		passwordBox.mouseClicked(x, y, button);
 		
 		if(nameOrEmailBox.isFocused() || passwordBox.isFocused())
 			message = "";
 		
-		if(context.button() == GLFW.GLFW_MOUSE_BUTTON_4)
+		if(button == GLFW.GLFW_MOUSE_BUTTON_4)
 		{
 			onClose();
 			return true;
 		}
 		
-		return super.mouseClicked(context, doubleClick);
+		return super.mouseClicked(x, y, button);
 	}
 	
 	@Override
-	public void extractRenderState(GuiGraphicsExtractor context, int mouseX,
-		int mouseY, float partialTicks)
+	public void render(GuiGraphics context, int mouseX, int mouseY,
+		float partialTicks)
 	{
+		renderBackground(context, mouseX, mouseY, partialTicks);
+		
 		// skin preview
 		AltRenderer.drawAltBack(context, nameOrEmailBox.getValue(),
 			(width / 2 - 100) / 2 - 64, height / 2 - 128, 128, 256);
@@ -237,24 +240,23 @@ public abstract class AltEditorScreen extends Screen
 		String accountType = getPassword().isEmpty() ? "cracked" : "premium";
 		
 		// text
-		context.text(font, "Name (for cracked alts), or", width / 2 - 100, 37,
-			CommonColors.LIGHT_GRAY);
-		context.text(font, "E-Mail (for premium alts)", width / 2 - 100, 47,
-			CommonColors.LIGHT_GRAY);
-		context.text(font, "Password (for premium alts)", width / 2 - 100, 87,
-			CommonColors.LIGHT_GRAY);
-		context.text(font, "Account type: " + accountType, width / 2 - 100, 127,
-			CommonColors.LIGHT_GRAY);
+		context.drawString(font, "Name (for cracked alts), or", width / 2 - 100,
+			37, 10526880);
+		context.drawString(font, "E-Mail (for premium alts)", width / 2 - 100,
+			47, 10526880);
+		context.drawString(font, "Password (for premium alts)", width / 2 - 100,
+			87, 10526880);
+		context.drawString(font, "Account type: " + accountType,
+			width / 2 - 100, 127, 10526880);
 		
 		String[] lines = message.split("\n");
 		for(int i = 0; i < lines.length; i++)
-			context.centeredText(font, lines[i], width / 2, 142 + 10 * i,
-				CommonColors.WHITE);
+			context.drawCenteredString(font, lines[i], width / 2, 142 + 10 * i,
+				16777215);
 		
 		// text boxes
-		nameOrEmailBox.extractRenderState(context, mouseX, mouseY,
-			partialTicks);
-		passwordBox.extractRenderState(context, mouseX, mouseY, partialTicks);
+		nameOrEmailBox.render(context, mouseX, mouseY, partialTicks);
+		passwordBox.render(context, mouseX, mouseY, partialTicks);
 		
 		// red flash for errors
 		if(errorTimer > 0)
@@ -266,7 +268,7 @@ public abstract class AltEditorScreen extends Screen
 		}
 		
 		for(Renderable drawable : renderables)
-			drawable.extractRenderState(context, mouseX, mouseY, partialTicks);
+			drawable.render(context, mouseX, mouseY, partialTicks);
 	}
 	
 	@Override

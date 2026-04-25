@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.world.inventory.ContainerInput;
+import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.wurstclient.Category;
 import net.wurstclient.SearchTags;
@@ -87,8 +87,7 @@ public final class AutoStealHack extends Hack
 				if(MC.screen == null)
 					break;
 				
-				screen.slotClicked(slot, slot.index, 0,
-					ContainerInput.QUICK_MOVE);
+				screen.slotClicked(slot, slot.index, 0, ClickType.QUICK_MOVE);
 				
 			}catch(InterruptedException e)
 			{
@@ -102,5 +101,5 @@ public final class AutoStealHack extends Hack
 		return buttons.isChecked();
 	}
 	
-	// See ContainerScreenMixin and ShulkerBoxScreenMixin
+	// See GenericContainerScreenMixin and ShulkerBoxScreenMixin
 }

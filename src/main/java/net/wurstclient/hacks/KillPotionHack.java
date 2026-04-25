@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -103,7 +103,7 @@ public final class KillPotionHack extends Hack
 			ItemStack stack = new ItemStack(item);
 			
 			MobEffectInstance effect =
-				new MobEffectInstance(MobEffects.INSTANT_HEALTH, 2000, 125);
+				new MobEffectInstance(MobEffects.HEAL, 2000, 125);
 			
 			PotionContents potionContents = new PotionContents(Optional.empty(),
 				Optional.empty(), List.of(effect), Optional.empty());

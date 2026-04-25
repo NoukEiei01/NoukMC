@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -7,17 +7,15 @@
  */
 package net.wurstclient.options;
 
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.CommonColors;
 import net.wurstclient.WurstClient;
 import net.wurstclient.other_features.ZoomOtf;
 import net.wurstclient.settings.CheckboxSetting;
 import net.wurstclient.settings.SliderSetting;
-import net.wurstclient.util.WurstColors;
 
 public class ZoomManagerScreen extends Screen implements PressAKeyCallback
 {
@@ -94,19 +92,20 @@ public class ZoomManagerScreen extends Screen implements PressAKeyCallback
 	}
 	
 	@Override
-	public void extractRenderState(GuiGraphicsExtractor context, int mouseX,
-		int mouseY, float partialTicks)
+	public void render(GuiGraphics context, int mouseX, int mouseY,
+		float partialTicks)
 	{
 		ZoomOtf zoom = WurstClient.INSTANCE.getOtfs().zoomOtf;
 		SliderSetting level = zoom.getLevelSetting();
 		
-		context.centeredText(font, "Zoom Manager", width / 2, 40,
-			CommonColors.WHITE);
-		context.text(font, "Zoom Level: " + level.getValueString(),
-			width / 2 - 75, height / 4 + 44, WurstColors.VERY_LIGHT_GRAY);
+		renderBackground(context, mouseX, mouseY, partialTicks);
+		context.drawCenteredString(font, "Zoom Manager", width / 2, 40,
+			0xffffff);
+		context.drawString(font, "Zoom Level: " + level.getValueString(),
+			width / 2 - 75, height / 4 + 44, 0xcccccc);
 		
 		for(Renderable drawable : renderables)
-			drawable.extractRenderState(context, mouseX, mouseY, partialTicks);
+			drawable.render(context, mouseX, mouseY, partialTicks);
 	}
 	
 	@Override

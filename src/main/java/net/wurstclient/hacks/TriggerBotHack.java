@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -17,7 +17,7 @@ import net.wurstclient.SearchTags;
 import net.wurstclient.events.HandleInputListener;
 import net.wurstclient.events.PreMotionListener;
 import net.wurstclient.hack.Hack;
-import net.wurstclient.mixinterface.IKeyMapping;
+import net.wurstclient.mixinterface.IKeyBinding;
 import net.wurstclient.settings.AttackSpeedSliderSetting;
 import net.wurstclient.settings.CheckboxSetting;
 import net.wurstclient.settings.SliderSetting;
@@ -112,7 +112,7 @@ public final class TriggerBotHack extends Hack
 	{
 		if(simulatingMouseClick)
 		{
-			IKeyMapping.get(MC.options.keyAttack).simulatePress(false);
+			IKeyBinding.get(MC.options.keyAttack).simulatePress(false);
 			simulatingMouseClick = false;
 		}
 		
@@ -126,7 +126,7 @@ public final class TriggerBotHack extends Hack
 		if(!simulatingMouseClick)
 			return;
 		
-		IKeyMapping.get(MC.options.keyAttack).simulatePress(false);
+		IKeyBinding.get(MC.options.keyAttack).simulatePress(false);
 		simulatingMouseClick = false;
 	}
 	
@@ -157,7 +157,7 @@ public final class TriggerBotHack extends Hack
 		
 		if(simulateMouseClick.isChecked())
 		{
-			IKeyMapping.get(MC.options.keyAttack).simulatePress(true);
+			IKeyBinding.get(MC.options.keyAttack).simulatePress(true);
 			simulatingMouseClick = true;
 			
 		}else
@@ -174,7 +174,7 @@ public final class TriggerBotHack extends Hack
 		if(!EntityUtils.IS_ATTACKABLE.test(entity))
 			return false;
 		
-		if(EntityUtils.distanceToHitboxSq(entity) > range.getValueSq())
+		if(MC.player.distanceToSqr(entity) > range.getValueSq())
 			return false;
 		
 		return entityFilters.testOne(entity);

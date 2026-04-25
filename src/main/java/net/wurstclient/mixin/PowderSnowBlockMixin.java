@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -26,9 +26,8 @@ public abstract class PowderSnowBlockMixin extends Block implements BucketPickup
 		super(settings);
 	}
 	
-	@Inject(
+	@Inject(at = @At("HEAD"),
 		method = "canEntityWalkOnPowderSnow(Lnet/minecraft/world/entity/Entity;)Z",
-		at = @At("HEAD"),
 		cancellable = true)
 	private static void onCanWalkOnPowderSnow(Entity entity,
 		CallbackInfoReturnable<Boolean> cir)

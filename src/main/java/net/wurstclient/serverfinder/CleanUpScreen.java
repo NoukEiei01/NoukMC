@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -15,16 +15,13 @@ import org.lwjgl.glfw.GLFW;
 
 import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.minecraft.SharedConstants;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.multiplayer.JoinMultiplayerScreen;
 import net.minecraft.client.gui.screens.multiplayer.ServerSelectionList;
-import net.minecraft.client.input.InputWithModifiers;
-import net.minecraft.client.input.KeyEvent;
-import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.CommonColors;
@@ -170,7 +167,7 @@ public class CleanUpScreen extends Screen
 	private boolean isSameProtocol(ServerData server)
 	{
 		return server.protocol == SharedConstants.getCurrentVersion()
-			.protocolVersion();
+			.getProtocolVersion();
 	}
 	
 	private boolean isFailedPing(ServerData server)
@@ -193,46 +190,47 @@ public class CleanUpScreen extends Screen
 	}
 	
 	@Override
-	public boolean keyPressed(KeyEvent context)
+	public boolean keyPressed(int keyCode, int scanCode, int int_3)
 	{
-		if(context.key() == GLFW.GLFW_KEY_ENTER)
-			cleanUpButton.onPress(context);
+		if(keyCode == GLFW.GLFW_KEY_ENTER)
+			cleanUpButton.onPress();
 		
-		return super.keyPressed(context);
+		return super.keyPressed(keyCode, scanCode, int_3);
 	}
 	
 	@Override
-	public boolean mouseClicked(MouseButtonEvent context, boolean doubleClick)
+	public boolean mouseClicked(double mouseX, double mouseY, int button)
 	{
-		if(context.button() == GLFW.GLFW_MOUSE_BUTTON_4)
+		if(button == GLFW.GLFW_MOUSE_BUTTON_4)
 		{
 			onClose();
 			return true;
 		}
 		
-		return super.mouseClicked(context, doubleClick);
+		return super.mouseClicked(mouseX, mouseY, button);
 	}
 	
 	@Override
-	public void extractRenderState(GuiGraphicsExtractor context, int mouseX,
-		int mouseY, float partialTicks)
+	public void render(GuiGraphics context, int mouseX, int mouseY,
+		float partialTicks)
 	{
-		context.centeredText(font, "Clean Up", width / 2, 20,
+		renderBackground(context, mouseX, mouseY, partialTicks);
+		context.drawCenteredString(font, "Clean Up", width / 2, 20,
 			CommonColors.WHITE);
-		context.centeredText(font,
+		context.drawCenteredString(font,
 			"Please select the servers you want to remove:", width / 2, 36,
 			CommonColors.LIGHT_GRAY);
 		
 		for(Renderable drawable : renderables)
-			drawable.extractRenderState(context, mouseX, mouseY, partialTicks);
+			drawable.render(context, mouseX, mouseY, partialTicks);
 		
 		renderButtonTooltip(context, mouseX, mouseY);
 	}
 	
-	private void renderButtonTooltip(GuiGraphicsExtractor context, int mouseX,
+	private void renderButtonTooltip(GuiGraphics context, int mouseX,
 		int mouseY)
 	{
-		for(AbstractWidget button : Screens.getWidgets(this))
+		for(AbstractWidget button : Screens.getButtons(this))
 		{
 			if(!button.isHoveredOrFocused()
 				|| !(button instanceof CleanUpButton))
@@ -243,8 +241,8 @@ public class CleanUpScreen extends Screen
 			if(cuButton.tooltip.isEmpty())
 				continue;
 			
-			context.setComponentTooltipForNextFrame(font, cuButton.tooltip,
-				mouseX, mouseY);
+			context.renderComponentTooltip(font, cuButton.tooltip, mouseX,
+				mouseY);
 			break;
 		}
 	}
@@ -258,14 +256,12 @@ public class CleanUpScreen extends Screen
 	private final class CleanUpButton extends Button
 	{
 		private final Supplier<String> messageSupplier;
-		private final List<net.minecraft.network.chat.Component> tooltip;
+		private final List<Component> tooltip;
 		
 		public CleanUpButton(int x, int y, Supplier<String> messageSupplier,
 			String tooltip, OnPress pressAction)
 		{
-			super(x, y, 200, 20,
-				net.minecraft.network.chat.Component
-					.literal(messageSupplier.get()),
+			super(x, y, 200, 20, Component.literal(messageSupplier.get()),
 				pressAction, Button.DEFAULT_NARRATION);
 			this.messageSupplier = messageSupplier;
 			
@@ -275,31 +271,19 @@ public class CleanUpScreen extends Screen
 			{
 				String[] lines = tooltip.split("\n");
 				
-				net.minecraft.network.chat.Component[] lines2 =
-					new net.minecraft.network.chat.Component[lines.length];
+				Component[] lines2 = new Component[lines.length];
 				for(int i = 0; i < lines.length; i++)
-					lines2[i] =
-						net.minecraft.network.chat.Component.literal(lines[i]);
+					lines2[i] = Component.literal(lines[i]);
 				
 				this.tooltip = Arrays.asList(lines2);
 			}
 		}
 		
 		@Override
-		public void onPress(InputWithModifiers context)
+		public void onPress()
 		{
-			super.onPress(context);
-			setMessage(net.minecraft.network.chat.Component
-				.literal(messageSupplier.get()));
-		}
-		
-		@Override
-		protected void extractContents(GuiGraphicsExtractor drawContext, int i,
-			int j, float f)
-		{
-			extractDefaultSprite(drawContext);
-			extractDefaultLabel(drawContext.textRendererForWidget(this,
-				GuiGraphicsExtractor.HoveredTextEffects.NONE));
+			super.onPress();
+			setMessage(Component.literal(messageSupplier.get()));
 		}
 	}
 }

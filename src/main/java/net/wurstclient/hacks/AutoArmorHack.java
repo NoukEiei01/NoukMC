@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -103,8 +103,8 @@ public final class AutoArmorHack extends Hack
 		LocalPlayer player = MC.player;
 		Inventory inventory = player.getInventory();
 		
-		if(!swapWhileMoving.isChecked()
-			&& player.input.getMoveVector().length() > 1e-5F)
+		if(!swapWhileMoving.isChecked() && (player.input.forwardImpulse != 0
+			|| player.input.leftImpulse != 0))
 			return;
 		
 		// store slots and values of best armor pieces

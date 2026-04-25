@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -132,7 +132,7 @@ public final class FightBotHack extends Hack
 		stream = entityFilters.applyTo(stream);
 		
 		Entity entity = stream
-			.min(Comparator.comparingDouble(EntityUtils::distanceToHitboxSq))
+			.min(Comparator.comparingDouble(e -> MC.player.distanceToSqr(e)))
 			.orElse(null);
 		if(entity == null)
 			return;
@@ -208,7 +208,7 @@ public final class FightBotHack extends Hack
 			return;
 		
 		// check range
-		if(EntityUtils.distanceToHitboxSq(entity) > range.getValueSq())
+		if(MC.player.distanceToSqr(entity) > Math.pow(range.getValue(), 2))
 			return;
 		
 		// attack entity

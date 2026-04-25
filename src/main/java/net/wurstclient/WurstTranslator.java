@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -25,7 +25,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.ClientLanguage;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.locale.Language;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.repository.KnownPack;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -187,13 +187,14 @@ public class WurstTranslator implements ResourceManagerReloadListener
 		for(String langCode : langCodes)
 		{
 			String langFilePath = "translations/" + langCode + ".json";
-			Identifier langId =
-				Identifier.fromNamespaceAndPath("wurst", langFilePath);
+			ResourceLocation langId =
+				ResourceLocation.fromNamespaceAndPath("wurst", langFilePath);
 			
 			// IMPORTANT: Exceptions thrown by Language.loadFromJson() must
 			// be caught to prevent mod detection vulnerabilities using
 			// intentionally corrupted resource packs.
 			for(Resource resource : manager.getResourceStack(langId))
+			{
 				try(InputStream stream = resource.open())
 				{
 					if(isBuiltInWurstResourcePack(resource))
@@ -212,6 +213,7 @@ public class WurstTranslator implements ResourceManagerReloadListener
 							+ langCode);
 					e.printStackTrace();
 				}
+			}
 		}
 	}
 	
@@ -230,11 +232,8 @@ public class WurstTranslator implements ResourceManagerReloadListener
 			.flatMap(Resource::knownPackInfo).orElse(null);
 		if(knownPack == null)
 			return false;
-			
-		// Note: Namespace can be "fabric" or "vanilla" depending on
-		// Fabric API version (changed in 0.139.3+1.21.11).
-		return ("fabric".equals(knownPack.namespace())
-			|| "vanilla".equals(knownPack.namespace()))
+		
+		return "fabric".equals(knownPack.namespace())
 			&& "wurst".equals(knownPack.id());
 	}
 }

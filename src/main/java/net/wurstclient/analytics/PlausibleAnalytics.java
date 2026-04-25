@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLevelEvents;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientWorldEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.fabricmc.loader.api.Version;
@@ -80,7 +80,7 @@ public final class PlausibleAnalytics
 		Thread.ofPlatform().daemon().name("Plausible")
 			.start(this::runBackgroundLoop);
 		
-		ClientLevelEvents.AFTER_CLIENT_LEVEL_CHANGE
+		ClientWorldEvents.AFTER_CLIENT_WORLD_CHANGE
 			.register(this::onWorldChange);
 	}
 	

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -29,7 +29,7 @@ import net.wurstclient.events.RenderListener;
 import net.wurstclient.events.UpdateListener;
 import net.wurstclient.hack.Hack;
 import net.wurstclient.hacks.nukers.CommonNukerSettings;
-import net.wurstclient.mixinterface.IKeyMapping;
+import net.wurstclient.mixinterface.IKeyBinding;
 import net.wurstclient.settings.SliderSetting;
 import net.wurstclient.settings.SliderSetting.ValueDisplay;
 import net.wurstclient.settings.SwingHandSetting;
@@ -97,7 +97,7 @@ public final class NukerLegitHack extends Hack
 		EVENTS.remove(RenderListener.class, this);
 		
 		// resets
-		IKeyMapping.get(MC.options.keyAttack).resetPressedState();
+		IKeyBinding.get(MC.options.keyAttack).resetPressedState();
 		MC.gameMode.stopDestroyBlock();
 		overlay.resetProgress();
 		currentBlock = null;
@@ -147,7 +147,7 @@ public final class NukerLegitHack extends Hack
 		// reset if no block was found
 		if(currentBlock == null)
 		{
-			IKeyMapping.get(MC.options.keyAttack).resetPressedState();
+			IKeyBinding.get(MC.options.keyAttack).resetPressedState();
 			overlay.resetProgress();
 		}
 		
@@ -188,7 +188,7 @@ public final class NukerLegitHack extends Hack
 		
 		if(im.continueDestroyBlock(pos, side))
 		{
-			MC.level.addBreakingBlockEffect(pos, side);
+			MC.particleEngine.crack(pos, side);
 			swingHand.swing(InteractionHand.MAIN_HAND);
 			MC.options.keyAttack.setDown(true);
 		}

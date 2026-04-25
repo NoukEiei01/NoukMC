@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -21,9 +21,8 @@ import net.wurstclient.WurstClient;
 public abstract class LanguageManagerMixin
 	implements ResourceManagerReloadListener
 {
-	@Inject(
-		method = "onResourceManagerReload(Lnet/minecraft/server/packs/resources/ResourceManager;)V",
-		at = @At("HEAD"))
+	@Inject(at = @At("HEAD"),
+		method = "onResourceManagerReload(Lnet/minecraft/server/packs/resources/ResourceManager;)V")
 	private void onReload(ResourceManager manager, CallbackInfo ci)
 	{
 		// Using a mixin for this because WurstClient.initialize() runs too

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -19,7 +19,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.wurstclient.command.CmdError;
@@ -36,7 +36,7 @@ public final class ModifyCmd extends Command
 		super("modify", "Allows you to modify component data of items.",
 			".modify set <type> <value>", ".modify remove <type>",
 			"Use $ for colors, use $$ for $.", "", "Example:",
-			".modify set custom_name {\"text\":\"$cRed Name\"}",
+			".modify set custom_name \"\\\"$cRed Name\\\"\"",
 			"(changes the item's name to \u00a7cRed Name\u00a7r)");
 	}
 	
@@ -50,8 +50,8 @@ public final class ModifyCmd extends Command
 			throw new CmdSyntaxError();
 		
 		Inventory inventory = player.getInventory();
-		int slot = inventory.getSelectedSlot();
-		ItemStack stack = inventory.getSelectedItem();
+		int slot = inventory.selected;
+		ItemStack stack = inventory.getSelected();
 		if(stack == null)
 			throw new CmdError("You must hold an item in your main hand.");
 		
@@ -106,7 +106,7 @@ public final class ModifyCmd extends Command
 		throws CmdError
 	{
 		DataComponentType<?> type = BuiltInRegistries.DATA_COMPONENT_TYPE
-			.getValue(Identifier.tryParse(typeName));
+			.getValue(ResourceLocation.tryParse(typeName));
 		
 		if(type == null)
 			throw new CmdError(

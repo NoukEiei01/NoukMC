@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -95,7 +95,7 @@ public enum MicrosoftLoginManager
 		Pattern.compile("\"urlPost\":\"([^\"]+)");
 	
 	private static final Pattern AUTHCODE_REGEX =
-		Pattern.compile("[?&]code=([^&]+)");
+		Pattern.compile("[?&]code=([\\w\\.-]+)");
 	
 	public static void login(String email, String password)
 		throws LoginException
@@ -103,7 +103,8 @@ public enum MicrosoftLoginManager
 		MinecraftProfile mcProfile = getAccount(email, password);
 		
 		User session = new User(mcProfile.getName(), mcProfile.getUUID(),
-			mcProfile.getAccessToken(), Optional.empty(), Optional.empty());
+			mcProfile.getAccessToken(), Optional.empty(), Optional.empty(),
+			User.Type.MSA);
 		
 		WurstClient.IMC.setWurstSession(session);
 	}

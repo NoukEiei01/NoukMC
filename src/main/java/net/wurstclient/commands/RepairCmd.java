@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -35,7 +35,7 @@ public final class RepairCmd extends Command
 		if(!player.getAbilities().instabuild)
 			throw new CmdError("Creative mode only.");
 		
-		int slot = player.getInventory().getSelectedSlot();
+		int slot = player.getInventory().selected;
 		ItemStack stack = getHeldStack(player);
 		stack.setDamageValue(0);
 		InventoryUtils.setCreativeStack(slot, stack);
@@ -45,7 +45,7 @@ public final class RepairCmd extends Command
 	
 	private ItemStack getHeldStack(LocalPlayer player) throws CmdError
 	{
-		ItemStack stack = player.getInventory().getSelectedItem();
+		ItemStack stack = player.getInventory().getSelected();
 		
 		if(stack.isEmpty())
 			throw new CmdError("You need an item in your hand.");

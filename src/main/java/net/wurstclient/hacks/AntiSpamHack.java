@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -9,9 +9,9 @@ package net.wurstclient.hacks;
 
 import java.util.List;
 
+import net.minecraft.client.GuiMessage;
 import net.minecraft.client.gui.components.ChatComponent;
 import net.minecraft.client.gui.components.ComponentRenderUtils;
-import net.minecraft.client.multiplayer.chat.GuiMessage;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
@@ -50,9 +50,8 @@ public final class AntiSpamHack extends Hack implements ChatInputListener
 		if(chatLines.isEmpty())
 			return;
 		
-		int maxTextLength =
-			Mth.floor(ChatComponent.getWidth(MC.options.chatWidth().get())
-				/ MC.options.chatScale().get());
+		ChatComponent chat = MC.gui.getChat();
+		int maxTextLength = Mth.floor(chat.getWidth() / chat.getScale());
 		List<FormattedCharSequence> newLines = ComponentRenderUtils
 			.wrapComponents(event.getComponent(), maxTextLength, MC.font);
 		

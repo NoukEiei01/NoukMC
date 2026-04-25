@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -10,11 +10,11 @@ package net.wurstclient.commands;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import net.minecraft.IdentifierException;
+import net.minecraft.ResourceLocationException;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
@@ -47,7 +47,7 @@ public final class PotionCmd extends Command
 		if(!MC.player.getAbilities().instabuild)
 			throw new CmdError("Creative mode only.");
 		
-		ItemStack stack = MC.player.getInventory().getSelectedItem();
+		ItemStack stack = MC.player.getInventory().getSelected();
 		if(!(stack.getItem() instanceof PotionItem))
 			throw new CmdError("You must hold a potion in your main hand.");
 		
@@ -137,10 +137,10 @@ public final class PotionCmd extends Command
 		else
 			try
 			{
-				Identifier identifier = Identifier.parse(input);
+				ResourceLocation identifier = ResourceLocation.parse(input);
 				effect = BuiltInRegistries.MOB_EFFECT.getValue(identifier);
 				
-			}catch(IdentifierException e)
+			}catch(ResourceLocationException e)
 			{
 				throw new CmdSyntaxError("Invalid effect: " + input);
 			}

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -15,7 +15,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.AirBlock;
 import net.minecraft.world.level.block.Block;
 import net.wurstclient.WurstClient;
@@ -119,7 +119,7 @@ public final class BlockSetting extends Setting
 		{
 			String rawName = JsonUtils.getAsString(json);
 			
-			Identifier id = Identifier.tryParse(rawName);
+			ResourceLocation id = ResourceLocation.tryParse(rawName);
 			if(id == null)
 				throw new JsonException("Discarding Block \"" + rawName
 					+ "\" as it is not a valid identifier");

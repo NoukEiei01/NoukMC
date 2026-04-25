@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -165,7 +165,7 @@ public final class InstaBuildHack extends Hack
 	private void buildInstantly()
 	{
 		Inventory inventory = MC.player.getInventory();
-		int oldSlot = inventory.getSelectedSlot();
+		int oldSlot = inventory.selected;
 		
 		for(Map.Entry<BlockPos, Item> entry : remainingBlocks.entrySet())
 		{
@@ -176,8 +176,7 @@ public final class InstaBuildHack extends Hack
 				continue;
 			
 			BlockPlacingParams params = BlockPlacer.getBlockPlacingParams(pos);
-			if(params == null || params.distanceSq() > range.getValueSq()
-				|| params.requiresSneaking())
+			if(params == null || params.distanceSq() > range.getValueSq())
 				continue;
 			
 			if(useSavedBlocks.isChecked() && item != Items.AIR
@@ -188,7 +187,7 @@ public final class InstaBuildHack extends Hack
 				SwingHand.OFF);
 		}
 		
-		inventory.setSelectedSlot(oldSlot);
+		inventory.setSelectedHotbarSlot(oldSlot);
 		remainingBlocks.clear();
 	}
 	
@@ -203,7 +202,7 @@ public final class InstaBuildHack extends Hack
 		Inventory inventory = MC.player.getInventory();
 		int slot = inventory.getFreeSlot();
 		if(!Inventory.isHotbarSlot(slot))
-			slot = inventory.getSelectedSlot();
+			slot = inventory.selected;
 		
 		ItemStack stack = new ItemStack(item);
 		InventoryUtils.setCreativeStack(slot, stack);

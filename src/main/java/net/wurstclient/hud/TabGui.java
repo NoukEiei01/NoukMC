@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -10,12 +10,13 @@ package net.wurstclient.hud;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-import org.joml.Matrix3x2fStack;
 import org.lwjgl.glfw.GLFW;
+
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.wurstclient.Category;
 import net.wurstclient.Feature;
 import net.wurstclient.WurstClient;
@@ -117,15 +118,14 @@ public final class TabGui implements KeyPressListener
 			}
 	}
 	
-	public void render(GuiGraphicsExtractor context, float partialTicks)
+	public void render(GuiGraphics context, float partialTicks)
 	{
 		if(tabGuiOtf.isHidden())
 			return;
 		
-		Matrix3x2fStack matrixStack = context.pose();
-		matrixStack.pushMatrix();
-		matrixStack.translate(2, 23);
-		context.guiRenderState.up();
+		PoseStack matrixStack = context.pose();
+		matrixStack.pushPose();
+		matrixStack.translate(2, 23, 100);
 		
 		drawBox(context, 0, 0, width, height);
 		context.enableScissor(0, 0, width, height);
@@ -133,14 +133,13 @@ public final class TabGui implements KeyPressListener
 		int textY = 1;
 		int txtColor = WURST.getGui().getTxtColor();
 		Font tr = MC.font;
-		context.guiRenderState.up();
 		for(int i = 0; i < tabs.size(); i++)
 		{
 			String tabName = tabs.get(i).name;
 			if(i == selected)
 				tabName = (tabOpened ? "<" : ">") + tabName;
 			
-			context.text(tr, tabName, 2, textY, txtColor, false);
+			context.drawString(tr, tabName, 2, textY, txtColor, false);
 			textY += 10;
 		}
 		
@@ -150,14 +149,13 @@ public final class TabGui implements KeyPressListener
 		{
 			Tab tab = tabs.get(selected);
 			
-			matrixStack.pushMatrix();
-			matrixStack.translate(width + 2, 0);
+			matrixStack.pushPose();
+			matrixStack.translate(width + 2, 0, 0);
 			
 			drawBox(context, 0, 0, tab.width, tab.height);
 			context.enableScissor(0, 0, tab.width, tab.height);
 			
 			int tabTextY = 1;
-			context.guiRenderState.up();
 			for(int i = 0; i < tab.features.size(); i++)
 			{
 				Feature feature = tab.features.get(i);
@@ -169,19 +167,18 @@ public final class TabGui implements KeyPressListener
 				if(i == tab.selected)
 					fName = ">" + fName;
 				
-				context.text(tr, fName, 2, tabTextY, txtColor, false);
+				context.drawString(tr, fName, 2, tabTextY, txtColor, false);
 				tabTextY += 10;
 			}
 			
 			context.disableScissor();
-			matrixStack.popMatrix();
+			matrixStack.popPose();
 		}
 		
-		matrixStack.popMatrix();
+		matrixStack.popPose();
 	}
 	
-	private void drawBox(GuiGraphicsExtractor context, int x1, int y1, int x2,
-		int y2)
+	private void drawBox(GuiGraphics context, int x1, int y1, int x2, int y2)
 	{
 		ClickGui gui = WURST.getGui();
 		int bgColor =

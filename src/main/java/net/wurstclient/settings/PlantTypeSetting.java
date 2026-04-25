@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -27,8 +27,7 @@ import net.wurstclient.util.text.WText;
 
 public final class PlantTypeSetting extends Setting
 {
-	private final Item iconItem;
-	private ItemStack icon;
+	private final ItemStack icon;
 	private boolean harvest;
 	private final boolean harvestByDefault;
 	private boolean replant;
@@ -38,7 +37,7 @@ public final class PlantTypeSetting extends Setting
 		boolean harvest, boolean replant)
 	{
 		super(name, description);
-		this.iconItem = icon;
+		this.icon = new ItemStack(icon);
 		this.harvest = harvest;
 		harvestByDefault = harvest;
 		this.replant = replant;
@@ -59,8 +58,6 @@ public final class PlantTypeSetting extends Setting
 	
 	public ItemStack getIcon()
 	{
-		if(icon == null)
-			icon = new ItemStack(iconItem);
 		return icon;
 	}
 	

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -16,7 +16,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.wurstclient.WurstClient;
-import net.wurstclient.mixinterface.IMultiPlayerGameMode;
+import net.wurstclient.mixinterface.IClientPlayerInteractionManager;
 import net.wurstclient.mixinterface.IMinecraftClient;
 
 public enum InventoryUtils
@@ -207,7 +207,7 @@ public enum InventoryUtils
 	public static boolean selectItem(int slot)
 	{
 		Inventory inventory = MC.player.getInventory();
-		IMultiPlayerGameMode im = IMC.getInteractionManager();
+		IClientPlayerInteractionManager im = IMC.getInteractionManager();
 		
 		// if the slot is negative, abort and return false
 		if(slot < 0)
@@ -215,15 +215,14 @@ public enum InventoryUtils
 		
 		// if the item is already in the hotbar, just select it
 		if(slot < 9)
-			inventory.setSelectedSlot(slot);
+			inventory.selected = slot;
 		// if there is an empty slot in the hotbar, shift-click the item there
 		// it will be selected in the next tick
 		else if(inventory.getFreeSlot() > -1 && inventory.getFreeSlot() < 9)
 			im.windowClick_QUICK_MOVE(toNetworkSlot(slot));
 		// otherwise, swap with the currently selected item
 		else
-			im.windowClick_SWAP(toNetworkSlot(slot),
-				inventory.getSelectedSlot());
+			im.windowClick_SWAP(toNetworkSlot(slot), inventory.selected);
 		
 		return true;
 	}

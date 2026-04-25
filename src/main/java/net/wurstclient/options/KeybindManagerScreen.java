@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -13,19 +13,16 @@ import org.lwjgl.glfw.GLFW;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ObjectSelectionList;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.input.KeyEvent;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.CommonColors;
 import net.wurstclient.WurstClient;
 import net.wurstclient.keybinds.Keybind;
 import net.wurstclient.keybinds.KeybindList;
-import net.wurstclient.util.WurstColors;
 
 public final class KeybindManagerScreen extends Screen
 {
@@ -105,30 +102,30 @@ public final class KeybindManagerScreen extends Screen
 	}
 	
 	@Override
-	public boolean keyPressed(KeyEvent context)
+	public boolean keyPressed(int keyCode, int scanCode, int modifiers)
 	{
-		switch(context.key())
+		switch(keyCode)
 		{
 			case GLFW.GLFW_KEY_ENTER:
 			if(editButton.active)
-				editButton.onPress(context);
+				editButton.onPress();
 			else
-				addButton.onPress(context);
+				addButton.onPress();
 			break;
 			
 			case GLFW.GLFW_KEY_DELETE:
-			removeButton.onPress(context);
+			removeButton.onPress();
 			break;
 			
 			case GLFW.GLFW_KEY_ESCAPE:
-			backButton.onPress(context);
+			backButton.onPress();
 			break;
 			
 			default:
 			break;
 		}
 		
-		return super.keyPressed(context);
+		return super.keyPressed(keyCode, scanCode, modifiers);
 	}
 	
 	@Override
@@ -140,20 +137,21 @@ public final class KeybindManagerScreen extends Screen
 	}
 	
 	@Override
-	public void extractRenderState(GuiGraphicsExtractor context, int mouseX,
-		int mouseY, float partialTicks)
+	public void render(GuiGraphics context, int mouseX, int mouseY,
+		float partialTicks)
 	{
-		listGui.extractRenderState(context, mouseX, mouseY, partialTicks);
+		renderBackground(context, mouseX, mouseY, partialTicks);
+		listGui.render(context, mouseX, mouseY, partialTicks);
 		
-		context.centeredText(font, "Keybind Manager", width / 2, 8,
-			CommonColors.WHITE);
+		context.drawCenteredString(font, "Keybind Manager", width / 2, 8,
+			0xFFFFFF);
 		
 		int count = WurstClient.INSTANCE.getKeybinds().getAllKeybinds().size();
-		context.centeredText(font, "Keybinds: " + count, width / 2, 20,
-			CommonColors.WHITE);
+		context.drawCenteredString(font, "Keybinds: " + count, width / 2, 20,
+			0xFFFFFF);
 		
 		for(Renderable drawable : renderables)
-			drawable.extractRenderState(context, mouseX, mouseY, partialTicks);
+			drawable.render(context, mouseX, mouseY, partialTicks);
 	}
 	
 	@Override
@@ -180,21 +178,18 @@ public final class KeybindManagerScreen extends Screen
 		}
 		
 		@Override
-		public void extractContent(GuiGraphicsExtractor context, int mouseX,
-			int mouseY, boolean hovered, float tickDelta)
+		public void render(GuiGraphics context, int index, int y, int x,
+			int entryWidth, int entryHeight, int mouseX, int mouseY,
+			boolean hovered, float tickDelta)
 		{
-			int x = getContentX();
-			int y = getContentY();
-			
 			Font tr = minecraft.font;
 			
-			String keyText = "Key: " + Keybind.getDisplayKey(keybind.getKey());
-			context.text(tr, keyText, x + 3, y + 3, WurstColors.VERY_LIGHT_GRAY,
-				false);
+			String keyText =
+				"Key: " + keybind.getKey().replace("key.keyboard.", "");
+			context.drawString(tr, keyText, x + 3, y + 3, 0xA0A0A0, false);
 			
 			String cmdText = "Commands: " + keybind.getCommands();
-			context.text(tr, cmdText, x + 3, y + 15, CommonColors.LIGHT_GRAY,
-				false);
+			context.drawString(tr, cmdText, x + 3, y + 15, 0xA0A0A0, false);
 		}
 	}
 	
@@ -203,7 +198,7 @@ public final class KeybindManagerScreen extends Screen
 	{
 		public ListGui(Minecraft mc, KeybindManagerScreen screen)
 		{
-			super(mc, screen.width, screen.height - 96, 36, 30);
+			super(mc, screen.width, screen.height - 96, 36, 30, 0);
 			
 			WurstClient.INSTANCE.getKeybinds().getAllKeybinds().stream()
 				.map(KeybindManagerScreen.Entry::new).forEach(this::addEntry);

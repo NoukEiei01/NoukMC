@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -13,20 +13,19 @@ import java.util.ArrayList;
 
 import org.lwjgl.glfw.GLFW;
 
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.Util;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.multiplayer.JoinMultiplayerScreen;
 import net.minecraft.client.gui.screens.multiplayer.ServerSelectionList;
-import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.ServerData.Type;
 import net.minecraft.client.multiplayer.ServerList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.CommonColors;
-import net.minecraft.util.Util;
 import net.wurstclient.util.MathUtils;
 
 public class ServerFinderScreen extends Screen
@@ -206,50 +205,53 @@ public class ServerFinderScreen extends Screen
 	}
 	
 	@Override
-	public boolean mouseClicked(MouseButtonEvent context, boolean doubleClick)
+	public boolean mouseClicked(double mouseX, double mouseY, int button)
 	{
-		if(context.button() == GLFW.GLFW_MOUSE_BUTTON_4)
+		if(button == GLFW.GLFW_MOUSE_BUTTON_4)
 		{
 			onClose();
 			return true;
 		}
 		
-		return super.mouseClicked(context, doubleClick);
+		return super.mouseClicked(mouseX, mouseY, button);
 	}
 	
 	@Override
-	public void extractRenderState(GuiGraphicsExtractor context, int mouseX,
-		int mouseY, float partialTicks)
+	public void render(GuiGraphics context, int mouseX, int mouseY,
+		float partialTicks)
 	{
-		context.centeredText(font, "Server Finder", width / 2, 20,
+		renderBackground(context, mouseX, mouseY, partialTicks);
+		
+		context.drawCenteredString(font, "Server Finder", width / 2, 20,
 			CommonColors.WHITE);
-		context.centeredText(font,
+		context.drawCenteredString(font,
 			"This will search for servers with similar IPs", width / 2, 40,
 			CommonColors.LIGHT_GRAY);
-		context.centeredText(font, "to the IP you type into the field below.",
-			width / 2, 50, CommonColors.LIGHT_GRAY);
-		context.centeredText(font,
+		context.drawCenteredString(font,
+			"to the IP you type into the field below.", width / 2, 50,
+			CommonColors.LIGHT_GRAY);
+		context.drawCenteredString(font,
 			"The servers it finds will be added to your server list.",
 			width / 2, 60, CommonColors.LIGHT_GRAY);
 		
-		context.text(font, "Server address:", width / 2 - 100, height / 4 + 24,
-			CommonColors.LIGHT_GRAY);
-		ipBox.extractRenderState(context, mouseX, mouseY, partialTicks);
+		context.drawString(font, "Server address:", width / 2 - 100,
+			height / 4 + 24, CommonColors.LIGHT_GRAY);
+		ipBox.render(context, mouseX, mouseY, partialTicks);
 		
-		context.text(font, "Max. threads:", width / 2 - 100, height / 4 + 60,
-			CommonColors.LIGHT_GRAY);
-		maxThreadsBox.extractRenderState(context, mouseX, mouseY, partialTicks);
+		context.drawString(font, "Max. threads:", width / 2 - 100,
+			height / 4 + 60, CommonColors.LIGHT_GRAY);
+		maxThreadsBox.render(context, mouseX, mouseY, partialTicks);
 		
-		context.centeredText(font, state.toString(), width / 2, height / 4 + 73,
-			CommonColors.LIGHT_GRAY);
+		context.drawCenteredString(font, state.toString(), width / 2,
+			height / 4 + 73, CommonColors.LIGHT_GRAY);
 		
-		context.text(font, "Checked: " + checked + " / 1792", width / 2 - 100,
-			height / 4 + 84, CommonColors.LIGHT_GRAY);
-		context.text(font, "Working: " + working, width / 2 - 100,
+		context.drawString(font, "Checked: " + checked + " / 1792",
+			width / 2 - 100, height / 4 + 84, CommonColors.LIGHT_GRAY);
+		context.drawString(font, "Working: " + working, width / 2 - 100,
 			height / 4 + 94, CommonColors.LIGHT_GRAY);
 		
 		for(Renderable drawable : renderables)
-			drawable.extractRenderState(context, mouseX, mouseY, partialTicks);
+			drawable.render(context, mouseX, mouseY, partialTicks);
 	}
 	
 	@Override

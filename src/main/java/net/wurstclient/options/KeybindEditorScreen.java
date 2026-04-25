@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -7,17 +7,13 @@
  */
 package net.wurstclient.options;
 
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.CommonColors;
 import net.wurstclient.WurstClient;
-import net.wurstclient.keybinds.Keybind;
-import net.wurstclient.util.WurstColors;
 
 public final class KeybindEditorScreen extends Screen
 	implements PressAKeyCallback
@@ -88,29 +84,31 @@ public final class KeybindEditorScreen extends Screen
 	}
 	
 	@Override
-	public boolean mouseClicked(MouseButtonEvent context, boolean doubleClick)
+	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton)
 	{
-		commandField.mouseClicked(context, doubleClick);
-		return super.mouseClicked(context, doubleClick);
+		commandField.mouseClicked(mouseX, mouseY, mouseButton);
+		return super.mouseClicked(mouseX, mouseY, mouseButton);
 	}
 	
 	@Override
-	public void extractRenderState(GuiGraphicsExtractor context, int mouseX,
-		int mouseY, float partialTicks)
+	public void render(GuiGraphics context, int mouseX, int mouseY,
+		float partialTicks)
 	{
-		context.centeredText(font,
+		renderBackground(context, mouseX, mouseY, partialTicks);
+		
+		context.drawCenteredString(font,
 			(oldKey != null ? "Edit" : "Add") + " Keybind", width / 2, 20,
-			CommonColors.WHITE);
+			0xffffff);
 		
-		context.text(font, "Key: " + Keybind.getDisplayKey(key),
-			width / 2 - 100, 47, WurstColors.VERY_LIGHT_GRAY);
-		context.text(font, "Commands (separated by ';')", width / 2 - 100, 87,
-			WurstColors.VERY_LIGHT_GRAY);
+		context.drawString(font, "Key: " + key.replace("key.keyboard.", ""),
+			width / 2 - 100, 47, 0xa0a0a0);
+		context.drawString(font, "Commands (separated by ';')", width / 2 - 100,
+			87, 0xa0a0a0);
 		
-		commandField.extractRenderState(context, mouseX, mouseY, partialTicks);
+		commandField.render(context, mouseX, mouseY, partialTicks);
 		
 		for(Renderable drawable : renderables)
-			drawable.extractRenderState(context, mouseX, mouseY, partialTicks);
+			drawable.render(context, mouseX, mouseY, partialTicks);
 	}
 	
 	@Override

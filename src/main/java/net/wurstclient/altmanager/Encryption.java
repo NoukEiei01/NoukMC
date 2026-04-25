@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -41,7 +41,7 @@ import com.google.gson.JsonParser;
 import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.ReportedException;
-import net.minecraft.util.Util;
+import net.minecraft.Util;
 import net.wurstclient.util.json.JsonException;
 import net.wurstclient.util.json.JsonUtils;
 import net.wurstclient.util.json.WsonArray;
@@ -180,7 +180,7 @@ public final class Encryption
 	
 	public JsonElement parseFile(Path path) throws IOException, JsonException
 	{
-		try(BufferedReader _ = Files.newBufferedReader(path))
+		try(BufferedReader reader = Files.newBufferedReader(path))
 		{
 			return JsonParser.parseString(loadEncryptedFile(path));
 			

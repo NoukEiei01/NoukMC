@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -10,15 +10,13 @@ package net.wurstclient.clickgui.components;
 import org.lwjgl.glfw.GLFW;
 
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.wurstclient.clickgui.ClickGui;
 import net.wurstclient.clickgui.Component;
 import net.wurstclient.clickgui.screens.EditColorScreen;
 import net.wurstclient.settings.ColorSetting;
 import net.wurstclient.util.ColorUtils;
 import net.wurstclient.util.RenderUtils;
-import net.wurstclient.util.text.WText;
 
 public final class ColorComponent extends Component
 {
@@ -36,8 +34,7 @@ public final class ColorComponent extends Component
 	}
 	
 	@Override
-	public void handleMouseClick(double mouseX, double mouseY, int mouseButton,
-		MouseButtonEvent context)
+	public void handleMouseClick(double mouseX, double mouseY, int mouseButton)
 	{
 		if(mouseY < getY() + TEXT_HEIGHT)
 			return;
@@ -55,7 +52,7 @@ public final class ColorComponent extends Component
 	}
 	
 	@Override
-	public void render(GuiGraphicsExtractor context, int mouseX, int mouseY,
+	public void render(GuiGraphics context, int mouseX, int mouseY,
 		float partialTicks)
 	{
 		int x1 = getX();
@@ -89,21 +86,18 @@ public final class ColorComponent extends Component
 		String value = ColorUtils.toHex(setting.getColor());
 		int valueWidth = TR.width(value);
 		int txtColor = GUI.getTxtColor();
-		context.guiRenderState.up();
-		context.text(TR, name, x1, y1 + 2, txtColor, false);
-		context.text(TR, value, x2 - valueWidth, y1 + 2, txtColor, false);
+		context.drawString(TR, name, x1, y1 + 2, txtColor, false);
+		context.drawString(TR, value, x2 - valueWidth, y1 + 2, txtColor, false);
 	}
 	
 	private String getColorTooltip()
 	{
-		return WText.literal("\u00a7cR:\u00a7r" + setting.getRed())
-			.append(WText.literal(" \u00a7aG:\u00a7r" + setting.getGreen()))
-			.append(WText.literal(" \u00a79B:\u00a7r" + setting.getBlue()))
-			.append(WText.literal("\n\n"))
-			.append(WText.translated("gui.wurst.generic.left_click_to_edit"))
-			.append(WText.literal("\n"))
-			.append(WText.translated("gui.wurst.generic.right_click_to_reset"))
-			.toString();
+		String tooltip = "\u00a7cR:\u00a7r" + setting.getRed();
+		tooltip += " \u00a7aG:\u00a7r" + setting.getGreen();
+		tooltip += " \u00a79B:\u00a7r" + setting.getBlue();
+		tooltip += "\n\n\u00a7e[left-click]\u00a7r to edit";
+		tooltip += "\n\u00a7e[right-click]\u00a7r to reset";
+		return tooltip;
 	}
 	
 	@Override

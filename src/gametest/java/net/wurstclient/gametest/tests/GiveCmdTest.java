@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -7,33 +7,31 @@
  */
 package net.wurstclient.gametest.tests;
 
+import static net.wurstclient.gametest.WurstClientTestHelper.*;
+
 import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
 import net.minecraft.world.item.Items;
-import net.wurstclient.gametest.SingleplayerTest;
+import net.wurstclient.gametest.WurstTest;
 
-public final class GiveCmdTest extends SingleplayerTest
+public enum GiveCmdTest
 {
-	public GiveCmdTest(ClientGameTestContext context,
+	;
+	
+	public static void testGiveCmd(ClientGameTestContext context,
 		TestSingleplayerContext spContext)
 	{
-		super(context, spContext);
-	}
-	
-	@Override
-	protected void runImpl()
-	{
-		logger.info("Testing .give command");
+		WurstTest.LOGGER.info("Testing .give command");
 		
-		runWurstCommand("give diamond");
+		runWurstCommand(context, "give diamond");
+		clearToasts(context);
 		context.waitTick();
-		clearToasts();
-		assertOneItemInSlot(0, Items.DIAMOND);
+		assertOneItemInSlot(context, 0, Items.DIAMOND);
 		context.takeScreenshot("give_command_result");
 		
 		// Clean up
-		clearInventory();
-		clearChat();
-		waitForHandSwing();
+		clearInventory(context);
+		clearChat(context);
+		context.waitTicks(7);
 	}
 }

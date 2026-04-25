@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.AbstractContainerEventHandler;
 import net.minecraft.client.gui.screens.Screen;
@@ -22,12 +22,10 @@ import net.wurstclient.WurstClient;
 public abstract class ScreenMixin extends AbstractContainerEventHandler
 	implements Renderable
 {
-	@Inject(
-		method = "extractTransparentBackground(Lnet/minecraft/client/gui/GuiGraphicsExtractor;)V",
-		at = @At("HEAD"),
+	@Inject(at = @At("HEAD"),
+		method = "renderTransparentBackground(Lnet/minecraft/client/gui/GuiGraphics;)V",
 		cancellable = true)
-	public void onRenderInGameBackground(GuiGraphicsExtractor context,
-		CallbackInfo ci)
+	public void onRenderInGameBackground(GuiGraphics context, CallbackInfo ci)
 	{
 		if(WurstClient.INSTANCE.getHax().noBackgroundHack
 			.shouldCancelBackground((Screen)(Object)this))

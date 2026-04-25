@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -12,8 +12,7 @@ import java.util.Objects;
 import org.lwjgl.glfw.GLFW;
 
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Style;
 import net.wurstclient.clickgui.ClickGui;
 import net.wurstclient.clickgui.Component;
@@ -38,8 +37,7 @@ public final class TextFieldEditButton extends Component
 	}
 	
 	@Override
-	public void handleMouseClick(double mouseX, double mouseY, int mouseButton,
-		MouseButtonEvent context)
+	public void handleMouseClick(double mouseX, double mouseY, int mouseButton)
 	{
 		if(mouseY < getY() + TEXT_HEIGHT)
 			return;
@@ -57,7 +55,7 @@ public final class TextFieldEditButton extends Component
 	}
 	
 	@Override
-	public void render(GuiGraphicsExtractor context, int mouseX, int mouseY,
+	public void render(GuiGraphics context, int mouseX, int mouseY,
 		float partialTicks)
 	{
 		float[] bgColor = GUI.getBgColor();
@@ -89,15 +87,14 @@ public final class TextFieldEditButton extends Component
 		
 		// text
 		int txtColor = GUI.getTxtColor();
-		context.guiRenderState.up();
-		context.text(TR, setting.getName(), x1, y1 + 2, txtColor, false);
+		context.drawString(TR, setting.getName(), x1, y1 + 2, txtColor, false);
 		String value = setting.getValue();
 		int maxWidth = getWidth() - TR.width("...") - 2;
-		int maxLength =
-			TR.getSplitter().plainIndexAtWidth(value, maxWidth, Style.EMPTY);
+		int maxLength = TR.getSplitter().formattedIndexByWidth(value, maxWidth,
+			Style.EMPTY);
 		if(maxLength < value.length())
 			value = value.substring(0, maxLength) + "...";
-		context.text(TR, value, x1 + 2, y3 + 2, txtColor, false);
+		context.drawString(TR, value, x1 + 2, y3 + 2, txtColor, false);
 	}
 	
 	@Override

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -7,20 +7,21 @@
  */
 package net.wurstclient.mixin;
 
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 
 import net.minecraft.commands.CommandSource;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.entity.EntityAccess;
+import net.minecraft.world.phys.Vec3;
 import net.wurstclient.WurstClient;
 import net.wurstclient.event.EventManager;
 import net.wurstclient.events.VelocityFromEntityCollisionListener.VelocityFromEntityCollisionEvent;
@@ -32,26 +33,24 @@ public abstract class EntityMixin
 {
 	/**
 	 * This mixin makes the VelocityFromFluidEvent work, which is used by
-	 * AntiWaterPush.
+	 * AntiWaterPush. It's set to require 0 because it doesn't work in Forge,
+	 * when using Sinytra Connector.
 	 */
-	@WrapOperation(method = "updateFluidInteraction()Z",
-		at = @At(value = "INVOKE",
-			target = "Lnet/minecraft/world/entity/Entity;isPushedByFluid()Z",
-			ordinal = 0))
-	private boolean wrapUpdateFluidInteractionIsPushedByFluid(Entity instance,
-		Operation<Boolean> original)
+	@WrapWithCondition(at = @At(value = "INVOKE",
+		target = "Lnet/minecraft/world/entity/Entity;setDeltaMovement(Lnet/minecraft/world/phys/Vec3;)V",
+		opcode = Opcodes.INVOKEVIRTUAL,
+		ordinal = 0),
+		method = "updateFluidHeightAndDoFluidPushing(Lnet/minecraft/tags/TagKey;D)Z",
+		require = 0)
+	private boolean shouldSetVelocity(Entity instance, Vec3 velocity)
 	{
 		VelocityFromFluidEvent event = new VelocityFromFluidEvent(instance);
 		EventManager.fire(event);
-		
-		if(event.isCancelled())
-			return false;
-		
-		return original.call(instance);
+		return !event.isCancelled();
 	}
 	
-	@Inject(method = "push(Lnet/minecraft/world/entity/Entity;)V",
-		at = @At("HEAD"),
+	@Inject(at = @At("HEAD"),
+		method = "push(Lnet/minecraft/world/entity/Entity;)V",
 		cancellable = true)
 	private void onPushAwayFrom(Entity entity, CallbackInfo ci)
 	{
@@ -66,9 +65,8 @@ public abstract class EntityMixin
 	/**
 	 * Makes invisible entities render as ghosts if TrueSight is enabled.
 	 */
-	@Inject(
+	@Inject(at = @At("RETURN"),
 		method = "isInvisibleTo(Lnet/minecraft/world/entity/player/Player;)Z",
-		at = @At("RETURN"),
 		cancellable = true)
 	private void onIsInvisibleTo(Player player,
 		CallbackInfoReturnable<Boolean> cir)

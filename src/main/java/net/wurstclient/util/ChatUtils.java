@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -10,9 +10,9 @@ package net.wurstclient.util;
 import java.util.List;
 import java.util.StringJoiner;
 
+import net.minecraft.client.GuiMessage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ChatComponent;
-import net.minecraft.client.multiplayer.chat.GuiMessage;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
@@ -49,7 +49,7 @@ public enum ChatUtils
 		
 		ChatComponent chatHud = MC.gui.getChat();
 		MutableComponent prefix = Component.literal(WURST_PREFIX);
-		chatHud.addClientSystemMessage(prefix.append(component));
+		chatHud.addMessage(prefix.append(component));
 	}
 	
 	public static void message(String message)

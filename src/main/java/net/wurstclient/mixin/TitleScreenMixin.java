@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -38,14 +38,14 @@ public abstract class TitleScreenMixin extends Screen
 	 * Adds the AltManager button to the title screen. This mixin must not
 	 * run in demo mode, as the Realms button doesn't exist there.
 	 */
-	@Inject(method = "createNormalMenuOptions(II)I", at = @At("RETURN"))
+	@Inject(at = @At("RETURN"), method = "createNormalMenuOptions(II)I")
 	private void onAddNormalWidgets(int y, int spacingY,
 		CallbackInfoReturnable<Integer> cir)
 	{
 		if(!WurstClient.INSTANCE.isEnabled())
 			return;
 		
-		for(AbstractWidget button : Screens.getWidgets(this))
+		for(AbstractWidget button : Screens.getButtons(this))
 		{
 			if(!button.getMessage().getString().equals(I18n.get("menu.online")))
 				continue;
@@ -68,7 +68,7 @@ public abstract class TitleScreenMixin extends Screen
 			.bounds(width / 2 + 2, realmsButton.getY(), 98, 20).build());
 	}
 	
-	@Inject(method = "tick()V", at = @At("RETURN"))
+	@Inject(at = @At("RETURN"), method = "tick()V")
 	private void onTick(CallbackInfo ci)
 	{
 		if(realmsButton == null || altsButton == null)
@@ -83,9 +83,8 @@ public abstract class TitleScreenMixin extends Screen
 	 * Stops the multiplayer button being grayed out if the user's Microsoft
 	 * account is parental-control'd or banned from online play.
 	 */
-	@Inject(
+	@Inject(at = @At("HEAD"),
 		method = "getMultiplayerDisabledReason()Lnet/minecraft/network/chat/Component;",
-		at = @At("HEAD"),
 		cancellable = true)
 	private void onGetMultiplayerDisabledText(
 		CallbackInfoReturnable<Component> cir)

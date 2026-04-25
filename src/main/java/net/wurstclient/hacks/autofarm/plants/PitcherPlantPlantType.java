@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -11,6 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.PitcherCropBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
@@ -24,7 +25,7 @@ public final class PitcherPlantPlantType extends AutoFarmPlantType
 	public final boolean isReplantingSpot(BlockPos pos, BlockState state)
 	{
 		return state.is(Blocks.PITCHER_CROP)
-			&& state.getValue(PitcherCropBlock.HALF) == DoubleBlockHalf.LOWER
+			&& state.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.LOWER
 			&& hasPlantingSurface(pos);
 	}
 	
@@ -51,7 +52,7 @@ public final class PitcherPlantPlantType extends AutoFarmPlantType
 	@Override
 	protected PlantTypeSetting createSetting()
 	{
-		return new PlantTypeSetting("Pitcher plants", Items.PITCHER_PLANT, true,
+		return new PlantTypeSetting("Pitcher Plants", Items.PITCHER_PLANT, true,
 			true);
 	}
 }

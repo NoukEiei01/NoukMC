@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -45,5 +45,5 @@ public final class NoShieldOverlayHack extends Hack
 			matrixStack.translate(0, -nonBlockingOffset.getValue(), 0);
 	}
 	
-	// See ItemInHandRendererMixin
+	// See HeldItemRendererMixin
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2026 Wurst-Imperium and contributors.
+ * Copyright (c) 2014-2025 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -14,6 +14,7 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
 import java.util.stream.Collectors;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexFormat.Mode;
@@ -175,14 +176,17 @@ public final class SearchHack extends Hack
 		if(vertexBuffer == null || bufferRegion == null)
 			return;
 		
+		float[] rainbow = RenderUtils.getRainbowColor();
+		RenderUtils.setShaderColor(rainbow, 0.5F);
+		
 		matrixStack.pushPose();
 		RenderUtils.applyRegionalRenderOffset(matrixStack, bufferRegion);
 		
-		float[] rainbow = RenderUtils.getRainbowColor();
-		vertexBuffer.draw(matrixStack, WurstRenderLayers.ESP_QUADS, rainbow,
-			0.5F);
+		vertexBuffer.draw(matrixStack, WurstRenderLayers.ESP_QUADS);
 		
 		matrixStack.popPose();
+		
+		RenderSystem.setShaderColor(1, 1, 1, 1);
 	}
 	
 	private void stopBuildingBuffer()
