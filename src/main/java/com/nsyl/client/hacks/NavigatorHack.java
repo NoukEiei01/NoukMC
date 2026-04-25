@@ -27,7 +27,9 @@ public final class NavigatorHack extends Hack
 	@Override
 	protected void onEnable()
 	{
-		if(!(MC.screen instanceof NavigatorMainScreen))
+		if(MC.screen instanceof NavigatorMainScreen)
+			MC.setScreen(null);
+		else
 			MC.setScreen(new NavigatorMainScreen());
 		
 		setEnabled(false);

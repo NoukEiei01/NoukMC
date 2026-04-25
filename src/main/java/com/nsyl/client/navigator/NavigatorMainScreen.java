@@ -74,12 +74,6 @@ public final class NavigatorMainScreen extends NavigatorScreen
 	@Override
 	protected void onKeyPress(int keyCode, int scanCode, int int_3)
 	{
-		if(keyCode == GLFW.GLFW_KEY_RIGHT_SHIFT)
-		{
-			NsylClient.MC.setScreen((Screen)null);
-			return;
-		}
-		
 		if(keyCode == GLFW.GLFW_KEY_ENTER)
 			leftClick(selectedFeature);
 		

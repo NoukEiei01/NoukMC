@@ -11,6 +11,9 @@ import java.awt.Rectangle;
 
 import org.joml.Matrix4f;
 
+import org.lwjgl.glfw.GLFW;
+
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
@@ -138,6 +141,12 @@ public abstract class NavigatorScreen extends Screen
 	@Override
 	public final void tick()
 	{
+		long handle = minecraft.getWindow().getWindow();
+		if(InputConstants.isKeyDown(handle, GLFW.GLFW_KEY_RIGHT_SHIFT))
+		{
+			minecraft.setScreen(null);
+			return;
+		}
 		onUpdate();
 	}
 	
