@@ -15,7 +15,7 @@ public final class NsylCapesOtf extends OtherFeature
 {
 	public NsylCapesOtf()
 	{
-		super("WurstCapes",
-			"Wurst has its own capes! Only Wurst users can see them.");
+		super("NSYLCapes",
+			"NSYL has its own capes! Only NSYL users can see them.");
 	}
 }

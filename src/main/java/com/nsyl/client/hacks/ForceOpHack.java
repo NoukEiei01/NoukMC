@@ -234,7 +234,7 @@ public final class ForceOpHack extends Hack implements ChatInputListener
 	public void onReceivedMessage(ChatInputEvent event)
 	{
 		String message = event.getComponent().getString();
-		if(message.startsWith("\u00a7c[\u00a76Wurst\u00a7c]\u00a7f "))
+		if(message.startsWith("\u00a7c[\u00a76NSYL\u00a7c]\u00a7f "))
 			return;
 		
 		String msgLowerCase = message.toLowerCase();

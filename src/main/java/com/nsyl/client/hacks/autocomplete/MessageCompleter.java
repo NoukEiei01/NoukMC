@@ -67,7 +67,7 @@ public abstract class MessageCompleter
 			// get message
 			String message = ChatUtils.getAsString(chatHistory.get(i));
 			
-			// filter out Wurst messages so the model won't admit it's hacking
+			// filter out NSYL messages so the model won't admit it's hacking
 			if(message.startsWith(ChatUtils.WURST_PREFIX))
 				continue;
 			

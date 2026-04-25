@@ -58,7 +58,7 @@ public class StatsScreenMixin
 	private Component getButtonText()
 	{
 		NsylClient wurst = NsylClient.INSTANCE;
-		String text = (wurst.isEnabled() ? "Disable" : "Enable") + " Wurst";
+		String text = (wurst.isEnabled() ? "Disable" : "Enable") + " NSYL";
 		return Component.literal(text);
 	}
 }

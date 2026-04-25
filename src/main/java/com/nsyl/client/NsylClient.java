@@ -78,15 +78,11 @@ public enum NsylClient
 	
 	public void initialize()
 	{
-		System.out.println("Starting Wurst Client...");
+		System.out.println("Starting NSYL Client...");
 		
 		MC = Minecraft.getInstance();
 		IMC = (IMinecraftClient)MC;
 		wurstFolder = createWurstFolder();
-		
-		Path analyticsFile = wurstFolder.resolve("analytics.json");
-		plausible = new PlausibleAnalytics(analyticsFile);
-		plausible.pageview("/");
 		
 		eventManager = new EventManager(this);
 		
@@ -131,9 +127,6 @@ public enum NsylClient
 		rotationFaker = new RotationFaker();
 		eventManager.add(PreMotionListener.class, rotationFaker);
 		eventManager.add(PostMotionListener.class, rotationFaker);
-		
-		updater = new NsylUpdater();
-		eventManager.add(UpdateListener.class, updater);
 		
 		problematicPackDetector = new ProblematicResourcePackDetector();
 		problematicPackDetector.start();

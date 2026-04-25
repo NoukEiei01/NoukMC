@@ -54,7 +54,7 @@ public final class NsylUpdater implements UpdateListener
 		try
 		{
 			WsonArray wson = JsonUtils.parseURLToArray(
-				"https://api.github.com/repos/Wurst-Imperium/Wurst-MCX2/releases");
+				"https://api.github.com/repos/nsyl/nsyl-client/releases");
 			
 			for(WsonObject release : wson.getAllObjects())
 			{
