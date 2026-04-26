@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleEngine;
@@ -31,10 +32,10 @@ public class ParticleEngineMixin
 	private <T extends ParticleOptions> void onCreateParticle(
 		T parameters, double x, double y, double z,
 		double velocityX, double velocityY, double velocityZ,
-		CallbackInfo ci)
+		CallbackInfoReturnable<Particle> cir)
 	{
 		if(!NsylClient.INSTANCE.getHax().noLagHack.shouldSpawnParticle())
-			ci.cancel();
+			cir.setReturnValue(null);
 	}
 	
 	/**
@@ -47,7 +48,7 @@ public class ParticleEngineMixin
 	private <T extends ParticleOptions> void onCreateWeatherParticle(
 		T parameters, double x, double y, double z,
 		double velocityX, double velocityY, double velocityZ,
-		CallbackInfo ci)
+		CallbackInfoReturnable<Particle> cir)
 	{
 		// Weather particles have near-zero velocity — covered by shouldSpawnParticle
 		// This hook is a placeholder; weather filtering is done via shouldHideWeatherParticles()
