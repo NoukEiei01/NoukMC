@@ -52,6 +52,9 @@ public final class PlayerEspHack extends Hack implements UpdateListener,
 		new FilterInvisibleSetting("Won't show invisible players.", false));
 	
 	private final ArrayList<Player> players = new ArrayList<>();
+	private final ArrayList<ColoredBox> boxes = new ArrayList<>();
+	private final ArrayList<ColoredPoint> ends = new ArrayList<>();
+	private final java.util.HashMap<Player, Integer> colorCache = new java.util.HashMap<>();
 	
 	public PlayerEspHack()
 	{
@@ -82,6 +85,7 @@ public final class PlayerEspHack extends Hack implements UpdateListener,
 	public void onUpdate()
 	{
 		players.clear();
+		colorCache.clear();
 		
 		Stream<AbstractClientPlayer> stream = MC.level.players()
 			.parallelStream().filter(e -> !e.isRemoved() && e.getHealth() > 0)
@@ -91,7 +95,10 @@ public final class PlayerEspHack extends Hack implements UpdateListener,
 		
 		stream = entityFilters.applyTo(stream);
 		
-		players.addAll(stream.collect(Collectors.toList()));
+		stream.collect(Collectors.toList()).forEach(e -> {
+			players.add(e);
+			colorCache.put(e, computeColor(e));
+		});
 	}
 	
 	@Override
@@ -109,7 +116,7 @@ public final class PlayerEspHack extends Hack implements UpdateListener,
 		{
 			double extraSize = boxSize.getExtraSize() / 2;
 			
-			ArrayList<ColoredBox> boxes = new ArrayList<>(players.size());
+			boxes.clear();
 			for(Player e : players)
 			{
 				AABB box = EntityUtils.getLerpedBox(e, partialTicks)
@@ -122,7 +129,7 @@ public final class PlayerEspHack extends Hack implements UpdateListener,
 		
 		if(style.hasLines())
 		{
-			ArrayList<ColoredPoint> ends = new ArrayList<>(players.size());
+			ends.clear();
 			for(Player e : players)
 			{
 				Vec3 point =
@@ -135,6 +142,11 @@ public final class PlayerEspHack extends Hack implements UpdateListener,
 	}
 	
 	private int getColor(Player e)
+	{
+		return colorCache.getOrDefault(e, 0x8000FF00);
+	}
+	
+	private int computeColor(Player e)
 	{
 		if(WURST.getFriends().contains(e.getName().getString()))
 			return 0x800000FF;

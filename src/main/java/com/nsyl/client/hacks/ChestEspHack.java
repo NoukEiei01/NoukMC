@@ -29,6 +29,7 @@ public class ChestEspHack extends Hack implements UpdateListener,
 {
 	private final EspStyleSetting style = new EspStyleSetting();
 	private final ChestEspGroupManager groups = new ChestEspGroupManager();
+	private int scanCooldown = 0;
 	
 	public ChestEspHack()
 	{
@@ -42,6 +43,7 @@ public class ChestEspHack extends Hack implements UpdateListener,
 	@Override
 	protected void onEnable()
 	{
+		scanCooldown = 0;
 		EVENTS.add(UpdateListener.class, this);
 		EVENTS.add(CameraTransformViewBobbingListener.class, this);
 		EVENTS.add(RenderListener.class, this);
@@ -59,6 +61,10 @@ public class ChestEspHack extends Hack implements UpdateListener,
 	@Override
 	public void onUpdate()
 	{
+		if(scanCooldown-- > 0)
+			return;
+		scanCooldown = 5; // สแกนทุก 5 tick (~250ms) แทนทุก tick
+		
 		groups.allGroups.forEach(ChestEspGroup::clear);
 		ChunkUtils.getLoadedBlockEntities().forEach(
 			be -> groups.blockGroups.forEach(group -> group.addIfMatches(be)));

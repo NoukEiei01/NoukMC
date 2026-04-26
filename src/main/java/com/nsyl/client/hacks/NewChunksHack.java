@@ -11,6 +11,8 @@ import java.awt.Color;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -84,6 +86,15 @@ public final class NewChunksHack extends Hack
 	private final NewChunksReasonsRenderer reasonsRenderer =
 		new NewChunksReasonsRenderer(drawDistance);
 	
+	// Thread pool แทน new Thread() ทุกครั้ง
+	private final ExecutorService chunkCheckPool =
+		Executors.newFixedThreadPool(2, r -> {
+			Thread t = new Thread(r, "NewChunks-Checker");
+			t.setDaemon(true);
+			t.setPriority(Thread.MIN_PRIORITY);
+			return t;
+		});
+	
 	private RegionPos lastRegion;
 	private DimensionType lastDimension;
 	
@@ -140,8 +151,15 @@ public final class NewChunksHack extends Hack
 			oldChunks.size());
 	}
 	
+	private boolean bufferDirty = true;
+	
 	@Override
 	public void onUpdate()
+	{
+		bufferDirty = true;
+	}
+	
+	private void rebuildBuffers()
 	{
 		renderer.closeBuffers();
 		
@@ -171,6 +189,8 @@ public final class NewChunksHack extends Hack
 					buffer -> reasonsRenderer.buildBuffer(buffer,
 						List.copyOf(oldChunkReasons)));
 		}
+		
+		bufferDirty = false;
 	}
 	
 	public void afterLoadChunk(int x, int z)
@@ -179,8 +199,7 @@ public final class NewChunksHack extends Hack
 			return;
 		
 		LevelChunk chunk = MC.level.getChunk(x, z);
-		new Thread(() -> checkLoadedChunk(chunk), "NewChunks " + chunk.getPos())
-			.start();
+		chunkCheckPool.submit(() -> checkLoadedChunk(chunk));
 	}
 	
 	private void checkLoadedChunk(LevelChunk chunk)
@@ -252,9 +271,12 @@ public final class NewChunksHack extends Hack
 		RegionPos region = RenderUtils.getCameraRegion();
 		if(!region.equals(lastRegion))
 		{
-			onUpdate();
+			bufferDirty = true;
 			lastRegion = region;
 		}
+		
+		if(bufferDirty)
+			rebuildBuffers();
 		
 		renderer.render(matrixStack, partialTicks);
 	}

@@ -69,6 +69,9 @@ public final class MobEspHack extends Hack implements UpdateListener,
 			FilterArmorStandsSetting.genericVision(true));
 	
 	private final ArrayList<LivingEntity> mobs = new ArrayList<>();
+	private final ArrayList<ColoredBox> boxes = new ArrayList<>();
+	private final ArrayList<ColoredPoint> ends = new ArrayList<>();
+	private final java.util.HashMap<LivingEntity, Integer> colorCache = new java.util.HashMap<>();
 	
 	public MobEspHack()
 	{
@@ -99,6 +102,7 @@ public final class MobEspHack extends Hack implements UpdateListener,
 	public void onUpdate()
 	{
 		mobs.clear();
+		colorCache.clear();
 		
 		Stream<LivingEntity> stream = StreamSupport
 			.stream(MC.level.entitiesForRendering().spliterator(), false)
@@ -108,7 +112,10 @@ public final class MobEspHack extends Hack implements UpdateListener,
 		
 		stream = entityFilters.applyTo(stream);
 		
-		mobs.addAll(stream.collect(Collectors.toList()));
+		stream.collect(Collectors.toList()).forEach(e -> {
+			mobs.add(e);
+			colorCache.put(e, computeColor(e));
+		});
 	}
 	
 	@Override
@@ -126,7 +133,7 @@ public final class MobEspHack extends Hack implements UpdateListener,
 		{
 			double extraSize = boxSize.getExtraSize() / 2;
 			
-			ArrayList<ColoredBox> boxes = new ArrayList<>(mobs.size());
+			boxes.clear();
 			for(LivingEntity e : mobs)
 			{
 				AABB box = EntityUtils.getLerpedBox(e, partialTicks)
@@ -139,7 +146,7 @@ public final class MobEspHack extends Hack implements UpdateListener,
 		
 		if(style.hasLines())
 		{
-			ArrayList<ColoredPoint> ends = new ArrayList<>(mobs.size());
+			ends.clear();
 			for(LivingEntity e : mobs)
 			{
 				Vec3 point =
@@ -152,6 +159,11 @@ public final class MobEspHack extends Hack implements UpdateListener,
 	}
 	
 	private int getColor(LivingEntity e)
+	{
+		return colorCache.getOrDefault(e, 0x8000FF00);
+	}
+	
+	private int computeColor(LivingEntity e)
 	{
 		float f = MC.player.distanceTo(e) / 20F;
 		float r = Mth.clamp(2 - f, 0, 1);

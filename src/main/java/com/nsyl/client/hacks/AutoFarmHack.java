@@ -148,19 +148,19 @@ public final class AutoFarmHack extends Hack
 					.comparingDouble(pos -> pos.distToCenterSqr(eyesVec)))
 				.toList();
 			
-			blocksToReplant =
-				BlockUtils.getAllInBoxStream(eyesBlock, blockRange)
-					.filter(pos -> pos.distToCenterSqr(eyesVec) <= rangeSq)
-					.filter(pos -> BlockUtils.getState(pos).canBeReplaced())
-					.filter(pos -> {
-						AutoFarmPlantType plantType = replantingSpots.get(pos);
-						return plantType != null
-							&& plantType.isReplantingEnabled()
-							&& plantType.hasPlantingSurface(pos);
-					})
-					.sorted(Comparator
-						.comparingDouble(pos -> pos.distToCenterSqr(eyesVec)))
-					.toList();
+			// ใช้ nonEmptyBlocks เดิมแทนการเรียก getAllInBoxStream ซ้ำ
+			// กรอง canBeReplaced() จาก block ที่ถูก scan ไปแล้ว
+			blocksToReplant = nonEmptyBlocks.stream()
+				.filter(pos -> BlockUtils.getState(pos).canBeReplaced())
+				.filter(pos -> {
+					AutoFarmPlantType plantType = replantingSpots.get(pos);
+					return plantType != null
+						&& plantType.isReplantingEnabled()
+						&& plantType.hasPlantingSurface(pos);
+				})
+				.sorted(Comparator
+					.comparingDouble(pos -> pos.distToCenterSqr(eyesVec)))
+				.toList();
 		}
 		
 		boolean replanting = replant(blocksToReplant);
