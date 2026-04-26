@@ -115,7 +115,7 @@ def getGhVersion() {
 
 def getChangelogLink(String platform, String from) {
 	def versionSlug = getGhVersion().substring(1).replace(".", "-")
-	def shortURL = "https://www.wurstclient.net/updates/wurst-${versionSlug}/"
+	def shortURL = "https://nsylclient.net/updates/wurst-${versionSlug}/"
 	def query = []
 	if (platform != "GitHub")
 		query.add("mc=${project.minecraft_version}")
@@ -123,11 +123,11 @@ def getChangelogLink(String platform, String from) {
 	query.add("utm_medium=" + project.archives_base_name.replace("-", "+"))
 	def fullURL = shortURL + (query.isEmpty() ? "" : "?" + query.join("&"))
 	def encodedURL = java.net.URLEncoder.encode(fullURL, "UTF-8")
-	return "[${shortURL}](https://go.wimods.net/from/${from}?to=${encodedURL})"
+	return "[${shortURL}](https://go.nsylmods.net/from/${from}?to=${encodedURL})"
 }
 
 def getChangelogImage(String from) {
-	return "![](https://img.wimods.net/${from})"
+	return "![](https://img.nsylmods.net/${from})"
 }
 
 def getChangelog(String platform, String from) {

@@ -9,7 +9,7 @@
   ],
   "contact": {},
   "license": "GPL-3.0-or-later",
-  "icon": "assets/wurst/icon.png",
+  "icon": "assets/nsyl/icon.png",
   "environment": "client",
   "entrypoints": {
     "main": [

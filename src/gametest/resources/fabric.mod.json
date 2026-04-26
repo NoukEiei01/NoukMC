@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "id": "wurst_testmod",
+  "id": "nsyl_testmod",
   "version": "1.0.0",
-  "name": "Wurst Test Mod",
+  "name": "NSYL Test Mod",
   "license": "GPL-3.0-or-later",
   "environment": "client",
   "entrypoints": {
     "fabric-client-gametest": [
-      "com.nsyl.client.gametest.WurstTest"
+      "com.nsyl.client.gametest.NsylTest"
     ]
   },
   "mixins": [
