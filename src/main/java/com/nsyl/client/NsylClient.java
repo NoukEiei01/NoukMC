@@ -131,9 +131,16 @@ public enum NsylClient
 		problematicPackDetector = new ProblematicResourcePackDetector();
 		problematicPackDetector.start();
 		
+		updater = new NsylUpdater();
+		eventManager.add(UpdateListener.class, updater);
+		
 		Path altsFile = wurstFolder.resolve("alts.encrypted_json");
 		Path encFolder = Encryption.chooseEncryptionFolder();
 		altManager = new AltManager(altsFile, encFolder);
+		
+		// initialize plausible analytics (ต้อง init หลังสุดเพราะต้องการ wurstFolder)
+		Path analyticsFile = wurstFolder.resolve("analytics.json");
+		plausible = new PlausibleAnalytics(analyticsFile);
 	}
 	
 	private Path createWurstFolder()

@@ -70,7 +70,8 @@ public class NsylOptionsScreen extends Screen
 				.setChecked(!middleClickFriends.isChecked()));
 		
 		new WurstOptionsButton(-154, 48,
-			() -> "Count Users: " + (plausible.isEnabled() ? "ON" : "OFF"),
+			() -> "Count Users: "
+				+ (plausible != null && plausible.isEnabled() ? "ON" : "OFF"),
 			"Counts how many people are using Wurst and which versions are the"
 				+ " most popular. This data helps me to decide when I can stop"
 				+ " supporting old versions.\n\n"
@@ -78,7 +79,10 @@ public class NsylOptionsScreen extends Screen
 				+ " stay in the EU (I'm self-hosting Plausible in Germany)."
 				+ " There are no cookies or persistent identifiers"
 				+ " (see plausible.io).",
-			b -> plausible.setEnabled(!plausible.isEnabled()));
+			b -> {
+				if(plausible != null)
+					plausible.setEnabled(!plausible.isEnabled());
+			});
 		
 		new WurstOptionsButton(-154, 72,
 			() -> "Spoof Vanilla: "

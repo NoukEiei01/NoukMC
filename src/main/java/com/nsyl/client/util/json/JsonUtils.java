@@ -137,13 +137,34 @@ public enum JsonUtils
 	public static void toJson(JsonElement json, Path path)
 		throws IOException, JsonException
 	{
-		try(BufferedWriter writer = Files.newBufferedWriter(path))
+		// เขียนลง temp file ก่อน แล้ว atomic rename
+		// ป้องกัน file corruption กรณี interrupt ระหว่างเขียน (เช่นบน Android)
+		Path tempPath = path.resolveSibling(path.getFileName() + ".tmp");
+		try
 		{
-			JsonUtils.PRETTY_GSON.toJson(json, writer);
+			try(BufferedWriter writer = Files.newBufferedWriter(tempPath))
+			{
+				JsonUtils.PRETTY_GSON.toJson(json, writer);
+				
+			}catch(JsonParseException e)
+			{
+				throw new JsonException(e);
+			}
 			
-		}catch(JsonParseException e)
+			// atomic replace: ย้าย temp ไปแทนที่ไฟล์จริง
+			Files.move(tempPath,
+				path,
+				java.nio.file.StandardCopyOption.REPLACE_EXISTING,
+				java.nio.file.StandardCopyOption.ATOMIC_MOVE);
+			
+		}finally
 		{
-			throw new JsonException(e);
+			// ลบ temp file ถ้ายังเหลืออยู่ (กรณี rename ล้มเหลว)
+			try
+			{
+				Files.deleteIfExists(tempPath);
+			}catch(IOException ignored)
+			{}
 		}
 	}
 	
