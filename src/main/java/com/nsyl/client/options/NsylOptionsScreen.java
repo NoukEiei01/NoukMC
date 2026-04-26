@@ -57,10 +57,10 @@ public class NsylOptionsScreen extends Screen
 		NsylClient nsyl = NsylClient.INSTANCE;
 		FriendsCmd friendsCmd = nsyl.getCmds().friendsCmd;
 		CheckboxSetting middleClickFriends = friendsCmd.getMiddleClickFriends();
-		PlausibleAnalytics plausible = CLIENT.getPlausible();
-		VanillaSpoofOtf vanillaSpoofOtf = CLIENT.getOtfs().vanillaSpoofOtf;
+		PlausibleAnalytics plausible = NsylClient.INSTANCE.getPlausible();
+		VanillaSpoofOtf vanillaSpoofOtf = NsylClient.INSTANCE.getOtfs().vanillaSpoofOtf;
 		CheckboxSetting forceEnglish =
-			CLIENT.getOtfs().translationsOtf.getForceEnglish();
+			NsylClient.INSTANCE.getOtfs().translationsOtf.getForceEnglish();
 		
 		new NsylOptionsButton(-154, 24,
 			() -> "Click Friends: "

@@ -72,9 +72,9 @@ public final class ClickGui
 			windowMap.put(category, new Window(category.getName()));
 		
 		ArrayList<Feature> features = new ArrayList<>();
-		features.addAll(CLIENT.getHax().getAllHax());
-		features.addAll(CLIENT.getCmds().getAllCmds());
-		features.addAll(CLIENT.getOtfs().getAllOtfs());
+		features.addAll(NsylClient.INSTANCE.getHax().getAllHax());
+		features.addAll(NsylClient.INSTANCE.getCmds().getAllCmds());
+		features.addAll(NsylClient.INSTANCE.getOtfs().getAllOtfs());
 		
 		for(Feature f : features)
 			if(f.getCategory() != null)
@@ -83,10 +83,10 @@ public final class ClickGui
 		windows.addAll(windowMap.values());
 		
 		Window uiSettings = new Window("UI Settings");
-		uiSettings.add(new FeatureButton(CLIENT.getOtfs().nsylLogoOtf));
-		uiSettings.add(new FeatureButton(CLIENT.getOtfs().hackListOtf));
-		uiSettings.add(new FeatureButton(CLIENT.getOtfs().keybindManagerOtf));
-		ClickGuiHack clickGuiHack = CLIENT.getHax().clickGuiHack;
+		uiSettings.add(new FeatureButton(NsylClient.INSTANCE.getOtfs().nsylLogoOtf));
+		uiSettings.add(new FeatureButton(NsylClient.INSTANCE.getOtfs().hackListOtf));
+		uiSettings.add(new FeatureButton(NsylClient.INSTANCE.getOtfs().keybindManagerOtf));
+		ClickGuiHack clickGuiHack = NsylClient.INSTANCE.getHax().clickGuiHack;
 		Stream<Setting> settings = clickGuiHack.getSettings().values().stream();
 		settings.map(Setting::getComponent).forEach(c -> uiSettings.add(c));
 		windows.add(uiSettings);
@@ -579,7 +579,7 @@ public final class ClickGui
 	
 	public void updateColors()
 	{
-		ClickGuiHack clickGui = CLIENT.getHax().clickGuiHack;
+		ClickGuiHack clickGui = NsylClient.INSTANCE.getHax().clickGuiHack;
 		
 		opacity = clickGui.getOpacity();
 		ttOpacity = clickGui.getTooltipOpacity();

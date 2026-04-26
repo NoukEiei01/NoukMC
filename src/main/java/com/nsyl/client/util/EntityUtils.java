@@ -41,7 +41,7 @@ public enum EntityUtils
 			&& (e instanceof LivingEntity && ((LivingEntity)e).getHealth() > 0
 				|| e instanceof EndCrystal || e instanceof ShulkerBullet)
 			&& e != MC.player && !(e instanceof FakePlayerEntity)
-			&& !CLIENT.getFriends().isFriend(e);
+			&& !NsylClient.INSTANCE.getFriends().isFriend(e);
 	
 	public static Stream<Animal> getValidAnimals()
 	{

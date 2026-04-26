@@ -21,7 +21,7 @@ public record PlayerAbilities(boolean invulnerable, boolean creativeFlying,
 	
 	public static PlayerAbilities get()
 	{
-		HackList hax = CLIENT.getHax();
+		HackList hax = NsylClient.INSTANCE.getHax();
 		net.minecraft.world.entity.player.Abilities mcAbilities =
 			MC.player.getAbilities();
 		

@@ -59,7 +59,7 @@ public abstract class PathProcessor
 	
 	protected final void facePosition(BlockPos pos)
 	{
-		CLIENT.getRotationFaker()
+		NsylClient.INSTANCE.getRotationFaker()
 			.faceVectorClientIgnorePitch(Vec3.atCenterOf(pos));
 	}
 	

@@ -143,7 +143,7 @@ public class NsylTranslator implements ResourceManagerReloadListener
 	
 	public boolean isForcedEnglish()
 	{
-		return CLIENT.getOtfs().translationsOtf.getForceEnglish().isChecked();
+		return NsylClient.INSTANCE.getOtfs().translationsOtf.getForceEnglish().isChecked();
 	}
 	
 	/**

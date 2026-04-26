@@ -23,7 +23,7 @@ import com.nsyl.client.util.RenderUtils;
 
 public final class FeatureButton extends Component
 {
-	private static final ClickGui GUI = CLIENT.getGui();
+	private static final ClickGui GUI = NsylClient.INSTANCE.getGui();
 	private static final Font TR = MC.font;
 	
 	private final Feature feature;
@@ -52,7 +52,7 @@ public final class FeatureButton extends Component
 			return;
 		}
 		
-		TooManyHaxHack tooManyHax = CLIENT.getHax().tooManyHaxHack;
+		TooManyHaxHack tooManyHax = NsylClient.INSTANCE.getHax().tooManyHaxHack;
 		if(tooManyHax.isEnabled() && tooManyHax.isBlocked(feature))
 		{
 			ChatUtils.error(feature.getName() + " is blocked by TooManyHax.");

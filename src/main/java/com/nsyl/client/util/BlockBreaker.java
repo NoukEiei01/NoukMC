@@ -45,7 +45,7 @@ public enum BlockBreaker
 	public static boolean breakOneBlock(BlockBreakingParams params)
 	{
 		// face block
-		CLIENT.getRotationFaker().faceVectorPacket(params.hitVec);
+		NsylClient.INSTANCE.getRotationFaker().faceVectorPacket(params.hitVec);
 		
 		// damage block
 		if(!MC.gameMode.continueDestroyBlock(params.pos, params.side))

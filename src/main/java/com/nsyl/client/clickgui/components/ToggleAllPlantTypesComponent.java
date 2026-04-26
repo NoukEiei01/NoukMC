@@ -20,7 +20,7 @@ import com.nsyl.client.util.text.WText;
 
 public final class ToggleAllPlantTypesComponent extends Component
 {
-	private static final ClickGui GUI = CLIENT.getGui();
+	private static final ClickGui GUI = NsylClient.INSTANCE.getGui();
 	private static final Font TR = MC.font;
 	private static final int BOX_SIZE = 11;
 	private static final int ICON_SIZE = 24;

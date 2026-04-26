@@ -19,7 +19,7 @@ import com.nsyl.client.util.RenderUtils;
 
 public final class FileComponent extends Component
 {
-	private static final ClickGui GUI = CLIENT.getGui();
+	private static final ClickGui GUI = NsylClient.INSTANCE.getGui();
 	private static final Font TR = MC.font;
 	
 	private final FileSetting setting;

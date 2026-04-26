@@ -46,7 +46,7 @@ public final class RadarComponent extends Component
 	{
 		// Can't make this a field because RadarComponent is initialized earlier
 		// than ClickGui.
-		ClickGui gui = CLIENT.getGui();
+		ClickGui gui = NsylClient.INSTANCE.getGui();
 		
 		int x1 = getX();
 		int x2 = x1 + getWidth();
@@ -109,7 +109,7 @@ public final class RadarComponent extends Component
 	
 	private int getEntityColor(Entity e)
 	{
-		if(CLIENT.getFriends().isFriend(e))
+		if(NsylClient.INSTANCE.getFriends().isFriend(e))
 			return 0xFF0000FF;
 		if(e instanceof Player)
 			return 0xFFFF0000;

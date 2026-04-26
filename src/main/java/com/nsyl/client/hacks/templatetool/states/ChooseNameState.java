@@ -119,7 +119,7 @@ public final class ChooseNameState extends TemplateToolState
 			else
 				try
 				{
-					Path folder = CLIENT.getHax().autoBuildHack.getFolder();
+					Path folder = NsylClient.INSTANCE.getHax().autoBuildHack.getFolder();
 					Path file = folder.resolve(nameField.getValue() + ".json");
 					hack.setFile(file.toFile());
 					

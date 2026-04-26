@@ -20,7 +20,7 @@ import com.nsyl.client.util.RenderUtils;
 
 public final class ColorComponent extends Component
 {
-	private static final ClickGui GUI = CLIENT.getGui();
+	private static final ClickGui GUI = NsylClient.INSTANCE.getGui();
 	private static final Font TR = MC.font;
 	private static final int TEXT_HEIGHT = 11;
 	

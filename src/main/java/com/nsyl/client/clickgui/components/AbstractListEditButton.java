@@ -18,7 +18,7 @@ import com.nsyl.client.util.RenderUtils;
 
 public abstract class AbstractListEditButton extends Component
 {
-	private static final ClickGui GUI = CLIENT.getGui();
+	private static final ClickGui GUI = NsylClient.INSTANCE.getGui();
 	private static final Font TR = MC.font;
 	
 	private final String buttonText = "Edit...";

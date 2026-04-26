@@ -89,10 +89,10 @@ public final class FaceTargetSetting
 		OFF("Off", v -> {}),
 		
 		SERVER("Server-side",
-			v -> CLIENT.getRotationFaker().faceVectorPacket(v)),
+			v -> NsylClient.INSTANCE.getRotationFaker().faceVectorPacket(v)),
 		
 		CLIENT("Client-side",
-			v -> CLIENT.getRotationFaker().faceVectorClient(v)),
+			v -> NsylClient.INSTANCE.getRotationFaker().faceVectorClient(v)),
 		
 		SPAM("Packet spam",
 			v -> RotationUtils.getNeededRotations(v).sendPlayerLookPacket());

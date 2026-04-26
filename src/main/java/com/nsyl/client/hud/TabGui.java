@@ -43,16 +43,16 @@ public final class TabGui implements KeyPressListener
 	
 	public TabGui()
 	{
-		CLIENT.getEventManager().add(KeyPressListener.class, this);
+		NsylClient.INSTANCE.getEventManager().add(KeyPressListener.class, this);
 		
 		LinkedHashMap<Category, Tab> tabMap = new LinkedHashMap<>();
 		for(Category category : Category.values())
 			tabMap.put(category, new Tab(category.getName()));
 		
 		ArrayList<Feature> features = new ArrayList<>();
-		features.addAll(CLIENT.getHax().getAllHax());
-		features.addAll(CLIENT.getCmds().getAllCmds());
-		features.addAll(CLIENT.getOtfs().getAllOtfs());
+		features.addAll(NsylClient.INSTANCE.getHax().getAllHax());
+		features.addAll(NsylClient.INSTANCE.getCmds().getAllCmds());
+		features.addAll(NsylClient.INSTANCE.getOtfs().getAllOtfs());
 		
 		for(Feature feature : features)
 			if(feature.getCategory() != null)
@@ -131,7 +131,7 @@ public final class TabGui implements KeyPressListener
 		context.enableScissor(0, 0, width, height);
 		
 		int textY = 1;
-		int txtColor = CLIENT.getGui().getTxtColor();
+		int txtColor = NsylClient.INSTANCE.getGui().getTxtColor();
 		Font tr = MC.font;
 		for(int i = 0; i < tabs.size(); i++)
 		{
@@ -180,7 +180,7 @@ public final class TabGui implements KeyPressListener
 	
 	private void drawBox(GuiGraphics context, int x1, int y1, int x2, int y2)
 	{
-		ClickGui gui = CLIENT.getGui();
+		ClickGui gui = NsylClient.INSTANCE.getGui();
 		int bgColor =
 			RenderUtils.toIntColor(gui.getBgColor(), gui.getOpacity());
 		
@@ -242,7 +242,7 @@ public final class TabGui implements KeyPressListener
 		{
 			Feature feature = features.get(selected);
 			
-			TooManyHaxHack tooManyHax = CLIENT.getHax().tooManyHaxHack;
+			TooManyHaxHack tooManyHax = NsylClient.INSTANCE.getHax().tooManyHaxHack;
 			if(tooManyHax.isEnabled() && tooManyHax.isBlocked(feature))
 			{
 				ChatUtils

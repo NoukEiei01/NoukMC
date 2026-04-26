@@ -74,7 +74,7 @@ public class WalkPathProcessor extends PathProcessor
 			.getHorizontalAngleToLookVec(Vec3.atCenterOf(nextPos)))) > 90)
 			return;
 		
-		if(CLIENT.getHax().jesusHack.isEnabled())
+		if(NsylClient.INSTANCE.getHax().jesusHack.isEnabled())
 		{
 			// wait for Jesus to swim up
 			if(NsylClient.MC.player.getY() < nextPos.getY()
@@ -86,7 +86,7 @@ public class WalkPathProcessor extends PathProcessor
 			if(NsylClient.MC.player.getY() - nextPos.getY() > 0.5
 				&& (NsylClient.MC.player.isInWater()
 					|| NsylClient.MC.player.isInLava()
-					|| CLIENT.getHax().jesusHack.isOverLiquid()))
+					|| NsylClient.INSTANCE.getHax().jesusHack.isOverLiquid()))
 				MC.options.keyShift.setDown(true);
 		}
 		
@@ -109,7 +109,7 @@ public class WalkPathProcessor extends PathProcessor
 				Block block = BlockUtils.getBlock(pos);
 				if(block instanceof LadderBlock || block instanceof VineBlock)
 				{
-					CLIENT.getRotationFaker().faceVectorClientIgnorePitch(
+					NsylClient.INSTANCE.getRotationFaker().faceVectorClientIgnorePitch(
 						BlockUtils.getBoundingBox(pos).getCenter());
 					
 					MC.options.keyUp.setDown(true);

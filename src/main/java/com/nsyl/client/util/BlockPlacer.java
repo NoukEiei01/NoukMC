@@ -35,7 +35,7 @@ public enum BlockPlacer
 			return false;
 		
 		// face block
-		CLIENT.getRotationFaker().faceVectorPacket(params.hitVec);
+		NsylClient.INSTANCE.getRotationFaker().faceVectorPacket(params.hitVec);
 		
 		// place block
 		IMC.getInteractionManager().rightClickBlock(params.neighbor,

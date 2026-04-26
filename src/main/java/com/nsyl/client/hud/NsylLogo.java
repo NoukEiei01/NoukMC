@@ -23,7 +23,7 @@ public final class NsylLogo
 	
 	public void render(GuiGraphics context)
 	{
-		NsylLogoOtf otf = CLIENT.getOtfs().nsylLogoOtf;
+		NsylLogoOtf otf = NsylClient.INSTANCE.getOtfs().nsylLogoOtf;
 		if(!otf.isVisible())
 			return;
 		
@@ -32,8 +32,8 @@ public final class NsylLogo
 		
 		// background
 		int bgColor;
-		if(CLIENT.getHax().rainbowUiHack.isEnabled())
-			bgColor = RenderUtils.toIntColor(CLIENT.getGui().getAcColor(), 0.5F);
+		if(NsylClient.INSTANCE.getHax().rainbowUiHack.isEnabled())
+			bgColor = RenderUtils.toIntColor(NsylClient.INSTANCE.getGui().getAcColor(), 0.5F);
 		else
 			bgColor = otf.getBackgroundColor();
 		context.fill(0, 6, tr.width(version) + 76, 17, bgColor);
@@ -51,7 +51,7 @@ public final class NsylLogo
 		String version = "NSYL Client v" + NsylClient.VERSION;
 		
 		
-		if(CLIENT.getUpdater().isOutdated())
+		if(NsylClient.INSTANCE.getUpdater().isOutdated())
 			version += " (outdated)";
 		
 		return version;
