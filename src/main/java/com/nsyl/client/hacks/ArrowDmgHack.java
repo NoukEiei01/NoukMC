@@ -27,12 +27,12 @@ import com.nsyl.client.settings.SliderSetting.ValueDisplay;
 public final class ArrowDmgHack extends Hack implements StopUsingItemListener
 {
 	private final SliderSetting strength = new SliderSetting("Strength",
-		"description.wurst.setting.arrowdmg.strength", 10, 0.1, 10, 0.1,
+		"description.nsyl.setting.arrowdmg.strength", 10, 0.1, 10, 0.1,
 		ValueDisplay.DECIMAL);
 	
 	private final CheckboxSetting yeetTridents =
 		new CheckboxSetting("Trident yeet mode",
-			"description.wurst.setting.arrowdmg.trident_yeet_mode", false);
+			"description.nsyl.setting.arrowdmg.trident_yeet_mode", false);
 	
 	public ArrowDmgHack()
 	{

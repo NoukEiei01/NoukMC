@@ -76,9 +76,9 @@ public final class FollowHack extends Hack
 	@Override
 	protected void onEnable()
 	{
-		WURST.getHax().fightBotHack.setEnabled(false);
-		WURST.getHax().protectHack.setEnabled(false);
-		WURST.getHax().tunnellerHack.setEnabled(false);
+		CLIENT.getHax().fightBotHack.setEnabled(false);
+		CLIENT.getHax().protectHack.setEnabled(false);
+		CLIENT.getHax().tunnellerHack.setEnabled(false);
 		
 		if(entity == null)
 		{
@@ -187,7 +187,7 @@ public final class FollowHack extends Hack
 			if(!pathFinder.isDone() && !pathFinder.isFailed())
 			{
 				PathProcessor.lockControls();
-				WURST.getRotationFaker()
+				CLIENT.getRotationFaker()
 					.faceVectorClient(entity.getBoundingBox().getCenter());
 				pathFinder.think();
 				pathFinder.formatPath();
@@ -214,7 +214,7 @@ public final class FollowHack extends Hack
 			// control height if flying
 			if(!MC.player.onGround()
 				&& (MC.player.getAbilities().flying
-					|| WURST.getHax().flightHack.isEnabled())
+					|| CLIENT.getHax().flightHack.isEnabled())
 				&& MC.player.distanceToSqr(entity.getX(), MC.player.getY(),
 					entity.getZ()) <= MC.player.distanceToSqr(MC.player.getX(),
 						entity.getY(), MC.player.getZ()))
@@ -230,7 +230,7 @@ public final class FollowHack extends Hack
 			}
 			
 			// follow entity
-			WURST.getRotationFaker()
+			CLIENT.getRotationFaker()
 				.faceVectorClient(entity.getBoundingBox().getCenter());
 			double distanceSq = Math.pow(distance.getValue(), 2);
 			MC.options.keyUp.setDown(MC.player.distanceToSqr(entity.getX(),
@@ -241,7 +241,7 @@ public final class FollowHack extends Hack
 	@Override
 	public void onRender(PoseStack matrixStack, float partialTicks)
 	{
-		PathCmd pathCmd = WURST.getCmds().pathCmd;
+		PathCmd pathCmd = CLIENT.getCmds().pathCmd;
 		pathFinder.renderPath(matrixStack, pathCmd.isDebugMode(),
 			pathCmd.isDepthTest());
 	}

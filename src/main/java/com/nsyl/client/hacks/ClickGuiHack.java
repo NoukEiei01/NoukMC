@@ -62,7 +62,7 @@ public final class ClickGuiHack extends Hack
 	@Override
 	protected void onEnable()
 	{
-		MC.setScreen(new ClickGuiScreen(WURST.getGui()));
+		MC.setScreen(new ClickGuiScreen(CLIENT.getGui()));
 		setEnabled(false);
 	}
 	

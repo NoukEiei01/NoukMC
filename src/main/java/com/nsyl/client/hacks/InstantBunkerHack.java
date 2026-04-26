@@ -53,7 +53,7 @@ public final class InstantBunkerHack extends Hack implements UpdateListener
 	@Override
 	protected void onEnable()
 	{
-		WURST.getHax().tunnellerHack.setEnabled(false);
+		CLIENT.getHax().tunnellerHack.setEnabled(false);
 		
 		if(!MC.player.onGround())
 		{
@@ -174,7 +174,7 @@ public final class InstantBunkerHack extends Hack implements UpdateListener
 		Vec3 hitVec = hitVecs[side.ordinal()];
 		
 		// face block
-		// WURST.getRotationFaker().faceVectorPacket(hitVec);
+		// CLIENT.getRotationFaker().faceVectorPacket(hitVec);
 		// if(RotationUtils.getAngleToLastReportedLookVec(hitVec) > 1)
 		// return;
 		

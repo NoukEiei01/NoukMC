@@ -24,19 +24,19 @@ public final class FollowFilterList extends EntityFilterList
 		ArrayList<EntityFilter> builder = new ArrayList<>();
 		
 		builder.add(new FilterPlayersSetting(
-			"description.wurst.setting.follow.filter_players", false));
+			"description.nsyl.setting.follow.filter_players", false));
 		
 		builder.add(new FilterSleepingSetting(
-			"description.wurst.setting.follow.filter_sleeping", false));
+			"description.nsyl.setting.follow.filter_sleeping", false));
 		
 		builder.add(new FilterFlyingSetting(
-			"description.wurst.setting.follow.filter_flying", 0));
+			"description.nsyl.setting.follow.filter_flying", 0));
 		
 		builder.add(new FilterHostileSetting(
 			"Won't follow hostile mobs like zombies and creepers.", true));
 		
 		builder.add(FilterNeutralSetting.onOffOnly(
-			"description.wurst.setting.follow.filter_neutral", true));
+			"description.nsyl.setting.follow.filter_neutral", true));
 		
 		builder.add(new FilterPassiveSetting(
 			"Won't follow animals like pigs and cows, ambient mobs like bats, and water mobs like fish, squid and dolphins.",
@@ -50,45 +50,45 @@ public final class FollowFilterList extends EntityFilterList
 			"Won't follow baby pigs, baby villagers, etc.", true));
 		
 		builder.add(new FilterBatsSetting(
-			"description.wurst.setting.follow.filter_bats", true));
+			"description.nsyl.setting.follow.filter_bats", true));
 		
 		builder.add(new FilterSlimesSetting("Won't follow slimes.", true));
 		
 		builder.add(new FilterPetsSetting(
-			"description.wurst.setting.follow.filter_pets", true));
+			"description.nsyl.setting.follow.filter_pets", true));
 		
 		builder.add(new FilterVillagersSetting(
-			"description.wurst.setting.follow.filter_villagers", true));
+			"description.nsyl.setting.follow.filter_villagers", true));
 		
 		builder.add(new FilterZombieVillagersSetting(
-			"description.wurst.setting.follow.filter_zombie_villagers", true));
+			"description.nsyl.setting.follow.filter_zombie_villagers", true));
 		
 		builder.add(new FilterGolemsSetting(
-			"description.wurst.setting.follow.filter_golems", true));
+			"description.nsyl.setting.follow.filter_golems", true));
 		
 		builder
 			.add(FilterPiglinsSetting.onOffOnly("Won't follow piglins.", true));
 		
 		builder.add(FilterZombiePiglinsSetting.onOffOnly(
-			"description.wurst.setting.follow.filter_zombie_piglins", true));
+			"description.nsyl.setting.follow.filter_zombie_piglins", true));
 		
 		builder.add(FilterEndermenSetting.onOffOnly(
-			"description.wurst.setting.follow.filter_endermen", true));
+			"description.nsyl.setting.follow.filter_endermen", true));
 		
 		builder.add(new FilterShulkersSetting(
-			"description.wurst.setting.follow.filter_shulkers", true));
+			"description.nsyl.setting.follow.filter_shulkers", true));
 		
 		builder.add(new FilterAllaysSetting(
-			"description.wurst.setting.follow.filter_allays", true));
+			"description.nsyl.setting.follow.filter_allays", true));
 		
 		builder.add(new FilterInvisibleSetting(
-			"description.wurst.setting.follow.filter_invisible", false));
+			"description.nsyl.setting.follow.filter_invisible", false));
 		
 		builder.add(new FilterArmorStandsSetting(
-			"description.wurst.setting.follow.filter_armor_stands", true));
+			"description.nsyl.setting.follow.filter_armor_stands", true));
 		
 		builder.add(new FilterMinecartsSetting(
-			"description.wurst.setting.follow.filter_minecarts", true));
+			"description.nsyl.setting.follow.filter_minecarts", true));
 		
 		return new FollowFilterList(builder);
 	}

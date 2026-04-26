@@ -14,13 +14,13 @@ import com.google.common.collect.Lists;
 import net.minecraft.network.chat.Component;
 
 /**
- * Allows you to build more complex text out of multiple Wurst translations and
+ * Allows you to build more complex text out of multiple NSYL translations and
  * have everything update automatically when the user's language changes.
  *
  * <p>
  * This is necessary because Minecraft's {@link Component} does not have access
  * to
- * Wurst's translations for security reasons.
+ * NSYL's translations for security reasons.
  */
 public final class WText
 {

@@ -26,7 +26,7 @@ public enum ChatUtils
 	
 	private static final Minecraft MC = NsylClient.MC;
 	
-	public static final String WURST_PREFIX =
+	public static final String NSYL_PREFIX =
 		"\u00a7c[\u00a76NSYL\u00a7c]\u00a7r ";
 	private static final String WARNING_PREFIX =
 		"\u00a7c[\u00a76\u00a7lWARNING\u00a7c]\u00a7r ";
@@ -48,7 +48,7 @@ public enum ChatUtils
 			return;
 		
 		ChatComponent chatHud = MC.gui.getChat();
-		MutableComponent prefix = Component.literal(WURST_PREFIX);
+		MutableComponent prefix = Component.literal(NSYL_PREFIX);
 		chatHud.addMessage(prefix.append(component));
 	}
 	

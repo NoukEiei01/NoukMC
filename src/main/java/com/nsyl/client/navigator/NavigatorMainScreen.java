@@ -155,8 +155,8 @@ public final class NavigatorMainScreen extends NavigatorScreen
 			return;
 		}
 		
-		NsylClient wurst = NsylClient.INSTANCE;
-		TooManyHaxHack tooManyHax = wurst.getHax().tooManyHaxHack;
+		NsylClient nsyl = NsylClient.INSTANCE;
+		TooManyHaxHack tooManyHax = nsyl.getHax().tooManyHaxHack;
 		
 		if(tooManyHax.isEnabled() && tooManyHax.isBlocked(feature))
 		{
@@ -165,7 +165,7 @@ public final class NavigatorMainScreen extends NavigatorScreen
 		}
 		
 		feature.doPrimaryAction();
-		wurst.getNavigator().addPreference(feature.getName());
+		nsyl.getNavigator().addPreference(feature.getName());
 	}
 	
 	@Override

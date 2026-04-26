@@ -137,6 +137,7 @@ public final class HackList implements UpdateListener
 	public final NoFallHack noFallHack = new NoFallHack();
 	public final NoFireOverlayHack noFireOverlayHack = new NoFireOverlayHack();
 	public final NoFogHack noFogHack = new NoFogHack();
+	public final NoLagHack noLagHack = new NoLagHack();
 	public final NoHurtcamHack noHurtcamHack = new NoHurtcamHack();
 	public final NoLevitationHack noLevitationHack = new NoLevitationHack();
 	public final NoOverlayHack noOverlayHack = new NoOverlayHack();
@@ -195,7 +196,7 @@ public final class HackList implements UpdateListener
 	
 	private final EnabledHacksFile enabledHacksFile;
 	private final Path profilesFolder =
-		NsylClient.INSTANCE.getWurstFolder().resolve("enabled hacks");
+		NsylClient.INSTANCE.getNsylFolder().resolve("enabled hacks");
 	
 	private final EventManager eventManager =
 		NsylClient.INSTANCE.getEventManager();
@@ -217,7 +218,7 @@ public final class HackList implements UpdateListener
 			
 		}catch(Exception e)
 		{
-			String message = "Initializing Wurst hacks";
+			String message = "Initializing NSYL hacks";
 			CrashReport report = CrashReport.forThrowable(e, message);
 			throw new ReportedException(report);
 		}

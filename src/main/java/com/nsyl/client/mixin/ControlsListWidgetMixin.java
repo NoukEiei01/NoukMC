@@ -25,14 +25,14 @@ import com.nsyl.client.NsylClient;
 public abstract class ControlsListWidgetMixin
 	extends ContainerObjectSelectionList<KeyBindsList.Entry>
 {
-	public ControlsListWidgetMixin(NsylClient wurst, Minecraft client,
+	public ControlsListWidgetMixin(NsylClient nsyl, Minecraft client,
 		int width, int height, int y, int itemHeight)
 	{
 		super(client, width, height, y, itemHeight);
 	}
 	
 	/**
-	 * Prevents Wurst's zoom keybind from being added to the controls list.
+	 * Prevents NSYL's zoom keybind from being added to the controls list.
 	 */
 	@WrapOperation(at = @At(value = "INVOKE",
 		target = "Lnet/minecraft/client/gui/screens/options/controls/KeyBindsList;addEntry(Lnet/minecraft/client/gui/components/AbstractSelectionList$Entry;)I",
@@ -49,7 +49,7 @@ public abstract class ControlsListWidgetMixin
 			|| !(name.getContents() instanceof TranslatableContents trContent))
 			return original.call(instance, entry);
 		
-		if(!"key.wurst.zoom".equals(trContent.getKey()))
+		if(!"key.nsyl.zoom".equals(trContent.getKey()))
 			return original.call(instance, entry);
 		
 		return 0;

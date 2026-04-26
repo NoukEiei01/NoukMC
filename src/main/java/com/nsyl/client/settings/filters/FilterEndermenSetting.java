@@ -38,14 +38,14 @@ public final class FilterEndermenSetting extends AttackDetectingEntityFilter
 	public static FilterEndermenSetting genericCombat(Mode selected)
 	{
 		return new FilterEndermenSetting(
-			"description.wurst.setting.generic.filter_endermen_combat",
+			"description.nsyl.setting.generic.filter_endermen_combat",
 			selected);
 	}
 	
 	public static FilterEndermenSetting genericVision(Mode selected)
 	{
 		return new FilterEndermenSetting(
-			"description.wurst.setting.generic.filter_endermen_vision",
+			"description.nsyl.setting.generic.filter_endermen_vision",
 			selected);
 	}
 	

@@ -49,14 +49,14 @@ public final class AddAltCmd extends Command
 		if(name.equalsIgnoreCase("Alexander01998"))
 			return;
 		
-		WURST.getAltManager().add(new CrackedAlt(name));
+		CLIENT.getAltManager().add(new CrackedAlt(name));
 		ChatUtils.message("Added 1 alt.");
 	}
 	
 	private void addAll()
 	{
 		int alts = 0;
-		AltManager altManager = WURST.getAltManager();
+		AltManager altManager = CLIENT.getAltManager();
 		String playerName = MC.getUser().getName();
 		
 		for(PlayerInfo entry : MC.player.connection.getOnlinePlayers())

@@ -118,19 +118,19 @@ public final class ProtectHack extends Hack
 	@Override
 	protected void onEnable()
 	{
-		WURST.getHax().followHack.setEnabled(false);
-		WURST.getHax().tunnellerHack.setEnabled(false);
+		CLIENT.getHax().followHack.setEnabled(false);
+		CLIENT.getHax().tunnellerHack.setEnabled(false);
 		
 		// disable other killauras
-		WURST.getHax().aimAssistHack.setEnabled(false);
-		WURST.getHax().clickAuraHack.setEnabled(false);
-		WURST.getHax().crystalAuraHack.setEnabled(false);
-		WURST.getHax().fightBotHack.setEnabled(false);
-		WURST.getHax().killauraLegitHack.setEnabled(false);
-		WURST.getHax().killauraHack.setEnabled(false);
-		WURST.getHax().multiAuraHack.setEnabled(false);
-		WURST.getHax().triggerBotHack.setEnabled(false);
-		WURST.getHax().tpAuraHack.setEnabled(false);
+		CLIENT.getHax().aimAssistHack.setEnabled(false);
+		CLIENT.getHax().clickAuraHack.setEnabled(false);
+		CLIENT.getHax().crystalAuraHack.setEnabled(false);
+		CLIENT.getHax().fightBotHack.setEnabled(false);
+		CLIENT.getHax().killauraLegitHack.setEnabled(false);
+		CLIENT.getHax().killauraHack.setEnabled(false);
+		CLIENT.getHax().multiAuraHack.setEnabled(false);
+		CLIENT.getHax().triggerBotHack.setEnabled(false);
+		CLIENT.getHax().tpAuraHack.setEnabled(false);
 		
 		// set friend
 		if(friend == null)
@@ -228,7 +228,7 @@ public final class ProtectHack extends Hack
 			if(!pathFinder.isDone() && !pathFinder.isFailed())
 			{
 				PathProcessor.lockControls();
-				WURST.getRotationFaker()
+				CLIENT.getRotationFaker()
 					.faceVectorClient(target.getBoundingBox().getCenter());
 				pathFinder.think();
 				pathFinder.formatPath();
@@ -254,7 +254,7 @@ public final class ProtectHack extends Hack
 			// control height if flying
 			if(!MC.player.onGround()
 				&& (MC.player.getAbilities().flying
-					|| WURST.getHax().flightHack.isEnabled())
+					|| CLIENT.getHax().flightHack.isEnabled())
 				&& MC.player.distanceToSqr(target.getX(), MC.player.getY(),
 					target.getZ()) <= MC.player.distanceToSqr(MC.player.getX(),
 						target.getY(), MC.player.getZ()))
@@ -270,7 +270,7 @@ public final class ProtectHack extends Hack
 			}
 			
 			// follow target
-			WURST.getRotationFaker()
+			CLIENT.getRotationFaker()
 				.faceVectorClient(target.getBoundingBox().getCenter());
 			MC.options.keyUp.setDown(MC.player.distanceTo(
 				target) > (target == friend ? distanceF : distanceE));
@@ -278,7 +278,7 @@ public final class ProtectHack extends Hack
 		
 		if(target == enemy)
 		{
-			WURST.getHax().autoSwordHack.setSlot(enemy);
+			CLIENT.getHax().autoSwordHack.setSlot(enemy);
 			
 			// check cooldown
 			if(!speed.isTimeToAttack())
@@ -297,7 +297,7 @@ public final class ProtectHack extends Hack
 		if(!useAi.isChecked())
 			return;
 		
-		PathCmd pathCmd = WURST.getCmds().pathCmd;
+		PathCmd pathCmd = CLIENT.getCmds().pathCmd;
 		pathFinder.renderPath(matrixStack, pathCmd.isDebugMode(),
 			pathCmd.isDepthTest());
 	}

@@ -20,11 +20,11 @@ import com.nsyl.client.settings.CheckboxSetting;
 public final class NoFallHack extends Hack implements UpdateListener
 {
 	private final CheckboxSetting allowElytra = new CheckboxSetting(
-		"Allow elytra", "description.wurst.setting.nofall.allow_elytra", false);
+		"Allow elytra", "description.nsyl.setting.nofall.allow_elytra", false);
 	
 	private final CheckboxSetting pauseForMace =
 		new CheckboxSetting("Pause for mace",
-			"description.wurst.setting.nofall.pause_for_mace", false);
+			"description.nsyl.setting.nofall.pause_for_mace", false);
 	
 	public NoFallHack()
 	{
@@ -56,7 +56,7 @@ public final class NoFallHack extends Hack implements UpdateListener
 	@Override
 	protected void onEnable()
 	{
-		WURST.getHax().antiHungerHack.setEnabled(false);
+		CLIENT.getHax().antiHungerHack.setEnabled(false);
 		EVENTS.add(UpdateListener.class, this);
 	}
 	

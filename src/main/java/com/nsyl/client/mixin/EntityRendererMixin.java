@@ -48,7 +48,7 @@ public abstract class EntityRendererMixin<T extends Entity, S extends EntityRend
 		CallbackInfo ci)
 	{
 		// do NameTags adjustments
-		wurstRenderLabelIfPresent(state, text, matrices, vertexConsumers,
+		nsylRenderLabelIfPresent(state, text, matrices, vertexConsumers,
 			light);
 		ci.cancel();
 	}
@@ -57,7 +57,7 @@ public abstract class EntityRendererMixin<T extends Entity, S extends EntityRend
 	 * Copy of renderLabelIfPresent() since calling the original would result in
 	 * an infinite loop. Also makes it easier to modify.
 	 */
-	protected void wurstRenderLabelIfPresent(S state, Component text,
+	protected void nsylRenderLabelIfPresent(S state, Component text,
 		PoseStack matrices, MultiBufferSource vertexConsumers, int light)
 	{
 		NameTagsHack nameTags = NsylClient.INSTANCE.getHax().nameTagsHack;

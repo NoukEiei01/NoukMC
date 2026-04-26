@@ -40,7 +40,7 @@ public final class FileSetting extends Setting
 		Consumer<Path> createDefaultFiles)
 	{
 		super(name, description);
-		folder = NsylClient.INSTANCE.getWurstFolder().resolve(folderName);
+		folder = NsylClient.INSTANCE.getNsylFolder().resolve(folderName);
 		this.createDefaultFiles = createDefaultFiles;
 		setSelectedFileToDefault();
 	}
@@ -180,7 +180,7 @@ public final class FileSetting extends Setting
 		json.addProperty("description", getDescription());
 		json.addProperty("type", "File");
 		
-		Path mcFolder = NsylClient.INSTANCE.getWurstFolder().getParent();
+		Path mcFolder = NsylClient.INSTANCE.getNsylFolder().getParent();
 		if(folder.startsWith(mcFolder))
 			json.addProperty("folder", mcFolder.relativize(folder).toString());
 		

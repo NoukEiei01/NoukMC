@@ -16,12 +16,12 @@ public record PlayerAbilities(boolean invulnerable, boolean creativeFlying,
 	boolean jesus, boolean spider)
 {
 	
-	private static final NsylClient WURST = NsylClient.INSTANCE;
+	private static final NsylClient CLIENT = NsylClient.INSTANCE;
 	private static final Minecraft MC = NsylClient.MC;
 	
 	public static PlayerAbilities get()
 	{
-		HackList hax = WURST.getHax();
+		HackList hax = CLIENT.getHax();
 		net.minecraft.world.entity.player.Abilities mcAbilities =
 			MC.player.getAbilities();
 		

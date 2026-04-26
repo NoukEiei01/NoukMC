@@ -18,7 +18,7 @@ import com.nsyl.client.mixinterface.IKeyBinding;
 
 public abstract class PathProcessor
 {
-	protected static final NsylClient WURST = NsylClient.INSTANCE;
+	protected static final NsylClient CLIENT = NsylClient.INSTANCE;
 	protected static final Minecraft MC = NsylClient.MC;
 	
 	private static final KeyMapping[] CONTROLS =
@@ -59,7 +59,7 @@ public abstract class PathProcessor
 	
 	protected final void facePosition(BlockPos pos)
 	{
-		WURST.getRotationFaker()
+		CLIENT.getRotationFaker()
 			.faceVectorClientIgnorePitch(Vec3.atCenterOf(pos));
 	}
 	

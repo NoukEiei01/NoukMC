@@ -221,7 +221,7 @@ public final class TreeBotHack extends Hack
 			return false;
 		
 		// select tool
-		WURST.getHax().autoToolHack.equipBestTool(pos, false, true, 0);
+		CLIENT.getHax().autoToolHack.equipBestTool(pos, false, true, 0);
 		
 		// face block
 		faceTarget.face(params.hitVec());
@@ -239,7 +239,7 @@ public final class TreeBotHack extends Hack
 	@Override
 	public void onRender(PoseStack matrixStack, float partialTicks)
 	{
-		PathCmd pathCmd = WURST.getCmds().pathCmd;
+		PathCmd pathCmd = CLIENT.getCmds().pathCmd;
 		
 		if(treeFinder != null)
 			treeFinder.renderPath(matrixStack, pathCmd.isDebugMode(),

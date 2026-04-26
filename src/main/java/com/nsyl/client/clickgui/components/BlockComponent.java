@@ -23,7 +23,7 @@ import com.nsyl.client.util.RenderUtils;
 
 public final class BlockComponent extends Component
 {
-	private static final ClickGui GUI = WURST.getGui();
+	private static final ClickGui GUI = CLIENT.getGui();
 	private static final Font TR = MC.font;
 	private static final int BLOCK_WIDTH = 24;
 	

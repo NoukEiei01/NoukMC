@@ -30,14 +30,14 @@ public final class FilterSleepingSetting extends EntityFilterCheckbox
 	public static FilterSleepingSetting genericCombat(boolean checked)
 	{
 		return new FilterSleepingSetting(
-			"description.wurst.setting.generic.filter_sleeping_combat",
+			"description.nsyl.setting.generic.filter_sleeping_combat",
 			checked);
 	}
 	
 	public static FilterSleepingSetting genericVision(boolean checked)
 	{
 		return new FilterSleepingSetting(
-			"description.wurst.setting.generic.filter_sleeping_vision",
+			"description.nsyl.setting.generic.filter_sleeping_vision",
 			checked);
 	}
 }

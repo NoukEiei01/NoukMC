@@ -75,12 +75,12 @@ public final class NukerLegitHack extends Hack
 	@Override
 	protected void onEnable()
 	{
-		WURST.getHax().autoMineHack.setEnabled(false);
-		WURST.getHax().excavatorHack.setEnabled(false);
-		WURST.getHax().nukerHack.setEnabled(false);
-		WURST.getHax().speedNukerHack.setEnabled(false);
-		WURST.getHax().tunnellerHack.setEnabled(false);
-		WURST.getHax().veinMinerHack.setEnabled(false);
+		CLIENT.getHax().autoMineHack.setEnabled(false);
+		CLIENT.getHax().excavatorHack.setEnabled(false);
+		CLIENT.getHax().nukerHack.setEnabled(false);
+		CLIENT.getHax().speedNukerHack.setEnabled(false);
+		CLIENT.getHax().tunnellerHack.setEnabled(false);
+		CLIENT.getHax().veinMinerHack.setEnabled(false);
 		
 		EVENTS.add(UpdateListener.class, this);
 		EVENTS.add(LeftClickListener.class, commonSettings);
@@ -158,7 +158,7 @@ public final class NukerLegitHack extends Hack
 	{
 		MultiPlayerGameMode im = MC.gameMode;
 		
-		WURST.getRotationFaker().faceVectorClient(params.hitVec());
+		CLIENT.getRotationFaker().faceVectorClient(params.hitVec());
 		HitResult hitResult = MC.hitResult;
 		if(hitResult == null || hitResult.getType() != HitResult.Type.BLOCK
 			|| !(hitResult instanceof BlockHitResult bHitResult))
@@ -177,7 +177,7 @@ public final class NukerLegitHack extends Hack
 			return true;
 		}
 		
-		WURST.getHax().autoToolHack.equipIfEnabled(params.pos());
+		CLIENT.getHax().autoToolHack.equipIfEnabled(params.pos());
 		
 		if(MC.player.isUsingItem())
 			// This case doesn't cancel block breaking in vanilla Minecraft.

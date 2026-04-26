@@ -44,7 +44,7 @@ public class DisconnectedScreenMixin extends Screen
 	@Final
 	private LinearLayout layout;
 	
-	private DisconnectedScreenMixin(NsylClient wurst, Component title)
+	private DisconnectedScreenMixin(NsylClient nsyl, Component title)
 	{
 		super(title);
 	}

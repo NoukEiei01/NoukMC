@@ -38,14 +38,14 @@ public enum NoFallHackTest
 		
 		// Fall 5 blocks with NoFall enabled
 		NsylTest.LOGGER.info("Falling 5 blocks with NoFall enabled");
-		runWurstCommand(context, "t NoFall on");
+		runNsylCommand(context, "t NoFall on");
 		fall5Blocks(context, server);
 		context.takeScreenshot("nofall_on_5_blocks");
 		assertPlayerHealth(context, health -> health == 20);
 		
 		// Fall 5 blocks with NoFall disabled
 		NsylTest.LOGGER.info("Falling 5 blocks with NoFall disabled");
-		runWurstCommand(context, "t NoFall off");
+		runNsylCommand(context, "t NoFall off");
 		fall5Blocks(context, server);
 		context.takeScreenshot("nofall_off_5_blocks");
 		assertPlayerHealth(context, health -> health < 20);

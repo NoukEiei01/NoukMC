@@ -49,7 +49,7 @@ public final class AutoFarmHack extends Hack
 	
 	private final CheckboxSetting checkLOS =
 		new CheckboxSetting("Check line of sight",
-			"description.wurst.setting.autofarm.check_line_of_sight", false);
+			"description.nsyl.setting.autofarm.check_line_of_sight", false);
 	
 	private final FaceTargetSetting faceTarget =
 		FaceTargetSetting.withoutPacketSpam(this, FaceTarget.SERVER);
@@ -85,7 +85,7 @@ public final class AutoFarmHack extends Hack
 	@Override
 	protected void onEnable()
 	{
-		WURST.getHax().autoMineHack.setEnabled(false);
+		CLIENT.getHax().autoMineHack.setEnabled(false);
 		replantingSpots.clear();
 		EVENTS.add(UpdateListener.class, this);
 		EVENTS.add(RenderListener.class, this);
@@ -134,7 +134,7 @@ public final class AutoFarmHack extends Hack
 		List<BlockPos> blocksToInteract = List.of();
 		List<BlockPos> blocksToReplant = List.of();
 		
-		if(!WURST.getHax().freecamHack.isEnabled())
+		if(!CLIENT.getHax().freecamHack.isEnabled())
 		{
 			blocksToMine = nonEmptyBlocks.stream()
 				.filter(plantTypes::shouldHarvestByMining)

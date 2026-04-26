@@ -18,7 +18,7 @@ import com.nsyl.client.util.text.WText;
 public final class FaceTargetSetting
 	extends EnumSetting<FaceTargetSetting.FaceTarget>
 {
-	private static final NsylClient WURST = NsylClient.INSTANCE;
+	private static final NsylClient CLIENT = NsylClient.INSTANCE;
 	private static final WText FULL_DESCRIPTION_SUFFIX =
 		buildDescriptionSuffix(true);
 	private static final WText REDUCED_DESCRIPTION_SUFFIX =
@@ -61,7 +61,7 @@ public final class FaceTargetSetting
 	
 	private static WText hackDescription(Hack hack)
 	{
-		return WText.translated("description.wurst.setting."
+		return WText.translated("description.nsyl.setting."
 			+ hack.getName().toLowerCase() + ".face_target");
 	}
 	
@@ -89,16 +89,16 @@ public final class FaceTargetSetting
 		OFF("Off", v -> {}),
 		
 		SERVER("Server-side",
-			v -> WURST.getRotationFaker().faceVectorPacket(v)),
+			v -> CLIENT.getRotationFaker().faceVectorPacket(v)),
 		
 		CLIENT("Client-side",
-			v -> WURST.getRotationFaker().faceVectorClient(v)),
+			v -> CLIENT.getRotationFaker().faceVectorClient(v)),
 		
 		SPAM("Packet spam",
 			v -> RotationUtils.getNeededRotations(v).sendPlayerLookPacket());
 		
 		private static final String TRANSLATION_KEY_PREFIX =
-			"description.wurst.setting.generic.face_target.";
+			"description.nsyl.setting.generic.face_target.";
 		
 		private final String name;
 		private final WText description;

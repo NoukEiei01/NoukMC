@@ -43,7 +43,7 @@ public final class SafeWalkHack extends Hack
 	@Override
 	protected void onEnable()
 	{
-		WURST.getHax().parkourHack.setEnabled(false);
+		CLIENT.getHax().parkourHack.setEnabled(false);
 		sneaking = false;
 	}
 	

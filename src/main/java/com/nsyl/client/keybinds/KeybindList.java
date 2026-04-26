@@ -28,7 +28,7 @@ public final class KeybindList
 	
 	private final KeybindsFile keybindsFile;
 	private final Path profilesFolder =
-		NsylClient.INSTANCE.getWurstFolder().resolve("keybinds");
+		NsylClient.INSTANCE.getNsylFolder().resolve("keybinds");
 	
 	public KeybindList(Path keybindsFile)
 	{

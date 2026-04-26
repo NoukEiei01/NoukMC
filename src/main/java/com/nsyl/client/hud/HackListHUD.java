@@ -39,7 +39,7 @@ public final class HackListHUD implements UpdateListener
 			return;
 		
 		if(otf.getPosition() == Position.LEFT
-			&& NsylClient.INSTANCE.getOtfs().wurstLogoOtf.isVisible())
+			&& NsylClient.INSTANCE.getOtfs().nsylLogoOtf.isVisible())
 			posY = 22;
 		else
 			posY = 2;

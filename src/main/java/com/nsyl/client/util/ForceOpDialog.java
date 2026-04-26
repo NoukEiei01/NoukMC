@@ -82,7 +82,7 @@ public class ForceOpDialog extends JDialog
 			new InputStreamReader(System.in, StandardCharsets.UTF_8)))
 		{
 			for(String line = ""; (line = bf.readLine()) != null;)
-				messageFromWurst(line);
+				messageFromNsyl(line);
 			
 		}catch(IOException e)
 		{
@@ -90,7 +90,7 @@ public class ForceOpDialog extends JDialog
 		}
 	}
 	
-	private void messageFromWurst(String line)
+	private void messageFromNsyl(String line)
 	{
 		if(line.startsWith("numPW "))
 		{

@@ -29,7 +29,7 @@ public final class WTranslatedTextContent implements WTextContent
 	private void update()
 	{
 		NsylTranslator translator = NsylClient.INSTANCE.getTranslator();
-		Map<String, String> language = translator.getWurstsCurrentLanguage();
+		Map<String, String> language = translator.getNsylsCurrentLanguage();
 		if(language == lastLanguage)
 			return;
 		

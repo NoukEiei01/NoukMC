@@ -52,7 +52,7 @@ public final class ChooseNameState extends TemplateToolState
 	
 	public static final class ChooseNameScreen extends Screen
 	{
-		private static final NsylClient WURST = NsylClient.INSTANCE;
+		private static final NsylClient CLIENT = NsylClient.INSTANCE;
 		private final TemplateToolHack hack;
 		
 		private EditBox nameField;
@@ -119,7 +119,7 @@ public final class ChooseNameState extends TemplateToolState
 			else
 				try
 				{
-					Path folder = WURST.getHax().autoBuildHack.getFolder();
+					Path folder = CLIENT.getHax().autoBuildHack.getFolder();
 					Path file = folder.resolve(nameField.getValue() + ".json");
 					hack.setFile(file.toFile());
 					

@@ -83,8 +83,8 @@ public final class BowAimbotHack extends Hack
 	protected void onEnable()
 	{
 		// disable conflicting hacks
-		WURST.getHax().excavatorHack.setEnabled(false);
-		WURST.getHax().templateToolHack.setEnabled(false);
+		CLIENT.getHax().excavatorHack.setEnabled(false);
+		CLIENT.getHax().templateToolHack.setEnabled(false);
 		
 		// register event listeners
 		EVENTS.add(GUIRenderListener.class, this);
@@ -171,7 +171,7 @@ public final class BowAimbotHack extends Hack
 		
 		// set pitch
 		if(Float.isNaN(neededPitch))
-			WURST.getRotationFaker()
+			CLIENT.getRotationFaker()
 				.faceVectorClient(target.getBoundingBox().getCenter());
 		else
 			MC.player.setXRot(neededPitch);

@@ -26,12 +26,12 @@ public final class FilterBatsSetting extends EntityFilterCheckbox
 	public static FilterBatsSetting genericCombat(boolean checked)
 	{
 		return new FilterBatsSetting(
-			"description.wurst.setting.generic.filter_bats_combat", checked);
+			"description.nsyl.setting.generic.filter_bats_combat", checked);
 	}
 	
 	public static FilterBatsSetting genericVision(boolean checked)
 	{
 		return new FilterBatsSetting(
-			"description.wurst.setting.generic.filter_bats_vision", checked);
+			"description.nsyl.setting.generic.filter_bats_vision", checked);
 	}
 }

@@ -28,7 +28,7 @@ public final class AntiHungerHack extends Hack implements PacketOutputListener
 	@Override
 	protected void onEnable()
 	{
-		WURST.getHax().noFallHack.setEnabled(false);
+		CLIENT.getHax().noFallHack.setEnabled(false);
 		EVENTS.add(PacketOutputListener.class, this);
 	}
 	

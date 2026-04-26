@@ -89,7 +89,7 @@ public final class CmdProcessor implements ChatOutputListener
 		}catch(Throwable e)
 		{
 			CrashReport report =
-				CrashReport.forThrowable(e, "Running Wurst command");
+				CrashReport.forThrowable(e, "Running NSYL command");
 			CrashReportCategory section =
 				report.addCategory("Affected command");
 			section.setDetail("Command input", () -> input);

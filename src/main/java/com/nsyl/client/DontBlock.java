@@ -21,7 +21,7 @@ import java.lang.annotation.Target;
  * <li>wouldn't actually do anything (e.g. ServerFinder button wouldn't be
  * removed by blocking its feature)
  * <li>would break other features in potentially unexpected ways (e.g. blocking
- * Panic would break Disable Wurst, blocking .setslider would break keybinds,
+ * Panic would break Disable NSYL, blocking .setslider would break keybinds,
  * etc.)
  * <li>would potentially brick the whole client (e.g. ClickGUI)
  * <li>would get the feature stuck in its current state rather than turning it

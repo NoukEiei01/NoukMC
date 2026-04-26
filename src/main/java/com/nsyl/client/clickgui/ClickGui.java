@@ -39,7 +39,7 @@ import com.nsyl.client.util.json.JsonUtils;
 
 public final class ClickGui
 {
-	private static final NsylClient WURST = NsylClient.INSTANCE;
+	private static final NsylClient CLIENT = NsylClient.INSTANCE;
 	private static final Minecraft MC = NsylClient.MC;
 	
 	private final ArrayList<Window> windows = new ArrayList<>();
@@ -72,9 +72,9 @@ public final class ClickGui
 			windowMap.put(category, new Window(category.getName()));
 		
 		ArrayList<Feature> features = new ArrayList<>();
-		features.addAll(WURST.getHax().getAllHax());
-		features.addAll(WURST.getCmds().getAllCmds());
-		features.addAll(WURST.getOtfs().getAllOtfs());
+		features.addAll(CLIENT.getHax().getAllHax());
+		features.addAll(CLIENT.getCmds().getAllCmds());
+		features.addAll(CLIENT.getOtfs().getAllOtfs());
 		
 		for(Feature f : features)
 			if(f.getCategory() != null)
@@ -83,10 +83,10 @@ public final class ClickGui
 		windows.addAll(windowMap.values());
 		
 		Window uiSettings = new Window("UI Settings");
-		uiSettings.add(new FeatureButton(WURST.getOtfs().wurstLogoOtf));
-		uiSettings.add(new FeatureButton(WURST.getOtfs().hackListOtf));
-		uiSettings.add(new FeatureButton(WURST.getOtfs().keybindManagerOtf));
-		ClickGuiHack clickGuiHack = WURST.getHax().clickGuiHack;
+		uiSettings.add(new FeatureButton(CLIENT.getOtfs().nsylLogoOtf));
+		uiSettings.add(new FeatureButton(CLIENT.getOtfs().hackListOtf));
+		uiSettings.add(new FeatureButton(CLIENT.getOtfs().keybindManagerOtf));
+		ClickGuiHack clickGuiHack = CLIENT.getHax().clickGuiHack;
 		Stream<Setting> settings = clickGuiHack.getSettings().values().stream();
 		settings.map(Setting::getComponent).forEach(c -> uiSettings.add(c));
 		windows.add(uiSettings);
@@ -579,7 +579,7 @@ public final class ClickGui
 	
 	public void updateColors()
 	{
-		ClickGuiHack clickGui = WURST.getHax().clickGuiHack;
+		ClickGuiHack clickGui = CLIENT.getHax().clickGuiHack;
 		
 		opacity = clickGui.getOpacity();
 		ttOpacity = clickGui.getTooltipOpacity();

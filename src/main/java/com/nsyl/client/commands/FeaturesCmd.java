@@ -32,11 +32,11 @@ public final class FeaturesCmd extends Command
 		
 		if(NsylClient.VERSION.startsWith("7.0pre"))
 			ChatUtils.warning(
-				"This is just a pre-release! It doesn't (yet) have all of the features of Wurst 7.0! See download page for details.");
+				"This is just a pre-release! It doesn't (yet) have all of the features of NSYL 1.0! See download page for details.");
 		
-		int hax = WURST.getHax().countHax();
-		int cmds = WURST.getCmds().countCmds();
-		int otfs = WURST.getOtfs().countOtfs();
+		int hax = CLIENT.getHax().countHax();
+		int cmds = CLIENT.getCmds().countCmds();
+		int otfs = CLIENT.getOtfs().countOtfs();
 		int all = hax + cmds + otfs;
 		
 		ChatUtils.message("All features: " + all);
@@ -45,11 +45,11 @@ public final class FeaturesCmd extends Command
 		ChatUtils.message("Other features: " + otfs);
 		
 		int settings = 0;
-		for(Hack hack : WURST.getHax().getAllHax())
+		for(Hack hack : CLIENT.getHax().getAllHax())
 			settings += hack.getSettings().size();
-		for(Command cmd : WURST.getCmds().getAllCmds())
+		for(Command cmd : CLIENT.getCmds().getAllCmds())
 			settings += cmd.getSettings().size();
-		for(OtherFeature otf : WURST.getOtfs().getAllOtfs())
+		for(OtherFeature otf : CLIENT.getOtfs().getAllOtfs())
 			settings += otf.getSettings().size();
 		
 		ChatUtils.message("Settings: " + settings);
@@ -64,6 +64,6 @@ public final class FeaturesCmd extends Command
 	@Override
 	public void doPrimaryAction()
 	{
-		WURST.getCmdProcessor().process("features");
+		CLIENT.getCmdProcessor().process("features");
 	}
 }

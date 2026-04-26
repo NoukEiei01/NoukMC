@@ -33,7 +33,7 @@ public abstract class GenericContainerScreenMixin
 	private final AutoStealHack autoSteal =
 		NsylClient.INSTANCE.getHax().autoStealHack;
 	
-	public GenericContainerScreenMixin(NsylClient wurst, ChestMenu container,
+	public GenericContainerScreenMixin(NsylClient nsyl, ChestMenu container,
 		Inventory playerInventory, Component name)
 	{
 		super(container, playerInventory, name);

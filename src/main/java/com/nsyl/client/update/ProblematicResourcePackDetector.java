@@ -23,7 +23,7 @@ import com.nsyl.client.util.StreamUtils;
 public final class ProblematicResourcePackDetector implements UpdateListener
 {
 	private static final String WARNING_MESSAGE =
-		"VanillaTweaks \"Twinkling Stars\" pack detected. This resource pack is known to cause problems with Wurst!";
+		"VanillaTweaks \"Twinkling Stars\" pack detected. This resource pack is known to cause problems with NSYL!";
 	
 	private boolean running;
 	

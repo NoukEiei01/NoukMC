@@ -90,14 +90,14 @@ public final class ExcavatorHack extends Hack
 	protected void onEnable()
 	{
 		// disable conflicting hacks
-		WURST.getHax().autoMineHack.setEnabled(false);
-		WURST.getHax().bowAimbotHack.setEnabled(false);
-		WURST.getHax().nukerHack.setEnabled(false);
-		WURST.getHax().nukerLegitHack.setEnabled(false);
-		WURST.getHax().speedNukerHack.setEnabled(false);
-		WURST.getHax().templateToolHack.setEnabled(false);
-		WURST.getHax().tunnellerHack.setEnabled(false);
-		WURST.getHax().veinMinerHack.setEnabled(false);
+		CLIENT.getHax().autoMineHack.setEnabled(false);
+		CLIENT.getHax().bowAimbotHack.setEnabled(false);
+		CLIENT.getHax().nukerHack.setEnabled(false);
+		CLIENT.getHax().nukerLegitHack.setEnabled(false);
+		CLIENT.getHax().speedNukerHack.setEnabled(false);
+		CLIENT.getHax().templateToolHack.setEnabled(false);
+		CLIENT.getHax().tunnellerHack.setEnabled(false);
+		CLIENT.getHax().veinMinerHack.setEnabled(false);
 		
 		step = Step.START_POS;
 		
@@ -143,7 +143,7 @@ public final class ExcavatorHack extends Hack
 	{
 		if(pathFinder != null)
 		{
-			PathCmd pathCmd = WURST.getCmds().pathCmd;
+			PathCmd pathCmd = CLIENT.getCmds().pathCmd;
 			pathFinder.renderPath(matrixStack, pathCmd.isDebugMode(),
 				pathCmd.isDepthTest());
 		}
@@ -317,7 +317,7 @@ public final class ExcavatorHack extends Hack
 	private void excavate()
 	{
 		// wait for AutoEat to finish eating
-		if(WURST.getHax().autoEatHack.isEating())
+		if(CLIENT.getHax().autoEatHack.isEating())
 			return;
 		
 		// prioritize the closest block from the top layer
@@ -353,7 +353,7 @@ public final class ExcavatorHack extends Hack
 			// break next block
 			for(BlockPos pos : validBlocks)
 			{
-				WURST.getHax().autoToolHack.equipIfEnabled(pos);
+				CLIENT.getHax().autoToolHack.equipIfEnabled(pos);
 				if(!BlockBreaker.breakOneBlock(pos))
 					continue;
 				

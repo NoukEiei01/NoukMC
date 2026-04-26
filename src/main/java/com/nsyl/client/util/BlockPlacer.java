@@ -24,7 +24,7 @@ public enum BlockPlacer
 {
 	;
 	
-	private static final NsylClient WURST = NsylClient.INSTANCE;
+	private static final NsylClient CLIENT = NsylClient.INSTANCE;
 	private static final Minecraft MC = NsylClient.MC;
 	private static final IMinecraftClient IMC = NsylClient.IMC;
 	
@@ -35,7 +35,7 @@ public enum BlockPlacer
 			return false;
 		
 		// face block
-		WURST.getRotationFaker().faceVectorPacket(params.hitVec);
+		CLIENT.getRotationFaker().faceVectorPacket(params.hitVec);
 		
 		// place block
 		IMC.getInteractionManager().rightClickBlock(params.neighbor,

@@ -31,8 +31,8 @@ public final class OtfList
 	public final TranslationsOtf translationsOtf = new TranslationsOtf();
 	public final VanillaSpoofOtf vanillaSpoofOtf = new VanillaSpoofOtf();
 	public final WikiDataExportOtf wikiDataExportOtf = new WikiDataExportOtf();
-	public final NsylCapesOtf wurstCapesOtf = new NsylCapesOtf();
-	public final NsylLogoOtf wurstLogoOtf = new NsylLogoOtf();
+	public final NsylCapesOtf nsylCapesOtf = new NsylCapesOtf();
+	public final NsylLogoOtf nsylLogoOtf = new NsylLogoOtf();
 	public final ZoomOtf zoomOtf = new ZoomOtf();
 	
 	private final TreeMap<String, OtherFeature> otfs =
@@ -53,7 +53,7 @@ public final class OtfList
 			
 		}catch(Exception e)
 		{
-			String message = "Initializing other Wurst features";
+			String message = "Initializing other NSYL features";
 			CrashReport report = CrashReport.forThrowable(e, message);
 			throw new ReportedException(report);
 		}

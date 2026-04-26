@@ -50,14 +50,14 @@ public final class FilterNeutralSetting extends AttackDetectingEntityFilter
 	public static FilterNeutralSetting genericCombat(Mode selected)
 	{
 		return new FilterNeutralSetting(
-			"description.wurst.setting.generic.filter_neutral_combat",
+			"description.nsyl.setting.generic.filter_neutral_combat",
 			selected);
 	}
 	
 	public static FilterNeutralSetting genericVision(Mode selected)
 	{
 		return new FilterNeutralSetting(
-			"description.wurst.setting.generic.filter_neutral_vision",
+			"description.nsyl.setting.generic.filter_neutral_vision",
 			selected);
 	}
 	

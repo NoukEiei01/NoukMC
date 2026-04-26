@@ -92,7 +92,7 @@ public final class XRayHack extends Hack implements UpdateListener,
 	
 	private final String optiFineWarning;
 	private final String renderName =
-		Math.random() < 0.01 ? "X-Wurst" : getName();
+		Math.random() < 0.01 ? "X-NSYL" : getName();
 	
 	private ArrayList<String> oreNamesCache;
 	private final ThreadLocal<BlockPos.MutableBlockPos> mutablePosForExposedCheck =
@@ -149,7 +149,7 @@ public final class XRayHack extends Hack implements UpdateListener,
 		MC.levelRenderer.allChanged();
 		
 		// reset gamma
-		FullbrightHack fullbright = WURST.getHax().fullbrightHack;
+		FullbrightHack fullbright = CLIENT.getHax().fullbrightHack;
 		if(!fullbright.isChangingGamma())
 			ISimpleOption.get(MC.options.gamma())
 				.forceSetValue(fullbright.getDefaultGamma());

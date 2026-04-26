@@ -23,7 +23,7 @@ public enum GiveCmdTest
 	{
 		NsylTest.LOGGER.info("Testing .give command");
 		
-		runWurstCommand(context, "give diamond");
+		runNsylCommand(context, "give diamond");
 		clearToasts(context);
 		context.waitTick();
 		assertOneItemInSlot(context, 0, Items.DIAMOND);

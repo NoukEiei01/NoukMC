@@ -27,7 +27,7 @@ public abstract class ShulkerBoxScreenMixin
 	private final AutoStealHack autoSteal =
 		NsylClient.INSTANCE.getHax().autoStealHack;
 	
-	private ShulkerBoxScreenMixin(NsylClient wurst, ShulkerBoxMenu handler,
+	private ShulkerBoxScreenMixin(NsylClient nsyl, ShulkerBoxMenu handler,
 		Inventory inventory, Component title)
 	{
 		super(handler, inventory, title);

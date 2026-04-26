@@ -17,7 +17,7 @@ public interface IKeyBinding
 	 */
 	public default void resetPressedState()
 	{
-		wurst_resetPressedState();
+		nsyl_resetPressedState();
 	}
 	
 	/**
@@ -27,7 +27,7 @@ public interface IKeyBinding
 	 */
 	public default void simulatePress(boolean pressed)
 	{
-		wurst_simulatePress(pressed);
+		nsyl_simulatePress(pressed);
 	}
 	
 	public default void setDown(boolean down)
@@ -53,11 +53,11 @@ public interface IKeyBinding
 	 * @deprecated Use {@link #resetPressedState()} instead.
 	 */
 	@Deprecated
-	public void wurst_resetPressedState();
+	public void nsyl_resetPressedState();
 	
 	/**
 	 * @deprecated Use {@link #simulatePress()} instead.
 	 */
 	@Deprecated
-	public void wurst_simulatePress(boolean pressed);
+	public void nsyl_simulatePress(boolean pressed);
 }

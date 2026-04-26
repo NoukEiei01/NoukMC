@@ -27,7 +27,7 @@ public abstract class AbstractSignEditScreenMixin extends Screen
 	@Final
 	private String[] messages;
 	
-	private AbstractSignEditScreenMixin(NsylClient wurst, Component title)
+	private AbstractSignEditScreenMixin(NsylClient nsyl, Component title)
 	{
 		super(title);
 	}

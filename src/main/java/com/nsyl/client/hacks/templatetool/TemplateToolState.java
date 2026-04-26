@@ -18,7 +18,7 @@ import com.nsyl.client.hacks.TemplateToolHack;
 
 public abstract class TemplateToolState
 {
-	protected static final NsylClient WURST = NsylClient.INSTANCE;
+	protected static final NsylClient CLIENT = NsylClient.INSTANCE;
 	protected static final Minecraft MC = NsylClient.MC;
 	
 	public void onEnter(TemplateToolHack hack)

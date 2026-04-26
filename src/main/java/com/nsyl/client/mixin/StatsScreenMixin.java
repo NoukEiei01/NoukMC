@@ -41,24 +41,24 @@ public class StatsScreenMixin
 		
 		LinearLayout subLayout =
 			layout.addChild(LinearLayout.horizontal()).spacing(5);
-		subLayout.addChild(Button.builder(getButtonText(), this::toggleWurst)
+		subLayout.addChild(Button.builder(getButtonText(), this::toggleNsyl)
 			.width(150).build());
 		return original.call(subLayout, doneButton);
 	}
 	
 	@Unique
-	private void toggleWurst(Button button)
+	private void toggleNsyl(Button button)
 	{
-		NsylClient wurst = NsylClient.INSTANCE;
-		wurst.setEnabled(!wurst.isEnabled());
+		NsylClient nsyl = NsylClient.INSTANCE;
+		nsyl.setEnabled(!nsyl.isEnabled());
 		button.setMessage(getButtonText());
 	}
 	
 	@Unique
 	private Component getButtonText()
 	{
-		NsylClient wurst = NsylClient.INSTANCE;
-		String text = (wurst.isEnabled() ? "Disable" : "Enable") + " NSYL";
+		NsylClient nsyl = NsylClient.INSTANCE;
+		String text = (nsyl.isEnabled() ? "Disable" : "Enable") + " NSYL";
 		return Component.literal(text);
 	}
 }

@@ -22,8 +22,8 @@ import com.nsyl.client.util.ChatUtils;
 
 public abstract class Feature
 {
-	protected static final NsylClient WURST = NsylClient.INSTANCE;
-	protected static final EventManager EVENTS = WURST.getEventManager();
+	protected static final NsylClient CLIENT = NsylClient.INSTANCE;
+	protected static final EventManager EVENTS = CLIENT.getEventManager();
 	protected static final Minecraft MC = NsylClient.MC;
 	protected static final IMinecraftClient IMC = NsylClient.IMC;
 	

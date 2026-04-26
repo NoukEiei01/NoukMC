@@ -19,17 +19,17 @@ import com.nsyl.client.NsylClient;
 
 public final class EventManager
 {
-	private final NsylClient wurst;
+	private final NsylClient nsyl;
 	private final HashMap<Class<? extends Listener>, ArrayList<? extends Listener>> listenerMap =
 		new HashMap<>();
 	
-	public EventManager(NsylClient wurst)
+	public EventManager(NsylClient nsyl)
 	{
-		this.wurst = wurst;
+		this.nsyl = nsyl;
 	}
 	
 	/**
-	 * Fires the given {@link Event} if Wurst is enabled and the
+	 * Fires the given {@link Event} if NSYL is enabled and the
 	 * {@link EventManager} is ready to accept events. This method is safe to
 	 * call even when the EventManager hasn't been initialized yet.
 	 */
@@ -44,7 +44,7 @@ public final class EventManager
 	
 	private <L extends Listener, E extends Event<L>> void fireImpl(E event)
 	{
-		if(!wurst.isEnabled())
+		if(!nsyl.isEnabled())
 			return;
 		
 		try
@@ -73,7 +73,7 @@ public final class EventManager
 			e.printStackTrace();
 			
 			CrashReport report =
-				CrashReport.forThrowable(e, "Firing Wurst event");
+				CrashReport.forThrowable(e, "Firing NSYL event");
 			CrashReportCategory section = report.addCategory("Affected event");
 			section.setDetail("Event class", () -> event.getClass().getName());
 			
@@ -102,7 +102,7 @@ public final class EventManager
 			e.printStackTrace();
 			
 			CrashReport report =
-				CrashReport.forThrowable(e, "Adding Wurst event listener");
+				CrashReport.forThrowable(e, "Adding NSYL event listener");
 			CrashReportCategory section =
 				report.addCategory("Affected listener");
 			section.setDetail("Listener type", () -> type.getName());
@@ -128,7 +128,7 @@ public final class EventManager
 			e.printStackTrace();
 			
 			CrashReport report =
-				CrashReport.forThrowable(e, "Removing Wurst event listener");
+				CrashReport.forThrowable(e, "Removing NSYL event listener");
 			CrashReportCategory section =
 				report.addCategory("Affected listener");
 			section.setDetail("Listener type", () -> type.getName());

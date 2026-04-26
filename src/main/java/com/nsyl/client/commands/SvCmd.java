@@ -54,6 +54,6 @@ public final class SvCmd extends Command
 	@Override
 	public void doPrimaryAction()
 	{
-		WURST.getCmdProcessor().process("sv");
+		CLIENT.getCmdProcessor().process("sv");
 	}
 }

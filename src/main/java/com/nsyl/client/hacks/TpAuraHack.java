@@ -76,15 +76,15 @@ public final class TpAuraHack extends Hack implements UpdateListener
 	protected void onEnable()
 	{
 		// disable other killauras
-		WURST.getHax().aimAssistHack.setEnabled(false);
-		WURST.getHax().clickAuraHack.setEnabled(false);
-		WURST.getHax().crystalAuraHack.setEnabled(false);
-		WURST.getHax().fightBotHack.setEnabled(false);
-		WURST.getHax().killauraLegitHack.setEnabled(false);
-		WURST.getHax().killauraHack.setEnabled(false);
-		WURST.getHax().multiAuraHack.setEnabled(false);
-		WURST.getHax().protectHack.setEnabled(false);
-		WURST.getHax().triggerBotHack.setEnabled(false);
+		CLIENT.getHax().aimAssistHack.setEnabled(false);
+		CLIENT.getHax().clickAuraHack.setEnabled(false);
+		CLIENT.getHax().crystalAuraHack.setEnabled(false);
+		CLIENT.getHax().fightBotHack.setEnabled(false);
+		CLIENT.getHax().killauraLegitHack.setEnabled(false);
+		CLIENT.getHax().killauraHack.setEnabled(false);
+		CLIENT.getHax().multiAuraHack.setEnabled(false);
+		CLIENT.getHax().protectHack.setEnabled(false);
+		CLIENT.getHax().triggerBotHack.setEnabled(false);
 		
 		speed.resetTimer();
 		EVENTS.add(UpdateListener.class, this);
@@ -120,7 +120,7 @@ public final class TpAuraHack extends Hack implements UpdateListener
 		if(entity == null)
 			return;
 		
-		WURST.getHax().autoSwordHack.setSlot(entity);
+		CLIENT.getHax().autoSwordHack.setSlot(entity);
 		
 		// teleport
 		player.setPos(entity.getX() + random.nextInt(3) * 2 - 2, entity.getY(),

@@ -55,7 +55,7 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayer
 	
 	private Screen tempCurrentScreen;
 	
-	public ClientPlayerEntityMixin(NsylClient wurst, ClientLevel world,
+	public ClientPlayerEntityMixin(NsylClient nsyl, ClientLevel world,
 		GameProfile profile)
 	{
 		super(world, profile);

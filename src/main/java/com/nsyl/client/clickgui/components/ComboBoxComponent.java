@@ -22,7 +22,7 @@ import com.nsyl.client.util.RenderUtils;
 
 public final class ComboBoxComponent<T extends Enum<T>> extends Component
 {
-	private static final ClickGui GUI = WURST.getGui();
+	private static final ClickGui GUI = CLIENT.getGui();
 	private static final Font TR = MC.font;
 	private static final int ARROW_SIZE = 11;
 	

@@ -26,12 +26,12 @@ public final class FilterAllaysSetting extends EntityFilterCheckbox
 	public static FilterAllaysSetting genericCombat(boolean checked)
 	{
 		return new FilterAllaysSetting(
-			"description.wurst.setting.generic.filter_allays_combat", checked);
+			"description.nsyl.setting.generic.filter_allays_combat", checked);
 	}
 	
 	public static FilterAllaysSetting genericVision(boolean checked)
 	{
 		return new FilterAllaysSetting(
-			"description.wurst.setting.generic.filter_allays_vision", checked);
+			"description.nsyl.setting.generic.filter_allays_vision", checked);
 	}
 }

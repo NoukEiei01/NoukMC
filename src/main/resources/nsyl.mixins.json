@@ -2,7 +2,9 @@
   "required": true,
   "package": "com.nsyl.client.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [],
+  "mixins": [
+    "ParticleEngineMixin"
+  ],
   "client": [
     "AbstractBlockStateMixin",
     "AbstractSignEditScreenMixin",

@@ -33,7 +33,7 @@ import com.nsyl.client.altmanager.SkinStealer;
 public abstract class AltEditorScreen extends Screen
 {
 	private final Path skinFolder =
-		NsylClient.INSTANCE.getWurstFolder().resolve("skins");
+		NsylClient.INSTANCE.getNsylFolder().resolve("skins");
 	
 	protected final Screen prevScreen;
 	

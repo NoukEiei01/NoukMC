@@ -48,7 +48,7 @@ public enum CopyItemCmdTest
 		assertOneItemInSlot(context, 39, Items.GOLDEN_HELMET);
 		
 		// .copyitem the helmet
-		runWurstCommand(context, "copyitem Wurst-Bot head");
+		runNsylCommand(context, "copyitem NSYL-Bot head");
 		clearToasts(context);
 		context.takeScreenshot("copyitem_command_result");
 		assertOneItemInSlot(context, 0, Items.GOLDEN_HELMET);

@@ -87,15 +87,15 @@ public final class AltManagerScreen extends Screen
 		listGui = new ListGui(minecraft, this, altManager.getList());
 		addWidget(listGui);
 		
-		NsylClient wurst = NsylClient.INSTANCE;
+		NsylClient nsyl = NsylClient.INSTANCE;
 		
 		Exception folderException = altManager.getFolderException();
 		if(folderException != null && shouldAsk)
 		{
 			Component title = Component.literal(
-				wurst.translate("gui.wurst.altmanager.folder_error.title"));
-			Component message = Component.literal(wurst.translate(
-				"gui.wurst.altmanager.folder_error.message", folderException));
+				nsyl.translate("gui.nsyl.altmanager.folder_error.title"));
+			Component message = Component.literal(nsyl.translate(
+				"gui.nsyl.altmanager.folder_error.message", folderException));
 			Component buttonText = Component.translatable("gui.done");
 			
 			// This just sets shouldAsk to false and closes the message.
@@ -108,9 +108,9 @@ public final class AltManagerScreen extends Screen
 		}else if(altManager.getList().isEmpty() && shouldAsk)
 		{
 			Component title = Component
-				.literal(wurst.translate("gui.wurst.altmanager.empty.title"));
+				.literal(nsyl.translate("gui.nsyl.altmanager.empty.title"));
 			Component message = Component
-				.literal(wurst.translate("gui.wurst.altmanager.empty.message"));
+				.literal(nsyl.translate("gui.nsyl.altmanager.empty.message"));
 			BooleanConsumer callback = this::confirmGenerate;
 			
 			ConfirmScreen screen = new ConfirmScreen(callback, title, message);
@@ -177,7 +177,7 @@ public final class AltManagerScreen extends Screen
 		deleteButton.active = altSelected;
 		
 		logoutButton.active =
-			((IMinecraftClient)minecraft).getWurstSession() != null;
+			((IMinecraftClient)minecraft).getNsylSession() != null;
 	}
 	
 	@Override
@@ -222,7 +222,7 @@ public final class AltManagerScreen extends Screen
 	
 	private void pressLogout()
 	{
-		((IMinecraftClient)minecraft).setWurstSession(null);
+		((IMinecraftClient)minecraft).setNsylSession(null);
 		updateAltButtons();
 	}
 	
@@ -269,7 +269,7 @@ public final class AltManagerScreen extends Screen
 		{
 			Process process = MultiProcessingUtils.startProcessWithIO(
 				ImportAltsFileChooser.class,
-				NsylClient.INSTANCE.getWurstFolder().toString());
+				NsylClient.INSTANCE.getNsylFolder().toString());
 			
 			Path path = getFileChooserPath(process);
 			process.waitFor();
@@ -322,7 +322,7 @@ public final class AltManagerScreen extends Screen
 		{
 			Process process = MultiProcessingUtils.startProcessWithIO(
 				ExportAltsFileChooser.class,
-				NsylClient.INSTANCE.getWurstFolder().toString());
+				NsylClient.INSTANCE.getNsylFolder().toString());
 			
 			Path path = getFileChooserPath(process);
 			
@@ -519,7 +519,7 @@ public final class AltManagerScreen extends Screen
 	{
 		// translate
 		String translated = NsylClient.INSTANCE
-			.translate("description.wurst.altmanager." + trKey);
+			.translate("description.nsyl.altmanager." + trKey);
 		
 		// line-wrap
 		StringJoiner joiner = new StringJoiner("\n");

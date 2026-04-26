@@ -21,7 +21,7 @@ public final class HitboxCheckSetting
 {
 	private static final Minecraft MC = NsylClient.MC;
 	private static final WText DESCRIPTION =
-		WText.translated("description.wurst.setting.mobspawnesp.hitbox_check")
+		WText.translated("description.nsyl.setting.mobspawnesp.hitbox_check")
 			.append(buildDescriptionSuffix());
 	
 	public HitboxCheckSetting()
@@ -66,7 +66,7 @@ public final class HitboxCheckSetting
 		UNSTABLE("Unstable", HitboxCheckSetting::unstableHitboxCheck);
 		
 		private static final String TRANSLATION_KEY_PREFIX =
-			"description.wurst.setting.mobspawnesp.hitbox_check.";
+			"description.nsyl.setting.mobspawnesp.hitbox_check.";
 		
 		private final String name;
 		private final WText description;

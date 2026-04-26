@@ -31,8 +31,8 @@ public class ZoomManagerScreen extends Screen implements PressAKeyCallback
 	@Override
 	public void init()
 	{
-		NsylClient wurst = NsylClient.INSTANCE;
-		ZoomOtf zoom = wurst.getOtfs().zoomOtf;
+		NsylClient nsyl = NsylClient.INSTANCE;
+		ZoomOtf zoom = CLIENT.getOtfs().zoomOtf;
 		SliderSetting level = zoom.getLevelSetting();
 		CheckboxSetting scroll = zoom.getScrollSetting();
 		

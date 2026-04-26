@@ -115,8 +115,8 @@ public final class AutoFishHack extends Hack
 		fishingSpots.reset();
 		shallowWaterWarning.reset();
 		
-		WURST.getHax().antiAfkHack.setEnabled(false);
-		WURST.getHax().aimAssistHack.setEnabled(false);
+		CLIENT.getHax().antiAfkHack.setEnabled(false);
+		CLIENT.getHax().aimAssistHack.setEnabled(false);
 		
 		EVENTS.add(UpdateListener.class, this);
 		EVENTS.add(PacketInputListener.class, this);

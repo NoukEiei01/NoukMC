@@ -21,7 +21,7 @@ import com.nsyl.client.util.ChatUtils;
 public final class AnnoyCmd extends Command implements ChatInputListener
 {
 	private final CheckboxSetting rcMode = new CheckboxSetting("RC mode",
-		"Remote control mode. Re-enables a bug that allows .annoy to run Wurst"
+		"Remote control mode. Re-enables a bug that allows .annoy to run NSYL"
 			+ " commands. Not recommended for security reasons, but until we have a"
 			+ " proper remote control feature, this is at least better than nothing.",
 		false);
@@ -88,7 +88,7 @@ public final class AnnoyCmd extends Command implements ChatInputListener
 	public void onReceivedMessage(ChatInputEvent event)
 	{
 		String message = event.getComponent().getString();
-		if(message.startsWith(ChatUtils.WURST_PREFIX))
+		if(message.startsWith(ChatUtils.NSYL_PREFIX))
 			return;
 		
 		String prefix1 = target + ">";
@@ -110,7 +110,7 @@ public final class AnnoyCmd extends Command implements ChatInputListener
 		repeated = StringUtils.normalizeSpace(repeated);
 		
 		if(rcMode.isChecked() && repeated.startsWith("."))
-			WURST.getCmdProcessor().process(repeated.substring(1));
+			CLIENT.getCmdProcessor().process(repeated.substring(1));
 		else
 			MC.getConnection().sendChat(repeated);
 	}

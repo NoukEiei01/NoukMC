@@ -29,7 +29,7 @@ public abstract class TitleScreenMixin extends Screen
 	private AbstractWidget realmsButton = null;
 	private Button altsButton;
 	
-	private TitleScreenMixin(NsylClient wurst, Component title)
+	private TitleScreenMixin(NsylClient nsyl, Component title)
 	{
 		super(title);
 	}

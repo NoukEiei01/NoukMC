@@ -150,7 +150,7 @@ public final class TillauraHack extends Hack implements HandleInputListener
 		
 		// face and right click the block
 		MC.rightClickDelay = 4;
-		WURST.getRotationFaker().faceVectorPacket(params.hitVec());
+		CLIENT.getRotationFaker().faceVectorPacket(params.hitVec());
 		InteractionSimulator.rightClickBlock(params.toHitResult());
 		return true;
 	}

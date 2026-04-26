@@ -23,6 +23,6 @@ public enum LoginManager
 			new User(newName, UUIDUtil.createOfflinePlayerUUID(newName), "",
 				Optional.empty(), Optional.empty(), User.Type.MOJANG);
 		
-		NsylClient.IMC.setWurstSession(session);
+		NsylClient.IMC.setNsylSession(session);
 	}
 }

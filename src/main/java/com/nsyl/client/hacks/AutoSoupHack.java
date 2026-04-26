@@ -49,7 +49,7 @@ public final class AutoSoupHack extends Hack implements UpdateListener
 	@Override
 	protected void onEnable()
 	{
-		WURST.getHax().autoEatHack.setEnabled(false);
+		CLIENT.getHax().autoEatHack.setEnabled(false);
 		EVENTS.add(UpdateListener.class, this);
 	}
 	

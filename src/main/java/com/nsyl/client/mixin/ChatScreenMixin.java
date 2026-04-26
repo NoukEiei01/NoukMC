@@ -27,7 +27,7 @@ public abstract class ChatScreenMixin extends Screen
 	@Shadow
 	protected EditBox input;
 	
-	private ChatScreenMixin(NsylClient wurst, Component title)
+	private ChatScreenMixin(NsylClient nsyl, Component title)
 	{
 		super(title);
 	}

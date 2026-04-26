@@ -48,10 +48,10 @@ public final class TemplateToolHack extends Hack
 	@Override
 	public void onEnable()
 	{
-		WURST.getHax().autoBuildHack.setEnabled(false);
-		WURST.getHax().instaBuildHack.setEnabled(false);
-		WURST.getHax().bowAimbotHack.setEnabled(false);
-		WURST.getHax().excavatorHack.setEnabled(false);
+		CLIENT.getHax().autoBuildHack.setEnabled(false);
+		CLIENT.getHax().instaBuildHack.setEnabled(false);
+		CLIENT.getHax().bowAimbotHack.setEnabled(false);
+		CLIENT.getHax().excavatorHack.setEnabled(false);
 		
 		setState(new SelectBoxStartState());
 		

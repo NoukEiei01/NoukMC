@@ -51,10 +51,16 @@ public final class PlayerEspHack extends Hack implements UpdateListener,
 		new FilterSleepingSetting("Won't show sleeping players.", false),
 		new FilterInvisibleSetting("Won't show invisible players.", false));
 	
+	// --- Performance: pre-built render lists, rebuilt in onUpdate not onRender ---
 	private final ArrayList<Player> players = new ArrayList<>();
 	private final ArrayList<ColoredBox> boxes = new ArrayList<>();
 	private final ArrayList<ColoredPoint> ends = new ArrayList<>();
-	private final java.util.HashMap<Player, Integer> colorCache = new java.util.HashMap<>();
+	private final java.util.HashMap<Player, Integer> colorCache =
+		new java.util.HashMap<>();
+	
+	// Track style/boxSize so we only rebuild render lists when needed
+	private EspStyle lastStyle;
+	private double lastExtraSize;
 	
 	public PlayerEspHack()
 	{
@@ -71,6 +77,7 @@ public final class PlayerEspHack extends Hack implements UpdateListener,
 		EVENTS.add(UpdateListener.class, this);
 		EVENTS.add(CameraTransformViewBobbingListener.class, this);
 		EVENTS.add(RenderListener.class, this);
+		lastStyle = null; // force rebuild on next update
 	}
 	
 	@Override
@@ -79,6 +86,10 @@ public final class PlayerEspHack extends Hack implements UpdateListener,
 		EVENTS.remove(UpdateListener.class, this);
 		EVENTS.remove(CameraTransformViewBobbingListener.class, this);
 		EVENTS.remove(RenderListener.class, this);
+		players.clear();
+		boxes.clear();
+		ends.clear();
+		colorCache.clear();
 	}
 	
 	@Override
@@ -87,8 +98,9 @@ public final class PlayerEspHack extends Hack implements UpdateListener,
 		players.clear();
 		colorCache.clear();
 		
-		Stream<AbstractClientPlayer> stream = MC.level.players()
-			.parallelStream().filter(e -> !e.isRemoved() && e.getHealth() > 0)
+		// Use sequential stream — avoids ForkJoinPool overhead for small lists
+		Stream<AbstractClientPlayer> stream = MC.level.players().stream()
+			.filter(e -> !e.isRemoved() && e.getHealth() > 0)
 			.filter(e -> e != MC.player)
 			.filter(e -> !(e instanceof FakePlayerEntity))
 			.filter(e -> Math.abs(e.getY() - MC.player.getY()) <= 1e6);
@@ -99,6 +111,28 @@ public final class PlayerEspHack extends Hack implements UpdateListener,
 			players.add(e);
 			colorCache.put(e, computeColor(e));
 		});
+		
+		// Pre-build render lists here (once per tick, not once per frame)
+		EspStyle currentStyle = style.getSelected();
+		double currentExtraSize = boxSize.getExtraSize() / 2;
+		
+		boxes.clear();
+		ends.clear();
+		
+		for(Player e : players)
+		{
+			AABB box = e.getBoundingBox()
+				.move(0, currentExtraSize, 0).inflate(currentExtraSize);
+			
+			if(currentStyle != EspStyle.LINES)
+				boxes.add(new ColoredBox(box, getColor(e)));
+			
+			if(currentStyle != EspStyle.BOXES)
+				ends.add(new ColoredPoint(box.getCenter(), getColor(e)));
+		}
+		
+		lastStyle = currentStyle;
+		lastExtraSize = currentExtraSize;
 	}
 	
 	@Override
@@ -112,33 +146,12 @@ public final class PlayerEspHack extends Hack implements UpdateListener,
 	@Override
 	public void onRender(PoseStack matrixStack, float partialTicks)
 	{
-		if(style.hasBoxes())
-		{
-			double extraSize = boxSize.getExtraSize() / 2;
-			
-			boxes.clear();
-			for(Player e : players)
-			{
-				AABB box = EntityUtils.getLerpedBox(e, partialTicks)
-					.move(0, extraSize, 0).inflate(extraSize);
-				boxes.add(new ColoredBox(box, getColor(e)));
-			}
-			
+		// Render pre-built lists — no allocation on the render thread
+		if(style.hasBoxes() && !boxes.isEmpty())
 			RenderUtils.drawOutlinedBoxes(matrixStack, boxes, false);
-		}
 		
-		if(style.hasLines())
-		{
-			ends.clear();
-			for(Player e : players)
-			{
-				Vec3 point =
-					EntityUtils.getLerpedBox(e, partialTicks).getCenter();
-				ends.add(new ColoredPoint(point, getColor(e)));
-			}
-			
+		if(style.hasLines() && !ends.isEmpty())
 			RenderUtils.drawTracers(matrixStack, partialTicks, ends, false);
-		}
 	}
 	
 	private int getColor(Player e)
@@ -148,7 +161,7 @@ public final class PlayerEspHack extends Hack implements UpdateListener,
 	
 	private int computeColor(Player e)
 	{
-		if(WURST.getFriends().contains(e.getName().getString()))
+		if(CLIENT.getFriends().contains(e.getName().getString()))
 			return 0x800000FF;
 		
 		float f = MC.player.distanceTo(e) / 20F;

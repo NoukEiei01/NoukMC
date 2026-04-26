@@ -212,7 +212,7 @@ public enum NsylClientTestHelper
 		});
 	}
 	
-	public static void runWurstCommand(ClientGameTestContext context,
+	public static void runNsylCommand(ClientGameTestContext context,
 		String command)
 	{
 		TestInput input = context.getInput();

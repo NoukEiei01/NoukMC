@@ -33,22 +33,22 @@ public final class ChatTranslatorHack extends Hack
 	
 	private final LanguageSetting playerLanguage =
 		LanguageSetting.withoutAutoDetect("Your language",
-			"description.wurst.setting.chattranslator.your_language",
+			"description.nsyl.setting.chattranslator.your_language",
 			Language.ENGLISH);
 	
 	private final LanguageSetting otherLanguage =
 		LanguageSetting.withoutAutoDetect("Other language",
-			"description.wurst.setting.chattranslator.other_language",
+			"description.nsyl.setting.chattranslator.other_language",
 			Language.CHINESE_SIMPLIFIED);
 	
 	private final CheckboxSetting autoDetectReceived =
 		new CheckboxSetting("Detect received language",
-			"description.wurst.setting.chattranslator.detect_received_language",
+			"description.nsyl.setting.chattranslator.detect_received_language",
 			true);
 	
 	private final CheckboxSetting autoDetectSent = new CheckboxSetting(
 		"Detect sent language",
-		"description.wurst.setting.chattranslator.detect_sent_language", true);
+		"description.nsyl.setting.chattranslator.detect_sent_language", true);
 	
 	private final FilterOwnMessagesSetting filterOwnMessages =
 		new FilterOwnMessagesSetting();
@@ -90,7 +90,7 @@ public final class ChatTranslatorHack extends Hack
 			? Language.AUTO_DETECT : otherLanguage.getSelected();
 		Language toLang = playerLanguage.getSelected();
 		
-		if(message.startsWith(ChatUtils.WURST_PREFIX)
+		if(message.startsWith(ChatUtils.NSYL_PREFIX)
 			|| message.startsWith(toLang.getPrefix()))
 			return;
 		

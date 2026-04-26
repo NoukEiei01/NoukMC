@@ -24,7 +24,7 @@ import com.nsyl.client.NsylClient;
 public abstract class CreativeInventoryScreenMixin
 	extends AbstractContainerScreen<CreativeModeInventoryScreen.ItemPickerMenu>
 {
-	private CreativeInventoryScreenMixin(NsylClient wurst,
+	private CreativeInventoryScreenMixin(NsylClient nsyl,
 		ItemPickerMenu screenHandler, Inventory inventory, Component title)
 	{
 		super(screenHandler, inventory, title);

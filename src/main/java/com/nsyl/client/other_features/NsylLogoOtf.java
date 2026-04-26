@@ -16,7 +16,7 @@ import com.nsyl.client.other_feature.OtherFeature;
 import com.nsyl.client.settings.ColorSetting;
 import com.nsyl.client.settings.EnumSetting;
 
-@SearchTags({"wurst logo", "top left corner"})
+@SearchTags({"nsyl logo", "top left corner"})
 @DontBlock
 public final class NsylLogoOtf extends OtherFeature
 {
@@ -59,7 +59,7 @@ public final class NsylLogoOtf extends OtherFeature
 		ALWAYS("Always", () -> true),
 		
 		ONLY_OUTDATED("Only when outdated",
-			() -> WURST.getUpdater().isOutdated()),
+			() -> CLIENT.getUpdater().isOutdated()),
 		
 		HIDDEN("Hidden", () -> false);
 		

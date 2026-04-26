@@ -106,7 +106,7 @@ public final class AutoLeaveHack extends Hack implements UpdateListener
 		setEnabled(false);
 		
 		if(disableAutoReconnect.isChecked())
-			WURST.getHax().autoReconnectHack.setEnabled(false);
+			CLIENT.getHax().autoReconnectHack.setEnabled(false);
 	}
 	
 	public static enum Mode

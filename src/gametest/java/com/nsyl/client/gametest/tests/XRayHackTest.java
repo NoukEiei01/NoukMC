@@ -33,16 +33,16 @@ public enum XRayHackTest
 		buildTestRig(context, spContext);
 		
 		// Enable X-Ray with default settings
-		runWurstCommand(context, "setcheckbox X-Ray only_show_exposed off");
-		runWurstCommand(context, "setslider X-Ray opacity 0");
+		runNsylCommand(context, "setcheckbox X-Ray only_show_exposed off");
+		runNsylCommand(context, "setslider X-Ray opacity 0");
 		input.pressKey(GLFW.GLFW_KEY_X);
 		waitForChunkReloading(context, world);
 		assertScreenshotEquals(context, "xray_default",
 			"https://i.imgur.com/Dftamqv.png");
 		
 		// Exposed only
-		runWurstCommand(context, "setcheckbox X-Ray only_show_exposed on");
-		runWurstCommand(context, "setslider X-Ray opacity 0");
+		runNsylCommand(context, "setcheckbox X-Ray only_show_exposed on");
+		runNsylCommand(context, "setslider X-Ray opacity 0");
 		input.pressKey(GLFW.GLFW_KEY_X);
 		input.pressKey(GLFW.GLFW_KEY_X);
 		waitForChunkReloading(context, world);
@@ -50,8 +50,8 @@ public enum XRayHackTest
 			"https://i.imgur.com/QlEpQTu.png");
 		
 		// Opacity mode
-		runWurstCommand(context, "setcheckbox X-Ray only_show_exposed off");
-		runWurstCommand(context, "setslider X-Ray opacity 0.5");
+		runNsylCommand(context, "setcheckbox X-Ray only_show_exposed off");
+		runNsylCommand(context, "setslider X-Ray opacity 0.5");
 		input.pressKey(GLFW.GLFW_KEY_X);
 		input.pressKey(GLFW.GLFW_KEY_X);
 		waitForChunkReloading(context, world);
@@ -59,8 +59,8 @@ public enum XRayHackTest
 			"https://i.imgur.com/0nLulJn.png");
 		
 		// Exposed only + opacity
-		runWurstCommand(context, "setcheckbox X-Ray only_show_exposed on");
-		runWurstCommand(context, "setslider X-Ray opacity 0.5");
+		runNsylCommand(context, "setcheckbox X-Ray only_show_exposed on");
+		runNsylCommand(context, "setslider X-Ray opacity 0.5");
 		input.pressKey(GLFW.GLFW_KEY_X);
 		input.pressKey(GLFW.GLFW_KEY_X);
 		waitForChunkReloading(context, world);
@@ -70,8 +70,8 @@ public enum XRayHackTest
 		// Clean up
 		runCommand(server, "fill ~-5 ~-2 ~5 ~5 ~5 ~7 air");
 		waitForBlock(context, 5, 5, 7, Blocks.AIR);
-		runWurstCommand(context, "setcheckbox X-Ray only_show_exposed off");
-		runWurstCommand(context, "setslider X-Ray opacity 0");
+		runNsylCommand(context, "setcheckbox X-Ray only_show_exposed off");
+		runNsylCommand(context, "setslider X-Ray opacity 0");
 		input.pressKey(GLFW.GLFW_KEY_X);
 		waitForChunkReloading(context, world);
 		clearChat(context);

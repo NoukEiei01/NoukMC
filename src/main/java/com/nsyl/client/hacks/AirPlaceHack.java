@@ -36,10 +36,10 @@ public final class AirPlaceHack extends Hack
 		new SliderSetting("Range", 5, 1, 6, 0.05, ValueDisplay.DECIMAL);
 	
 	private final CheckboxSetting guide = new CheckboxSetting("Guide",
-		"description.wurst.setting.airplace.guide", true);
+		"description.nsyl.setting.airplace.guide", true);
 	
 	private final ColorSetting guideColor = new ColorSetting("Guide color",
-		"description.wurst.setting.airplace.guide_color", Color.RED);
+		"description.nsyl.setting.airplace.guide_color", Color.RED);
 	
 	private BlockPos renderPos;
 	

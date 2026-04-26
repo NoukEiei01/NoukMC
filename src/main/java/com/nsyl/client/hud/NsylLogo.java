@@ -17,13 +17,13 @@ import com.nsyl.client.util.RenderUtils;
 
 public final class NsylLogo
 {
-	private static final NsylClient WURST = NsylClient.INSTANCE;
+	private static final NsylClient CLIENT = NsylClient.INSTANCE;
 	private static final ResourceLocation LOGO_TEXTURE =
 		ResourceLocation.fromNamespaceAndPath("nsyl", "nsyl_logo.png");
 	
 	public void render(GuiGraphics context)
 	{
-		NsylLogoOtf otf = WURST.getOtfs().wurstLogoOtf;
+		NsylLogoOtf otf = CLIENT.getOtfs().nsylLogoOtf;
 		if(!otf.isVisible())
 			return;
 		
@@ -32,8 +32,8 @@ public final class NsylLogo
 		
 		// background
 		int bgColor;
-		if(WURST.getHax().rainbowUiHack.isEnabled())
-			bgColor = RenderUtils.toIntColor(WURST.getGui().getAcColor(), 0.5F);
+		if(CLIENT.getHax().rainbowUiHack.isEnabled())
+			bgColor = RenderUtils.toIntColor(CLIENT.getGui().getAcColor(), 0.5F);
 		else
 			bgColor = otf.getBackgroundColor();
 		context.fill(0, 6, tr.width(version) + 76, 17, bgColor);
@@ -41,7 +41,7 @@ public final class NsylLogo
 		// version string
 		context.drawString(tr, version, 74, 8, otf.getTextColor(), false);
 		
-		// Wurst logo
+		// NSYL logo
 		context.blit(RenderType::guiTextured, LOGO_TEXTURE, 0, 3, 0, 0, 72, 18,
 			72, 18);
 	}
@@ -51,7 +51,7 @@ public final class NsylLogo
 		String version = "NSYL Client v" + NsylClient.VERSION;
 		
 		
-		if(WURST.getUpdater().isOutdated())
+		if(CLIENT.getUpdater().isOutdated())
 			version += " (outdated)";
 		
 		return version;

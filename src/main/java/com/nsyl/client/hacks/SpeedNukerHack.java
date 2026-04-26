@@ -61,12 +61,12 @@ public final class SpeedNukerHack extends Hack implements UpdateListener
 	@Override
 	protected void onEnable()
 	{
-		WURST.getHax().autoMineHack.setEnabled(false);
-		WURST.getHax().excavatorHack.setEnabled(false);
-		WURST.getHax().nukerHack.setEnabled(false);
-		WURST.getHax().nukerLegitHack.setEnabled(false);
-		WURST.getHax().tunnellerHack.setEnabled(false);
-		WURST.getHax().veinMinerHack.setEnabled(false);
+		CLIENT.getHax().autoMineHack.setEnabled(false);
+		CLIENT.getHax().excavatorHack.setEnabled(false);
+		CLIENT.getHax().nukerHack.setEnabled(false);
+		CLIENT.getHax().nukerLegitHack.setEnabled(false);
+		CLIENT.getHax().tunnellerHack.setEnabled(false);
+		CLIENT.getHax().veinMinerHack.setEnabled(false);
 		
 		EVENTS.add(LeftClickListener.class, commonSettings);
 		EVENTS.add(UpdateListener.class, this);
@@ -109,7 +109,7 @@ public final class SpeedNukerHack extends Hack implements UpdateListener
 		if(blocks.isEmpty())
 			return;
 		
-		WURST.getHax().autoToolHack.equipIfEnabled(blocks.get(0));
+		CLIENT.getHax().autoToolHack.equipIfEnabled(blocks.get(0));
 		BlockBreaker.breakBlocksWithPacketSpam(blocks);
 		swingHand.swing(InteractionHand.MAIN_HAND);
 	}

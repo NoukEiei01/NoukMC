@@ -28,7 +28,7 @@ public class MultiplayerScreenMixin extends Screen
 {
 	private Button lastServerButton;
 	
-	private MultiplayerScreenMixin(NsylClient wurst, Component title)
+	private MultiplayerScreenMixin(NsylClient nsyl, Component title)
 	{
 		super(title);
 	}

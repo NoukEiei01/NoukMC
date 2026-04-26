@@ -54,25 +54,25 @@ public class NsylOptionsScreen extends Screen
 	
 	private void addSettingButtons()
 	{
-		NsylClient wurst = NsylClient.INSTANCE;
-		FriendsCmd friendsCmd = wurst.getCmds().friendsCmd;
+		NsylClient nsyl = NsylClient.INSTANCE;
+		FriendsCmd friendsCmd = nsyl.getCmds().friendsCmd;
 		CheckboxSetting middleClickFriends = friendsCmd.getMiddleClickFriends();
-		PlausibleAnalytics plausible = wurst.getPlausible();
-		VanillaSpoofOtf vanillaSpoofOtf = wurst.getOtfs().vanillaSpoofOtf;
+		PlausibleAnalytics plausible = CLIENT.getPlausible();
+		VanillaSpoofOtf vanillaSpoofOtf = CLIENT.getOtfs().vanillaSpoofOtf;
 		CheckboxSetting forceEnglish =
-			wurst.getOtfs().translationsOtf.getForceEnglish();
+			CLIENT.getOtfs().translationsOtf.getForceEnglish();
 		
-		new WurstOptionsButton(-154, 24,
+		new NsylOptionsButton(-154, 24,
 			() -> "Click Friends: "
 				+ (middleClickFriends.isChecked() ? "ON" : "OFF"),
 			middleClickFriends.getWrappedDescription(200),
 			b -> middleClickFriends
 				.setChecked(!middleClickFriends.isChecked()));
 		
-		new WurstOptionsButton(-154, 48,
+		new NsylOptionsButton(-154, 48,
 			() -> "Count Users: "
 				+ (plausible != null && plausible.isEnabled() ? "ON" : "OFF"),
-			"Counts how many people are using Wurst and which versions are the"
+			"Counts how many people are using NSYL and which versions are the"
 				+ " most popular. This data helps me to decide when I can stop"
 				+ " supporting old versions.\n\n"
 				+ "These statistics are completely anonymous, never sold, and"
@@ -84,15 +84,15 @@ public class NsylOptionsScreen extends Screen
 					plausible.setEnabled(!plausible.isEnabled());
 			});
 		
-		new WurstOptionsButton(-154, 72,
+		new NsylOptionsButton(-154, 72,
 			() -> "Spoof Vanilla: "
 				+ (vanillaSpoofOtf.isEnabled() ? "ON" : "OFF"),
 			vanillaSpoofOtf.getDescription(),
 			b -> vanillaSpoofOtf.doPrimaryAction());
 		
-		new WurstOptionsButton(-154, 96,
+		new NsylOptionsButton(-154, 96,
 			() -> "Translations: " + (!forceEnglish.isChecked() ? "ON" : "OFF"),
-			"Allows text in Wurst to be displayed in other languages than"
+			"Allows text in NSYL to be displayed in other languages than"
 				+ " English. It will use the same language that Minecraft is"
 				+ " set to.\n\n" + "This is an experimental feature!",
 			b -> forceEnglish.setChecked(!forceEnglish.isChecked()));
@@ -102,16 +102,16 @@ public class NsylOptionsScreen extends Screen
 	{
 		XRayHack xRayHack = NsylClient.INSTANCE.getHax().xRayHack;
 		
-		new WurstOptionsButton(-50, 24, () -> "Keybinds",
+		new NsylOptionsButton(-50, 24, () -> "Keybinds",
 			"Keybinds allow you to toggle any hack or command by simply"
 				+ " pressing a button.",
 			b -> minecraft.setScreen(new KeybindManagerScreen(this)));
 		
-		new WurstOptionsButton(-50, 48, () -> "X-Ray Blocks",
+		new NsylOptionsButton(-50, 48, () -> "X-Ray Blocks",
 			"Manager for the blocks that X-Ray will show.",
 			b -> xRayHack.openBlockListEditor(this));
 		
-		new WurstOptionsButton(-50, 72, () -> "Zoom",
+		new NsylOptionsButton(-50, 72, () -> "Zoom",
 			"The Zoom Manager allows you to change the zoom key and how far it"
 				+ " will zoom in.",
 			b -> minecraft.setScreen(new ZoomManagerScreen(this)));
@@ -121,22 +121,22 @@ public class NsylOptionsScreen extends Screen
 	{
 		OS os = Util.getPlatform();
 		
-		new WurstOptionsButton(54, 24, () -> "Official Website",
+		new NsylOptionsButton(54, 24, () -> "Official Website",
 			"§n§lNsylClient.net",
 			b -> os.openUri("https://github.com/"));
 		
-		new WurstOptionsButton(54, 48, () -> "NSYL Wiki", "",
+		new NsylOptionsButton(54, 48, () -> "NSYL Wiki", "",
 			b -> os.openUri("https://github.com/"));
 		
-		new WurstOptionsButton(54, 72, () -> "", "",
+		new NsylOptionsButton(54, 72, () -> "", "",
 			b -> os.openUri("https://github.com/"));
 		
-		new WurstOptionsButton(54, 96, () -> "Twitter", "@Wurst_Imperium",
+		new NsylOptionsButton(54, 96, () -> "Twitter", "@NSYL_Client",
 			b -> os.openUri("https://github.com/"));
 		
-		new WurstOptionsButton(54, 120, () -> "Donate",
+		new NsylOptionsButton(54, 120, () -> "Donate",
 			"§n§lNsylClient.net/donate\n"
-				+ "Donate now to help me keep the Wurst Client alive and free"
+				+ "Donate now to help me keep the NSYL Client alive and free"
 				+ " to use for everyone.\n\n"
 				+ "Every bit helps and is much appreciated! You can also get a"
 				+ " few cool perks in return.",
@@ -182,10 +182,10 @@ public class NsylOptionsScreen extends Screen
 		for(AbstractWidget button : Screens.getButtons(this))
 		{
 			if(!button.isHoveredOrFocused()
-				|| !(button instanceof WurstOptionsButton))
+				|| !(button instanceof NsylOptionsButton))
 				continue;
 			
-			WurstOptionsButton woButton = (WurstOptionsButton)button;
+			NsylOptionsButton woButton = (NsylOptionsButton)button;
 			
 			if(woButton.tooltip.isEmpty())
 				continue;
@@ -196,12 +196,12 @@ public class NsylOptionsScreen extends Screen
 		}
 	}
 	
-	private final class WurstOptionsButton extends Button
+	private final class NsylOptionsButton extends Button
 	{
 		private final Supplier<String> messageSupplier;
 		private final List<Component> tooltip;
 		
-		public WurstOptionsButton(int xOffset, int yOffset,
+		public NsylOptionsButton(int xOffset, int yOffset,
 			Supplier<String> messageSupplier, String tooltip,
 			OnPress pressAction)
 		{

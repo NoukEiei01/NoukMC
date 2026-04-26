@@ -34,28 +34,28 @@ public final class AntiAfkHack extends Hack
 	implements UpdateListener, RenderListener
 {
 	private final CheckboxSetting useAi = new CheckboxSetting("Use AI",
-		"description.wurst.setting.antiafk.use_ai", true);
+		"description.nsyl.setting.antiafk.use_ai", true);
 	
 	private final SliderSetting aiRange = new SliderSetting("AI range",
-		"description.wurst.setting.antiafk.ai_range", 16, 1, 64, 1,
+		"description.nsyl.setting.antiafk.ai_range", 16, 1, 64, 1,
 		ValueDisplay.AREA_FROM_RADIUS);
 	
 	private final SliderSetting nonAiRange = new SliderSetting("Non-AI range",
-		"description.wurst.setting.antiafk.non-ai_range", 1, 1, 64, 1,
+		"description.nsyl.setting.antiafk.non-ai_range", 1, 1, 64, 1,
 		ValueDisplay.AREA_FROM_RADIUS);
 	
 	private final SliderSetting waitTime = new SliderSetting("Wait time",
-		"description.wurst.setting.antiafk.wait_time", 2.5, 0, 60, 0.05,
+		"description.nsyl.setting.antiafk.wait_time", 2.5, 0, 60, 0.05,
 		ValueDisplay.DECIMAL.withSuffix("s"));
 	
 	private final SliderSetting waitTimeRand = new SliderSetting(
 		"Wait time randomization",
-		"description.wurst.setting.antiafk.wait_time_randomization", 0.5, 0, 60,
+		"description.nsyl.setting.antiafk.wait_time_randomization", 0.5, 0, 60,
 		0.05, ValueDisplay.DECIMAL.withPrefix("\u00b1").withSuffix("s"));
 	
 	private final CheckboxSetting showWaitTime =
 		new CheckboxSetting("Show wait time",
-			"description.wurst.setting.antiafk.show_wait_time", true);
+			"description.nsyl.setting.antiafk.show_wait_time", true);
 	
 	private int timer;
 	private RandomSource random = RandomSource.createNewThreadLocalInstance();
@@ -97,7 +97,7 @@ public final class AntiAfkHack extends Hack
 			new RandomPathFinder(randomize(start, aiRange.getValueI(), true));
 		creativeFlying = MC.player.getAbilities().flying;
 		
-		WURST.getHax().autoFishHack.setEnabled(false);
+		CLIENT.getHax().autoFishHack.setEnabled(false);
 		
 		EVENTS.add(UpdateListener.class, this);
 		EVENTS.add(RenderListener.class, this);
@@ -129,7 +129,7 @@ public final class AntiAfkHack extends Hack
 		{
 			// prevent drowning
 			if(MC.player.isUnderWater()
-				&& !WURST.getHax().jesusHack.isEnabled())
+				&& !CLIENT.getHax().jesusHack.isEnabled())
 			{
 				MC.options.keyJump.setDown(true);
 				return;
@@ -188,7 +188,7 @@ public final class AntiAfkHack extends Hack
 			}
 			
 			// face block
-			WURST.getRotationFaker()
+			CLIENT.getRotationFaker()
 				.faceVectorClientIgnorePitch(Vec3.atCenterOf(nextBlock));
 			
 			// walk
@@ -212,7 +212,7 @@ public final class AntiAfkHack extends Hack
 		if(!useAi.isChecked())
 			return;
 		
-		PathCmd pathCmd = WURST.getCmds().pathCmd;
+		PathCmd pathCmd = CLIENT.getCmds().pathCmd;
 		pathFinder.renderPath(matrixStack, pathCmd.isDebugMode(),
 			pathCmd.isDepthTest());
 	}

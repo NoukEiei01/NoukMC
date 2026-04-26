@@ -34,7 +34,7 @@ public abstract class ClientPlayNetworkHandlerMixin
 	extends ClientCommonPacketListenerImpl
 	implements TickablePacketListener, ClientGamePacketListener
 {
-	private ClientPlayNetworkHandlerMixin(NsylClient wurst, Minecraft client,
+	private ClientPlayNetworkHandlerMixin(NsylClient nsyl, Minecraft client,
 		Connection connection, CommonListenerCookie connectionState)
 	{
 		super(client, connection, connectionState);
@@ -44,8 +44,8 @@ public abstract class ClientPlayNetworkHandlerMixin
 		method = "handleLogin(Lnet/minecraft/network/protocol/game/ClientboundLoginPacket;)V")
 	public void onOnGameJoin(ClientboundLoginPacket packet, CallbackInfo ci)
 	{
-		NsylClient wurst = NsylClient.INSTANCE;
-		if(!wurst.isEnabled())
+		NsylClient nsyl = NsylClient.INSTANCE;
+		if(!nsyl.isEnabled())
 			return;
 		
 		// Remove Mojang's dishonest warning toast on safe servers
@@ -57,10 +57,10 @@ public abstract class ClientPlayNetworkHandlerMixin
 		}
 		
 		// Add an honest warning toast on unsafe servers
-		MutableComponent title = Component.literal(ChatUtils.WURST_PREFIX
-			+ wurst.translate("toast.wurst.nochatreports.unsafe_server.title"));
+		MutableComponent title = Component.literal(ChatUtils.NSYL_PREFIX
+			+ nsyl.translate("toast.nsyl.nochatreports.unsafe_server.title"));
 		MutableComponent message = Component.literal(
-			wurst.translate("toast.wurst.nochatreports.unsafe_server.message"));
+			nsyl.translate("toast.nsyl.nochatreports.unsafe_server.message"));
 		
 		SystemToast systemToast = SystemToast.multiline(minecraft,
 			SystemToast.SystemToastId.UNSECURE_SERVER_WARNING, title, message);

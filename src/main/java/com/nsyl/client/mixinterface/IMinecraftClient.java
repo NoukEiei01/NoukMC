@@ -15,7 +15,7 @@ public interface IMinecraftClient
 	
 	public IClientPlayerEntity getPlayer();
 	
-	public User getWurstSession();
+	public User getNsylSession();
 	
-	public void setWurstSession(User session);
+	public void setNsylSession(User session);
 }

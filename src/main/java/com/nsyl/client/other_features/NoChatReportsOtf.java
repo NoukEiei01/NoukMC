@@ -47,7 +47,7 @@ public final class NoChatReportsOtf extends OtherFeature
 	
 	public NoChatReportsOtf()
 	{
-		super("NoChatReports", "description.wurst.other_feature.nochatreports");
+		super("NoChatReports", "description.nsyl.other_feature.nochatreports");
 		addSetting(disableSignatures);
 		
 		ClientLoginConnectionEvents.INIT.register(this::onLoginStart);
@@ -113,17 +113,17 @@ public final class NoChatReportsOtf extends OtherFeature
 	public GuiMessageTag modifyIndicator(Component message,
 		MessageSignature signature, GuiMessageTag indicator)
 	{
-		if(!WURST.isEnabled() || MC.isLocalServer())
+		if(!CLIENT.isEnabled() || MC.isLocalServer())
 			return indicator;
 		
 		if(indicator != null || signature == null)
 			return indicator;
 		
 		return new GuiMessageTag(0xE84F58, Icon.CHAT_MODIFIED,
-			Component.literal(ChatUtils.WURST_PREFIX
+			Component.literal(ChatUtils.NSYL_PREFIX
 				+ "\u00a7cReportable\u00a7r - "
-				+ WURST.translate(
-					"description.wurst.nochatreports.message_is_reportable")),
+				+ CLIENT.translate(
+					"description.nsyl.nochatreports.message_is_reportable")),
 			"Reportable");
 	}
 	
@@ -135,13 +135,13 @@ public final class NoChatReportsOtf extends OtherFeature
 	
 	public boolean isActive()
 	{
-		return isEnabled() && WURST.isEnabled() && !MC.isLocalServer();
+		return isEnabled() && CLIENT.isEnabled() && !MC.isLocalServer();
 	}
 	
 	@Override
 	public String getPrimaryAction()
 	{
-		return WURST.translate("button.wurst.nochatreports."
+		return CLIENT.translate("button.nsyl.nochatreports."
 			+ (isEnabled() ? "re-enable_signatures" : "disable_signatures"));
 	}
 	

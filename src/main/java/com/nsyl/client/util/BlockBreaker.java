@@ -30,7 +30,7 @@ public enum BlockBreaker
 {
 	;
 	
-	private static final NsylClient WURST = NsylClient.INSTANCE;
+	private static final NsylClient CLIENT = NsylClient.INSTANCE;
 	private static final Minecraft MC = NsylClient.MC;
 	
 	public static boolean breakOneBlock(BlockPos pos)
@@ -45,7 +45,7 @@ public enum BlockBreaker
 	public static boolean breakOneBlock(BlockBreakingParams params)
 	{
 		// face block
-		WURST.getRotationFaker().faceVectorPacket(params.hitVec);
+		CLIENT.getRotationFaker().faceVectorPacket(params.hitVec);
 		
 		// damage block
 		if(!MC.gameMode.continueDestroyBlock(params.pos, params.side))

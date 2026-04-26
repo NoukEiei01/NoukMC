@@ -116,6 +116,20 @@ public final class MobEspHack extends Hack implements UpdateListener,
 			mobs.add(e);
 			colorCache.put(e, computeColor(e));
 		});
+		
+		// Pre-build render lists in onUpdate (once per tick, not per frame)
+		double extraSize = boxSize.getExtraSize() / 2;
+		boxes.clear();
+		ends.clear();
+		for(LivingEntity e : mobs)
+		{
+			AABB box = e.getBoundingBox()
+				.move(0, extraSize, 0).inflate(extraSize);
+			if(style.hasBoxes())
+				boxes.add(new ColoredBox(box, getColor(e)));
+			if(style.hasLines())
+				ends.add(new ColoredPoint(box.getCenter(), getColor(e)));
+		}
 	}
 	
 	@Override
@@ -129,33 +143,12 @@ public final class MobEspHack extends Hack implements UpdateListener,
 	@Override
 	public void onRender(PoseStack matrixStack, float partialTicks)
 	{
-		if(style.hasBoxes())
-		{
-			double extraSize = boxSize.getExtraSize() / 2;
-			
-			boxes.clear();
-			for(LivingEntity e : mobs)
-			{
-				AABB box = EntityUtils.getLerpedBox(e, partialTicks)
-					.move(0, extraSize, 0).inflate(extraSize);
-				boxes.add(new ColoredBox(box, getColor(e)));
-			}
-			
+		// Render pre-built lists - no allocation on the render thread
+		if(style.hasBoxes() && !boxes.isEmpty())
 			RenderUtils.drawOutlinedBoxes(matrixStack, boxes, false);
-		}
 		
-		if(style.hasLines())
-		{
-			ends.clear();
-			for(LivingEntity e : mobs)
-			{
-				Vec3 point =
-					EntityUtils.getLerpedBox(e, partialTicks).getCenter();
-				ends.add(new ColoredPoint(point, getColor(e)));
-			}
-			
+		if(style.hasLines() && !ends.isEmpty())
 			RenderUtils.drawTracers(matrixStack, partialTicks, ends, false);
-		}
 	}
 	
 	private int getColor(LivingEntity e)

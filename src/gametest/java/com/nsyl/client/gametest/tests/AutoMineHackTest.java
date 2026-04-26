@@ -31,14 +31,14 @@ public enum AutoMineHackTest
 		// Break a dirt block in survival mode
 		runCommand(server, "setblock ~ ~1 ~2 minecraft:dirt");
 		waitForBlock(context, 0, 1, 2, Blocks.DIRT);
-		runWurstCommand(context, "t AutoMine on");
+		runNsylCommand(context, "t AutoMine on");
 		waitForBlock(context, 0, 1, 2, Blocks.AIR);
 		context.waitTick();
 		world.waitForChunksRender();
 		context.takeScreenshot("automine_survival");
 		
 		// Clean up
-		runWurstCommand(context, "t AutoMine off");
+		runNsylCommand(context, "t AutoMine off");
 		runCommand(server, "gamemode creative");
 		runCommand(server, "kill @e[type=item]");
 		clearInventory(context);

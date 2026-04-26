@@ -20,7 +20,7 @@ import com.nsyl.client.NsylClient;
 @Mixin(PackSelectionScreen.class)
 public class PackScreenMixin extends Screen
 {
-	private PackScreenMixin(NsylClient wurst, Component title)
+	private PackScreenMixin(NsylClient nsyl, Component title)
 	{
 		super(title);
 	}

@@ -20,7 +20,7 @@ public class FilterOwnMessagesSetting extends CheckboxSetting
 	public FilterOwnMessagesSetting()
 	{
 		super("Filter own messages",
-			"description.wurst.setting.chattranslator.filter_own_messages",
+			"description.nsyl.setting.chattranslator.filter_own_messages",
 			true);
 	}
 	

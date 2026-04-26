@@ -13,7 +13,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Adds search tags to a Wurst feature so that it can be found through the
+ * Adds search tags to a NSYL feature so that it can be found through the
  * search bar in the Navigator GUI.
  *
  * <p>

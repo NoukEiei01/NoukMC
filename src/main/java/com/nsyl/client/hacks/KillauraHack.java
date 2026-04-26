@@ -115,15 +115,15 @@ public final class KillauraHack extends Hack
 	protected void onEnable()
 	{
 		// disable other killauras
-		WURST.getHax().aimAssistHack.setEnabled(false);
-		WURST.getHax().clickAuraHack.setEnabled(false);
-		WURST.getHax().crystalAuraHack.setEnabled(false);
-		WURST.getHax().fightBotHack.setEnabled(false);
-		WURST.getHax().killauraLegitHack.setEnabled(false);
-		WURST.getHax().multiAuraHack.setEnabled(false);
-		WURST.getHax().protectHack.setEnabled(false);
-		WURST.getHax().triggerBotHack.setEnabled(false);
-		WURST.getHax().tpAuraHack.setEnabled(false);
+		CLIENT.getHax().aimAssistHack.setEnabled(false);
+		CLIENT.getHax().clickAuraHack.setEnabled(false);
+		CLIENT.getHax().crystalAuraHack.setEnabled(false);
+		CLIENT.getHax().fightBotHack.setEnabled(false);
+		CLIENT.getHax().killauraLegitHack.setEnabled(false);
+		CLIENT.getHax().multiAuraHack.setEnabled(false);
+		CLIENT.getHax().protectHack.setEnabled(false);
+		CLIENT.getHax().triggerBotHack.setEnabled(false);
+		CLIENT.getHax().tpAuraHack.setEnabled(false);
 		
 		speed.resetTimer(speedRandMS.getValue());
 		EVENTS.add(UpdateListener.class, this);
@@ -167,7 +167,7 @@ public final class KillauraHack extends Hack
 		if(target == null)
 			return;
 		
-		WURST.getHax().autoSwordHack.setSlot(target);
+		CLIENT.getHax().autoSwordHack.setSlot(target);
 		
 		Vec3 hitVec = target.getBoundingBox().getCenter();
 		if(checkLOS.isChecked() && !BlockUtils.hasLineOfSight(hitVec))
@@ -176,7 +176,7 @@ public final class KillauraHack extends Hack
 			return;
 		}
 		
-		WURST.getRotationFaker().faceVectorPacket(hitVec);
+		CLIENT.getRotationFaker().faceVectorPacket(hitVec);
 	}
 	
 	@Override

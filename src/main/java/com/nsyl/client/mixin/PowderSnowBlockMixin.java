@@ -21,7 +21,7 @@ import com.nsyl.client.NsylClient;
 @Mixin(PowderSnowBlock.class)
 public abstract class PowderSnowBlockMixin extends Block implements BucketPickup
 {
-	private PowderSnowBlockMixin(NsylClient wurst, Properties settings)
+	private PowderSnowBlockMixin(NsylClient nsyl, Properties settings)
 	{
 		super(settings);
 	}

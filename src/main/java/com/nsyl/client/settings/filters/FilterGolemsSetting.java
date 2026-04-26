@@ -27,12 +27,12 @@ public final class FilterGolemsSetting extends EntityFilterCheckbox
 	public static FilterGolemsSetting genericCombat(boolean checked)
 	{
 		return new FilterGolemsSetting(
-			"description.wurst.setting.generic.filter_golems_combat", checked);
+			"description.nsyl.setting.generic.filter_golems_combat", checked);
 	}
 	
 	public static FilterGolemsSetting genericVision(boolean checked)
 	{
 		return new FilterGolemsSetting(
-			"description.wurst.setting.generic.filter_golems_vision", checked);
+			"description.nsyl.setting.generic.filter_golems_vision", checked);
 	}
 }

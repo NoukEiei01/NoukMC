@@ -276,7 +276,7 @@ public final class AutoLibrarianHack extends Hack
 		}
 		
 		// equip tool
-		WURST.getHax().autoToolHack.equipBestTool(jobSite, false, true,
+		CLIENT.getHax().autoToolHack.equipBestTool(jobSite, false, true,
 			repairMode.getValueI());
 		
 		// face block

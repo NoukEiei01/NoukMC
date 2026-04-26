@@ -88,7 +88,7 @@ public final class CmdList
 			
 		}catch(Exception e)
 		{
-			String message = "Initializing Wurst commands";
+			String message = "Initializing NSYL commands";
 			CrashReport report = CrashReport.forThrowable(e, message);
 			throw new ReportedException(report);
 		}

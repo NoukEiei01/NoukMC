@@ -15,7 +15,7 @@ import com.nsyl.client.events.GUIRenderListener;
 
 public final class IngameHUD implements GUIRenderListener
 {
-	private final NsylLogo wurstLogo = new NsylLogo();
+	private final NsylLogo nsylLogo = new NsylLogo();
 	private final HackListHUD hackList = new HackListHUD();
 	private TabGui tabGui;
 	
@@ -32,7 +32,7 @@ public final class IngameHUD implements GUIRenderListener
 		
 		clickGui.updateColors();
 		
-		wurstLogo.render(context);
+		nsylLogo.render(context);
 		hackList.render(context, partialTicks);
 		tabGui.render(context, partialTicks);
 		

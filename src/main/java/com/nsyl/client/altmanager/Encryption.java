@@ -59,11 +59,11 @@ public final class Encryption
 		createEncryptionFolder(encFolder);
 		
 		KeyPair rsaKeyPair =
-			getRsaKeyPair(encFolder.resolve("wurst_rsa_public.txt"),
-				encFolder.resolve("wurst_rsa_private.txt"));
+			getRsaKeyPair(encFolder.resolve("nsyl_rsa_public.txt"),
+				encFolder.resolve("nsyl_rsa_private.txt"));
 		
 		SecretKey aesKey =
-			getAesKey(encFolder.resolve("wurst_aes.txt"), rsaKeyPair);
+			getAesKey(encFolder.resolve("nsyl_aes.txt"), rsaKeyPair);
 		
 		try
 		{
@@ -94,7 +94,7 @@ public final class Encryption
 			+ "If someone is asking you to send these files, they are 100% trying to scam you.\r\n"
 			+ "\r\n"
 			+ "DO NOT EDIT, RENAME OR DELETE THESE FILES! (unless you know what you're doing)\r\n"
-			+ "If you do, Wurst's Alt Manager can no longer read your alt list and will replace it with a blank one.\r\n"
+			+ "If you do, NSYL's Alt Manager can no longer read your alt list and will replace it with a blank one.\r\n"
 			+ "In other words, YOUR ALT LIST WILL BE DELETED.";
 		Files.write(readme, readmeText.getBytes("UTF-8"),
 			StandardOpenOption.CREATE);
@@ -106,7 +106,7 @@ public final class Encryption
 	{
 		String userHome = System.getProperty("user.home");
 		String xdgDataHome = System.getenv("XDG_DATA_HOME");
-		String encFolderName = ".Wurst encryption";
+		String encFolderName = ".NSYL encryption";
 		
 		Path homeEncFolder = Paths.get(userHome, encFolderName).normalize();
 		Path encFolder = homeEncFolder;
@@ -145,7 +145,7 @@ public final class Encryption
 		}catch(IOException e)
 		{
 			CrashReport report = CrashReport.forThrowable(e,
-				"Migrating Wurst encryption folder");
+				"Migrating NSYL encryption folder");
 			CrashReportCategory section = report.addCategory("Migration");
 			section.setDetail("Old path", oldFolder);
 			section.setDetail("New path", newFolder);

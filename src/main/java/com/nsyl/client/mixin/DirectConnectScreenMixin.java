@@ -28,7 +28,7 @@ public class DirectConnectScreenMixin extends Screen
 	@Final
 	private ServerData serverData;
 	
-	private DirectConnectScreenMixin(NsylClient wurst, Component title)
+	private DirectConnectScreenMixin(NsylClient nsyl, Component title)
 	{
 		super(title);
 	}

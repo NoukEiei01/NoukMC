@@ -26,14 +26,14 @@ public final class FilterShulkersSetting extends EntityFilterCheckbox
 	public static FilterShulkersSetting genericCombat(boolean checked)
 	{
 		return new FilterShulkersSetting(
-			"description.wurst.setting.generic.filter_shulkers_combat",
+			"description.nsyl.setting.generic.filter_shulkers_combat",
 			checked);
 	}
 	
 	public static FilterShulkersSetting genericVision(boolean checked)
 	{
 		return new FilterShulkersSetting(
-			"description.wurst.setting.generic.filter_shulkers_vision",
+			"description.nsyl.setting.generic.filter_shulkers_vision",
 			checked);
 	}
 }

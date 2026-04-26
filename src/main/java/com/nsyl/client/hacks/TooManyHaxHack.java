@@ -39,10 +39,10 @@ public final class TooManyHaxHack extends Hack
 		super("TooManyHax");
 		setCategory(Category.OTHER);
 		
-		Path wurstFolder = WURST.getWurstFolder();
-		profilesFolder = wurstFolder.resolve("toomanyhax");
+		Path nsylFolder = CLIENT.getNsylFolder();
+		profilesFolder = nsylFolder.resolve("toomanyhax");
 		
-		Path filePath = wurstFolder.resolve("toomanyhax.json");
+		Path filePath = nsylFolder.resolve("toomanyhax.json");
 		file = new TooManyHaxFile(filePath, blockedFeatures);
 	}
 	
@@ -128,9 +128,9 @@ public final class TooManyHaxHack extends Hack
 		blockedFeatures.clear();
 		
 		ArrayList<Feature> features = new ArrayList<>();
-		features.addAll(WURST.getHax().getAllHax());
-		features.addAll(WURST.getCmds().getAllCmds());
-		features.addAll(WURST.getOtfs().getAllOtfs());
+		features.addAll(CLIENT.getHax().getAllHax());
+		features.addAll(CLIENT.getCmds().getAllCmds());
+		features.addAll(CLIENT.getOtfs().getAllOtfs());
 		
 		for(Feature feature : features)
 		{

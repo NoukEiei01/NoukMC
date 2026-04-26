@@ -34,7 +34,7 @@ public enum ModifyCmdTest
 		assertOneItemInSlot(context, 0, Items.DIAMOND);
 		
 		// .modify it with NBT data
-		runWurstCommand(context,
+		runNsylCommand(context,
 			"modify set custom_name \"\\\"$cRed Name\\\"\"");
 		assertOneItemInSlot(context, 0, Items.DIAMOND);
 		ItemStack stack = context
@@ -44,7 +44,7 @@ public enum ModifyCmdTest
 			.getString();
 		if(!name.equals("\u00a7cRed Name"))
 			throw new RuntimeException("Custom name is wrong: " + name);
-		runWurstCommand(context, "viewcomp type name");
+		runNsylCommand(context, "viewcomp type name");
 		context.takeScreenshot("modify_command_result");
 		
 		// Clean up

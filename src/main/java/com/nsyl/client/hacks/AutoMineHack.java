@@ -42,13 +42,13 @@ public final class AutoMineHack extends Hack
 	@Override
 	protected void onEnable()
 	{
-		WURST.getHax().autoFarmHack.setEnabled(false);
-		WURST.getHax().excavatorHack.setEnabled(false);
-		WURST.getHax().nukerHack.setEnabled(false);
-		WURST.getHax().nukerLegitHack.setEnabled(false);
-		WURST.getHax().speedNukerHack.setEnabled(false);
-		WURST.getHax().tunnellerHack.setEnabled(false);
-		WURST.getHax().veinMinerHack.setEnabled(false);
+		CLIENT.getHax().autoFarmHack.setEnabled(false);
+		CLIENT.getHax().excavatorHack.setEnabled(false);
+		CLIENT.getHax().nukerHack.setEnabled(false);
+		CLIENT.getHax().nukerLegitHack.setEnabled(false);
+		CLIENT.getHax().speedNukerHack.setEnabled(false);
+		CLIENT.getHax().tunnellerHack.setEnabled(false);
+		CLIENT.getHax().veinMinerHack.setEnabled(false);
 		
 		EVENTS.add(UpdateListener.class, this);
 		EVENTS.add(HandleBlockBreakingListener.class, this);
@@ -94,7 +94,7 @@ public final class AutoMineHack extends Hack
 			return;
 		}
 		
-		WURST.getHax().autoToolHack.equipIfEnabled(pos);
+		CLIENT.getHax().autoToolHack.equipIfEnabled(pos);
 		
 		if(MC.player.isUsingItem())
 			// This case doesn't cancel block breaking in vanilla Minecraft.

@@ -49,16 +49,16 @@ import com.nsyl.client.util.RotationUtils;
 public final class AnchorAuraHack extends Hack implements UpdateListener
 {
 	private final SliderSetting range =
-		new SliderSetting("Range", "description.wurst.setting.anchoraura.range",
+		new SliderSetting("Range", "description.nsyl.setting.anchoraura.range",
 			6, 1, 6, 0.05, ValueDisplay.DECIMAL);
 	
 	private final CheckboxSetting autoPlace =
 		new CheckboxSetting("Auto-place anchors",
-			"description.wurst.setting.anchoraura.auto-place_anchors", true);
+			"description.nsyl.setting.anchoraura.auto-place_anchors", true);
 	
 	private final CheckboxSetting checkLOS =
 		new CheckboxSetting("Check line of sight",
-			"description.wurst.setting.anchoraura.check_line_of_sight", false);
+			"description.nsyl.setting.anchoraura.check_line_of_sight", false);
 	
 	private final FaceTargetSetting faceTarget =
 		FaceTargetSetting.withPacketSpam(this, FaceTarget.OFF);
@@ -68,7 +68,7 @@ public final class AnchorAuraHack extends Hack implements UpdateListener
 	
 	private final EnumSetting<TakeItemsFrom> takeItemsFrom =
 		new EnumSetting<>("Take items from",
-			"description.wurst.setting.anchoraura.take_items_from",
+			"description.nsyl.setting.anchoraura.take_items_from",
 			TakeItemsFrom.values(), TakeItemsFrom.INVENTORY);
 	
 	private final EntityFilterList entityFilters =
@@ -334,7 +334,7 @@ public final class AnchorAuraHack extends Hack implements UpdateListener
 				&& ((LivingEntity)e).getHealth() > 0)
 			.filter(e -> e != MC.player)
 			.filter(e -> !(e instanceof FakePlayerEntity))
-			.filter(e -> !WURST.getFriends().contains(e.getName().getString()))
+			.filter(e -> !CLIENT.getFriends().contains(e.getName().getString()))
 			.filter(e -> MC.player.distanceToSqr(e) <= rangeSq);
 		
 		stream = entityFilters.applyTo(stream);
@@ -397,7 +397,7 @@ public final class AnchorAuraHack extends Hack implements UpdateListener
 	private boolean isSneaking()
 	{
 		return MC.player.isShiftKeyDown()
-			|| WURST.getHax().sneakHack.isEnabled();
+			|| CLIENT.getHax().sneakHack.isEnabled();
 	}
 	
 	private enum TakeItemsFrom

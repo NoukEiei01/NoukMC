@@ -14,7 +14,7 @@ import com.nsyl.client.NsylClient;
 public abstract class Component
 {
 	protected static final Minecraft MC = NsylClient.MC;
-	protected static final NsylClient WURST = NsylClient.INSTANCE;
+	protected static final NsylClient CLIENT = NsylClient.INSTANCE;
 	
 	private int x;
 	private int y;

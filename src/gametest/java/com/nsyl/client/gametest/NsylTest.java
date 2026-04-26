@@ -34,15 +34,15 @@ import com.nsyl.client.gametest.tests.*;
 
 public class NsylTest implements FabricClientGameTest
 {
-	public static final Logger LOGGER = LoggerFactory.getLogger("Wurst Test");
+	public static final Logger LOGGER = LoggerFactory.getLogger("NSYL Test");
 	
 	public static final boolean IS_MOD_COMPAT_TEST =
-		System.getProperty("wurst.test.withMods") != null;
+		System.getProperty("nsyl.test.withMods") != null;
 	
 	@Override
 	public void runTest(ClientGameTestContext context)
 	{
-		LOGGER.info("Starting Wurst Client GameTest");
+		LOGGER.info("Starting NSYL Client GameTest");
 		hideSplashTexts(context);
 		waitForTitleScreenFade(context);
 		
@@ -112,29 +112,29 @@ public class NsylTest implements FabricClientGameTest
 			"https://i.imgur.com/L58HCGj.png");
 		input.pressKey(GLFW.GLFW_KEY_ESCAPE);
 		
-		runWurstCommand(context,
+		runNsylCommand(context,
 			"setmode NsylLogo visibility only_when_outdated");
-		runWurstCommand(context, "setcheckbox HackList animations off");
+		runNsylCommand(context, "setcheckbox HackList animations off");
 		
 		// TODO: Open ClickGUI and Navigator
 		
-		// Test Wurst hacks
+		// Test NSYL hacks
 		AutoMineHackTest.testAutoMineHack(context, spContext);
 		FreecamHackTest.testFreecamHack(context, spContext);
 		NoFallHackTest.testNoFallHack(context, spContext);
 		XRayHackTest.testXRayHack(context, spContext);
 		
-		// Test Wurst commands
+		// Test NSYL commands
 		CopyItemCmdTest.testCopyItemCmd(context, spContext);
 		GiveCmdTest.testGiveCmd(context, spContext);
 		ModifyCmdTest.testModifyCmd(context, spContext);
 		
-		// TODO: Test more Wurst features
+		// TODO: Test more NSYL features
 		
 		// Test special cases
 		PistonTest.testPistonDoesntCrash(context, spContext);
 		
-		// TODO: Check Wurst Options
+		// TODO: Check NSYL Options
 	}
 	
 	// because the grass texture is randomized and smooth stone isn't

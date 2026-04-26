@@ -74,7 +74,7 @@ public enum NsylClient
 	private static boolean guiInitialized;
 	private NsylUpdater updater;
 	private ProblematicResourcePackDetector problematicPackDetector;
-	private Path wurstFolder;
+	private Path nsylFolder;
 	
 	public void initialize()
 	{
@@ -82,33 +82,33 @@ public enum NsylClient
 		
 		MC = Minecraft.getInstance();
 		IMC = (IMinecraftClient)MC;
-		wurstFolder = createWurstFolder();
+		nsylFolder = createNsylFolder();
 		
 		eventManager = new EventManager(this);
 		
-		Path enabledHacksFile = wurstFolder.resolve("enabled-hacks.json");
+		Path enabledHacksFile = nsylFolder.resolve("enabled-hacks.json");
 		hax = new HackList(enabledHacksFile);
 		
 		cmds = new CmdList();
 		
 		otfs = new OtfList();
 		
-		Path settingsFile = wurstFolder.resolve("settings.json");
-		settingsProfileFolder = wurstFolder.resolve("settings");
+		Path settingsFile = nsylFolder.resolve("settings.json");
+		settingsProfileFolder = nsylFolder.resolve("settings");
 		this.settingsFile = new SettingsFile(settingsFile, hax, cmds, otfs);
 		this.settingsFile.load();
 		hax.tooManyHaxHack.loadBlockedHacksFile();
 		
-		Path keybindsFile = wurstFolder.resolve("keybinds.json");
+		Path keybindsFile = nsylFolder.resolve("keybinds.json");
 		keybinds = new KeybindList(keybindsFile);
 		
-		Path guiFile = wurstFolder.resolve("windows.json");
+		Path guiFile = nsylFolder.resolve("windows.json");
 		gui = new ClickGui(guiFile);
 		
-		Path preferencesFile = wurstFolder.resolve("preferences.json");
+		Path preferencesFile = nsylFolder.resolve("preferences.json");
 		navigator = new Navigator(preferencesFile, hax, cmds, otfs);
 		
-		Path friendsFile = wurstFolder.resolve("friends.json");
+		Path friendsFile = nsylFolder.resolve("friends.json");
 		friends = new FriendsList(friendsFile);
 		friends.load();
 		
@@ -134,31 +134,31 @@ public enum NsylClient
 		updater = new NsylUpdater();
 		eventManager.add(UpdateListener.class, updater);
 		
-		Path altsFile = wurstFolder.resolve("alts.encrypted_json");
+		Path altsFile = nsylFolder.resolve("alts.encrypted_json");
 		Path encFolder = Encryption.chooseEncryptionFolder();
 		altManager = new AltManager(altsFile, encFolder);
 		
-		// initialize plausible analytics (ต้อง init หลังสุดเพราะต้องการ wurstFolder)
-		Path analyticsFile = wurstFolder.resolve("analytics.json");
+		// initialize plausible analytics (ต้อง init หลังสุดเพราะต้องการ nsylFolder)
+		Path analyticsFile = nsylFolder.resolve("analytics.json");
 		plausible = new PlausibleAnalytics(analyticsFile);
 	}
 	
-	private Path createWurstFolder()
+	private Path createNsylFolder()
 	{
 		Path dotMinecraftFolder = MC.gameDirectory.toPath().normalize();
-		Path wurstFolder = dotMinecraftFolder.resolve("nsyl");
+		Path nsylFolder = dotMinecraftFolder.resolve("nsyl");
 		
 		try
 		{
-			Files.createDirectories(wurstFolder);
+			Files.createDirectories(nsylFolder);
 			
 		}catch(IOException e)
 		{
 			throw new RuntimeException(
-				"Couldn't create .minecraft/wurst folder.", e);
+				"Couldn't create .minecraft/nsyl folder.", e);
 		}
 		
-		return wurstFolder;
+		return nsylFolder;
 	}
 	
 	public String translate(String key, Object... args)
@@ -310,9 +310,9 @@ public enum NsylClient
 		return problematicPackDetector;
 	}
 	
-	public Path getWurstFolder()
+	public Path getNsylFolder()
 	{
-		return wurstFolder;
+		return nsylFolder;
 	}
 	
 	public AltManager getAltManager()

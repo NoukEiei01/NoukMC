@@ -56,10 +56,10 @@ public abstract class MinecraftClientMixin
 	@Final
 	private YggdrasilAuthenticationService authenticationService;
 	
-	private User wurstSession;
-	private ProfileKeyPairManager wurstProfileKeys;
+	private User nsylSession;
+	private ProfileKeyPairManager nsylProfileKeys;
 	
-	private MinecraftClientMixin(NsylClient wurst, String name)
+	private MinecraftClientMixin(NsylClient nsyl, String name)
 	{
 		super(name);
 	}
@@ -140,8 +140,8 @@ public abstract class MinecraftClientMixin
 		cancellable = true)
 	private void onGetSession(CallbackInfoReturnable<User> cir)
 	{
-		if(wurstSession != null)
-			cir.setReturnValue(wurstSession);
+		if(nsylSession != null)
+			cir.setReturnValue(nsylSession);
 	}
 	
 	@Inject(at = @At("RETURN"),
@@ -149,12 +149,12 @@ public abstract class MinecraftClientMixin
 		cancellable = true)
 	public void onGetGameProfile(CallbackInfoReturnable<GameProfile> cir)
 	{
-		if(wurstSession == null)
+		if(nsylSession == null)
 			return;
 		
 		GameProfile oldProfile = cir.getReturnValue();
-		GameProfile newProfile = new GameProfile(wurstSession.getProfileId(),
-			wurstSession.getName());
+		GameProfile newProfile = new GameProfile(nsylSession.getProfileId(),
+			nsylSession.getName());
 		newProfile.getProperties().putAll(oldProfile.getProperties());
 		cir.setReturnValue(newProfile);
 	}
@@ -168,10 +168,10 @@ public abstract class MinecraftClientMixin
 		if(NsylClient.INSTANCE.getOtfs().noChatReportsOtf.isActive())
 			cir.setReturnValue(ProfileKeyPairManager.EMPTY_KEY_MANAGER);
 		
-		if(wurstProfileKeys == null)
+		if(nsylProfileKeys == null)
 			return;
 		
-		cir.setReturnValue(wurstProfileKeys);
+		cir.setReturnValue(nsylProfileKeys);
 	}
 	
 	@Inject(at = @At("HEAD"), method = "allowsTelemetry()Z", cancellable = true)
@@ -204,18 +204,18 @@ public abstract class MinecraftClientMixin
 	}
 	
 	@Override
-	public User getWurstSession()
+	public User getNsylSession()
 	{
-		return wurstSession;
+		return nsylSession;
 	}
 	
 	@Override
-	public void setWurstSession(User session)
+	public void setNsylSession(User session)
 	{
-		wurstSession = session;
+		nsylSession = session;
 		if(session == null)
 		{
-			wurstProfileKeys = null;
+			nsylProfileKeys = null;
 			return;
 		}
 		
@@ -223,7 +223,7 @@ public abstract class MinecraftClientMixin
 			session.getType() == User.Type.MSA ? authenticationService
 				.createUserApiService(session.getAccessToken())
 				: UserApiService.OFFLINE;
-		wurstProfileKeys = ProfileKeyPairManager.create(userApiService, session,
+		nsylProfileKeys = ProfileKeyPairManager.create(userApiService, session,
 			gameDirectory.toPath());
 	}
 }

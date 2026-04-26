@@ -42,8 +42,8 @@ public final class TpCmd extends Command
 	{
 		BlockPos pos = argsToPos(args);
 		
-		if(disableFreecam.isChecked() && WURST.getHax().freecamHack.isEnabled())
-			WURST.getHax().freecamHack.setEnabled(false);
+		if(disableFreecam.isChecked() && CLIENT.getHax().freecamHack.isEnabled())
+			CLIENT.getHax().freecamHack.setEnabled(false);
 		
 		MC.player.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 	}

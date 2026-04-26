@@ -24,7 +24,7 @@ import com.nsyl.client.hacks.AutoRespawnHack;
 @Mixin(DeathScreen.class)
 public abstract class DeathScreenMixin extends Screen
 {
-	private DeathScreenMixin(NsylClient wurst, Component title)
+	private DeathScreenMixin(NsylClient nsyl, Component title)
 	{
 		super(title);
 	}

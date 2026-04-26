@@ -126,8 +126,8 @@ public final class AutoBuildHack extends Hack
 	@Override
 	protected void onEnable()
 	{
-		WURST.getHax().instaBuildHack.setEnabled(false);
-		WURST.getHax().templateToolHack.setEnabled(false);
+		CLIENT.getHax().instaBuildHack.setEnabled(false);
+		CLIENT.getHax().templateToolHack.setEnabled(false);
 		
 		EVENTS.add(UpdateListener.class, this);
 		EVENTS.add(RightClickListener.class, this);

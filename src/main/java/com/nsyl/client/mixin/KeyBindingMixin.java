@@ -28,7 +28,7 @@ public abstract class KeyBindingMixin implements IKeyBinding
 	@Override
 	@Unique
 	@Deprecated // use IKeyBinding.resetPressedState() instead
-	public void wurst_resetPressedState()
+	public void nsyl_resetPressedState()
 	{
 		long handle = NsylClient.MC.getWindow().getWindow();
 		int code = key.getValue();
@@ -42,7 +42,7 @@ public abstract class KeyBindingMixin implements IKeyBinding
 	@Override
 	@Unique
 	@Deprecated // use IKeyBinding.simulatePress() instead
-	public void wurst_simulatePress(boolean pressed)
+	public void nsyl_simulatePress(boolean pressed)
 	{
 		Minecraft mc = NsylClient.MC;
 		long window = mc.getWindow().getWindow();

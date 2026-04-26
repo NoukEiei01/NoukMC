@@ -22,7 +22,7 @@ import com.nsyl.client.NsylClient;
 @Mixin(TitleScreen.class)
 public abstract class TitleScreenMixin extends Screen
 {
-	private TitleScreenMixin(NsylClient wurst, Component title)
+	private TitleScreenMixin(NsylClient nsyl, Component title)
 	{
 		super(title);
 	}

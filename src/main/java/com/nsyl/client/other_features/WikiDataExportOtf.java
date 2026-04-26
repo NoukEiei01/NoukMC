@@ -28,8 +28,8 @@ public final class WikiDataExportOtf extends OtherFeature
 	{
 		super("WikiDataExport",
 			"Creates a JSON file full of technical details about all the"
-				+ " different features and settings in this version of Wurst."
-				+ " Primarily used to update the Wurst Wiki.");
+				+ " different features and settings in this version of NSYL."
+				+ " Primarily used to update the NSYL Wiki.");
 	}
 	
 	@Override
@@ -43,10 +43,10 @@ public final class WikiDataExportOtf extends OtherFeature
 	{
 		try
 		{
-			Path exportFile = WURST.getWurstFolder().resolve("wiki-data.json");
+			Path exportFile = CLIENT.getNsylFolder().resolve("wiki-data.json");
 			
 			JsonObject json = new JsonObject();
-			for(Hack hack : WURST.getHax().getAllHax())
+			for(Hack hack : CLIENT.getHax().getAllHax())
 				json.add(hack.getName(), hackToJson(hack));
 			
 			JsonUtils.toJson(json, exportFile);

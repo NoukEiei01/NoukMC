@@ -33,7 +33,7 @@ import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 
 public class NsylTranslator implements ResourceManagerReloadListener
 {
-	private final NsylClient wurst = NsylClient.INSTANCE;
+	private final NsylClient nsyl = NsylClient.INSTANCE;
 	private ClientLanguage mcEnglish;
 	
 	private Map<String, String> currentLangStrings = Map.of();
@@ -59,7 +59,7 @@ public class NsylTranslator implements ResourceManagerReloadListener
 	
 	/**
 	 * Translates the given key with the given args into the current language,
-	 * or into English if the "Force English" setting is enabled. Both Wurst and
+	 * or into English if the "Force English" setting is enabled. Both NSYL and
 	 * vanilla translations are supported.
 	 */
 	public String translate(String key, Object... args)
@@ -68,7 +68,7 @@ public class NsylTranslator implements ResourceManagerReloadListener
 		if(isForcedEnglish())
 			return translateEnglish(key, args);
 		
-		// Wurst translation
+		// NSYL translation
 		String string = currentLangStrings.get(key);
 		if(string != null)
 			try
@@ -86,7 +86,7 @@ public class NsylTranslator implements ResourceManagerReloadListener
 	
 	/**
 	 * Translates the given key with the given args into English, regardless of
-	 * the current language. Both Wurst and vanilla translations are supported.
+	 * the current language. Both NSYL and vanilla translations are supported.
 	 */
 	public String translateEnglish(String key, Object... args)
 	{
@@ -143,12 +143,12 @@ public class NsylTranslator implements ResourceManagerReloadListener
 	
 	public boolean isForcedEnglish()
 	{
-		return wurst.getOtfs().translationsOtf.getForceEnglish().isChecked();
+		return CLIENT.getOtfs().translationsOtf.getForceEnglish().isChecked();
 	}
 	
 	/**
 	 * Returns a translation storage for Minecraft's English strings, regardless
-	 * of the current language. Does not include any of Wurst's translations.
+	 * of the current language. Does not include any of NSYL's translations.
 	 */
 	public ClientLanguage getMcEnglish()
 	{
@@ -160,7 +160,7 @@ public class NsylTranslator implements ResourceManagerReloadListener
 		return currentLangStrings;
 	}
 	
-	public Map<String, String> getWurstsCurrentLanguage()
+	public Map<String, String> getNsylsCurrentLanguage()
 	{
 		return isForcedEnglish() ? englishOnlyStrings
 			: getMinecraftsCurrentLanguage();
@@ -197,19 +197,19 @@ public class NsylTranslator implements ResourceManagerReloadListener
 			{
 				try(InputStream stream = resource.open())
 				{
-					if(isBuiltInWurstResourcePack(resource))
+					if(isBuiltInNsylResourcePack(resource))
 						Language.loadFromJson(stream, entryConsumer);
 					
 				}catch(IOException | JsonParseException e)
 				{
 					System.out.println(
-						"Failed to load Wurst translations for " + langCode);
+						"Failed to load NSYL translations for " + langCode);
 					e.printStackTrace();
 					
 				}catch(Exception e)
 				{
 					System.out.println(
-						"Unexpected exception while loading Wurst translations for "
+						"Unexpected exception while loading NSYL translations for "
 							+ langCode);
 					e.printStackTrace();
 				}
@@ -218,15 +218,15 @@ public class NsylTranslator implements ResourceManagerReloadListener
 	}
 	
 	/**
-	 * Ensures that the given resource is from Wurst's built-in resource pack,
-	 * or at least from another client-side mod pretending to be Wurst, as it
+	 * Ensures that the given resource is from NSYL's built-in resource pack,
+	 * or at least from another client-side mod pretending to be NSYL, as it
 	 * should be impossible for server-provided resource packs to obtain a
-	 * KnownPack of <code>fabric:wurst</code>.
+	 * KnownPack of <code>fabric:nsyl</code>.
 	 *
 	 * <p>
 	 * ASSUME THEY CAN BYPASS THIS. CATCH EXCEPTIONS ANYWAY.
 	 */
-	private boolean isBuiltInWurstResourcePack(Resource resource)
+	private boolean isBuiltInNsylResourcePack(Resource resource)
 	{
 		KnownPack knownPack = Optional.ofNullable(resource)
 			.flatMap(Resource::knownPackInfo).orElse(null);
@@ -234,6 +234,6 @@ public class NsylTranslator implements ResourceManagerReloadListener
 			return false;
 		
 		return "fabric".equals(knownPack.namespace())
-			&& "wurst".equals(knownPack.id());
+			&& "nsyl".equals(knownPack.id());
 	}
 }

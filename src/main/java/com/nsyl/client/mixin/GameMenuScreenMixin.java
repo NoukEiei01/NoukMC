@@ -36,13 +36,13 @@ import com.nsyl.client.options.NsylOptionsScreen;
 public abstract class GameMenuScreenMixin extends Screen
 {
 	@Unique
-	private static final ResourceLocation WURST_TEXTURE =
+	private static final ResourceLocation NSYL_TEXTURE =
 		ResourceLocation.fromNamespaceAndPath("nsyl", "nsyl_logo.png");
 	
 	@Unique
-	private Button wurstOptionsButton;
+	private Button nsylOptionsButton;
 	
-	private GameMenuScreenMixin(NsylClient wurst, Component title)
+	private GameMenuScreenMixin(NsylClient nsyl, Component title)
 	{
 		super(title);
 	}
@@ -53,7 +53,7 @@ public abstract class GameMenuScreenMixin extends Screen
 		if(!NsylClient.INSTANCE.isEnabled())
 			return;
 		
-		addWurstOptionsButton();
+		addNsylOptionsButton();
 	}
 	
 	@Inject(at = @At("TAIL"),
@@ -61,25 +61,25 @@ public abstract class GameMenuScreenMixin extends Screen
 	private void onRender(GuiGraphics context, int mouseX, int mouseY,
 		float partialTicks, CallbackInfo ci)
 	{
-		if(!NsylClient.INSTANCE.isEnabled() || wurstOptionsButton == null)
+		if(!NsylClient.INSTANCE.isEnabled() || nsylOptionsButton == null)
 			return;
 		
 		RenderSystem.setShaderColor(1, 1, 1, 1);
 		
-		int x = wurstOptionsButton.getX() + 34;
-		int y = wurstOptionsButton.getY() + 2;
+		int x = nsylOptionsButton.getX() + 34;
+		int y = nsylOptionsButton.getY() + 2;
 		int w = 63;
 		int h = 16;
 		int fw = 63;
 		int fh = 16;
 		float u = 0;
 		float v = 0;
-		context.blit(RenderType::guiTextured, WURST_TEXTURE, x, y, u, v, w, h,
+		context.blit(RenderType::guiTextured, NSYL_TEXTURE, x, y, u, v, w, h,
 			fw, fh);
 	}
 	
 	@Unique
-	private void addWurstOptionsButton()
+	private void addNsylOptionsButton()
 	{
 		List<AbstractWidget> buttons = Screens.getButtons(this);
 		
@@ -113,9 +113,9 @@ public abstract class GameMenuScreenMixin extends Screen
 		
 		// Create NSYL Options button
 		MutableComponent buttonText = Component.literal("            Options");
-		wurstOptionsButton = Button.builder(buttonText, b -> openWurstOptions())
+		nsylOptionsButton = Button.builder(buttonText, b -> openNsylOptions())
 			.bounds(buttonX, buttonY, buttonWidth, buttonHeight).build();
-		buttons.add(wurstOptionsButton);
+		buttons.add(nsylOptionsButton);
 	}
 	
 	@Unique
@@ -157,7 +157,7 @@ public abstract class GameMenuScreenMixin extends Screen
 	}
 	
 	@Unique
-	private void openWurstOptions()
+	private void openNsylOptions()
 	{
 		minecraft.setScreen(new NsylOptionsScreen(this));
 	}

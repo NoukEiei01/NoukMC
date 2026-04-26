@@ -58,7 +58,7 @@ public final class CriticalsHack extends Hack
 		if(!(target instanceof LivingEntity))
 			return;
 		
-		if(WURST.getHax().maceDmgHack.isEnabled()
+		if(CLIENT.getHax().maceDmgHack.isEnabled()
 			&& MC.player.getMainHandItem().is(Items.MACE))
 			return;
 		

@@ -20,7 +20,7 @@ import com.nsyl.client.util.text.WText;
 
 public final class ToggleAllPlantTypesComponent extends Component
 {
-	private static final ClickGui GUI = WURST.getGui();
+	private static final ClickGui GUI = CLIENT.getGui();
 	private static final Font TR = MC.font;
 	private static final int BOX_SIZE = 11;
 	private static final int ICON_SIZE = 24;
@@ -91,11 +91,11 @@ public final class ToggleAllPlantTypesComponent extends Component
 		
 		if(hIcon || hName)
 			GUI.setTooltip(
-				"" + WText.translated("gui.wurst.autofarm.all_plant_types"));
+				"" + WText.translated("gui.nsyl.autofarm.all_plant_types"));
 		else if(hHarvest)
-			GUI.setTooltip("" + WText.translated("gui.wurst.autofarm.harvest"));
+			GUI.setTooltip("" + WText.translated("gui.nsyl.autofarm.harvest"));
 		else if(hReplant)
-			GUI.setTooltip("" + WText.translated("gui.wurst.autofarm.replant"));
+			GUI.setTooltip("" + WText.translated("gui.nsyl.autofarm.replant"));
 		
 		// background
 		int bgColor = getFillColor(false);

@@ -29,7 +29,7 @@ import com.nsyl.client.util.RenderUtils;
 
 public final class TabGui implements KeyPressListener
 {
-	private static final NsylClient WURST = NsylClient.INSTANCE;
+	private static final NsylClient CLIENT = NsylClient.INSTANCE;
 	private static final Minecraft MC = NsylClient.MC;
 	
 	private final ArrayList<Tab> tabs = new ArrayList<>();
@@ -43,16 +43,16 @@ public final class TabGui implements KeyPressListener
 	
 	public TabGui()
 	{
-		WURST.getEventManager().add(KeyPressListener.class, this);
+		CLIENT.getEventManager().add(KeyPressListener.class, this);
 		
 		LinkedHashMap<Category, Tab> tabMap = new LinkedHashMap<>();
 		for(Category category : Category.values())
 			tabMap.put(category, new Tab(category.getName()));
 		
 		ArrayList<Feature> features = new ArrayList<>();
-		features.addAll(WURST.getHax().getAllHax());
-		features.addAll(WURST.getCmds().getAllCmds());
-		features.addAll(WURST.getOtfs().getAllOtfs());
+		features.addAll(CLIENT.getHax().getAllHax());
+		features.addAll(CLIENT.getCmds().getAllCmds());
+		features.addAll(CLIENT.getOtfs().getAllOtfs());
 		
 		for(Feature feature : features)
 			if(feature.getCategory() != null)
@@ -131,7 +131,7 @@ public final class TabGui implements KeyPressListener
 		context.enableScissor(0, 0, width, height);
 		
 		int textY = 1;
-		int txtColor = WURST.getGui().getTxtColor();
+		int txtColor = CLIENT.getGui().getTxtColor();
 		Font tr = MC.font;
 		for(int i = 0; i < tabs.size(); i++)
 		{
@@ -180,7 +180,7 @@ public final class TabGui implements KeyPressListener
 	
 	private void drawBox(GuiGraphics context, int x1, int y1, int x2, int y2)
 	{
-		ClickGui gui = WURST.getGui();
+		ClickGui gui = CLIENT.getGui();
 		int bgColor =
 			RenderUtils.toIntColor(gui.getBgColor(), gui.getOpacity());
 		
@@ -242,7 +242,7 @@ public final class TabGui implements KeyPressListener
 		{
 			Feature feature = features.get(selected);
 			
-			TooManyHaxHack tooManyHax = WURST.getHax().tooManyHaxHack;
+			TooManyHaxHack tooManyHax = CLIENT.getHax().tooManyHaxHack;
 			if(tooManyHax.isEnabled() && tooManyHax.isBlocked(feature))
 			{
 				ChatUtils

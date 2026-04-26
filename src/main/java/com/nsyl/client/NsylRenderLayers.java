@@ -29,7 +29,7 @@ public enum NsylRenderLayers
 	 *           the line width number does nothing.
 	 */
 	public static final RenderType.CompositeRenderType ONE_PIXEL_LINES =
-		RenderType.create("wurst:1px_lines", DefaultVertexFormat.POSITION_COLOR,
+		RenderType.create("nsyl:1px_lines", DefaultVertexFormat.POSITION_COLOR,
 			Mode.DEBUG_LINES, 1536, false, true,
 			RenderType.CompositeState.builder()
 				.setShaderState(RenderType.POSITION_COLOR_SHADER)
@@ -47,7 +47,7 @@ public enum NsylRenderLayers
 	 *           the line width number does nothing.
 	 */
 	public static final RenderType.CompositeRenderType ONE_PIXEL_LINE_STRIP =
-		RenderType.create("wurst:1px_line_strip",
+		RenderType.create("nsyl:1px_line_strip",
 			DefaultVertexFormat.POSITION_COLOR, Mode.DEBUG_LINE_STRIP, 1536,
 			false, true,
 			RenderType.CompositeState.builder()
@@ -61,7 +61,7 @@ public enum NsylRenderLayers
 	 * Similar to {@link RenderType#lines()}, but with line width 2.
 	 */
 	public static final RenderType.CompositeRenderType LINES = RenderType
-		.create("wurst:lines", DefaultVertexFormat.POSITION_COLOR_NORMAL,
+		.create("nsyl:lines", DefaultVertexFormat.POSITION_COLOR_NORMAL,
 			VertexFormat.Mode.LINES, 1536, false, true,
 			RenderType.CompositeState.builder()
 				.setShaderState(RenderType.RENDERTYPE_LINES_SHADER)
@@ -86,7 +86,7 @@ public enum NsylRenderLayers
 	 *          obstructed).
 	 */
 	public static final RenderType.CompositeRenderType ESP_LINES = RenderType
-		.create("wurst:esp_lines", DefaultVertexFormat.POSITION_COLOR_NORMAL,
+		.create("nsyl:esp_lines", DefaultVertexFormat.POSITION_COLOR_NORMAL,
 			VertexFormat.Mode.LINES, 1536, false, true,
 			RenderType.CompositeState.builder()
 				.setShaderState(RenderType.RENDERTYPE_LINES_SHADER)
@@ -110,7 +110,7 @@ public enum NsylRenderLayers
 	 *          obstructed).
 	 */
 	public static final RenderType.CompositeRenderType LINE_STRIP = RenderType
-		.create("wurst:line_strip", DefaultVertexFormat.POSITION_COLOR_NORMAL,
+		.create("nsyl:line_strip", DefaultVertexFormat.POSITION_COLOR_NORMAL,
 			VertexFormat.Mode.LINE_STRIP, 1536, false, true,
 			RenderType.CompositeState.builder()
 				.setShaderState(RenderType.RENDERTYPE_LINES_SHADER)
@@ -135,7 +135,7 @@ public enum NsylRenderLayers
 	 *          obstructed).
 	 */
 	public static final RenderType.CompositeRenderType ESP_LINE_STRIP =
-		RenderType.create("wurst:esp_line_strip",
+		RenderType.create("nsyl:esp_line_strip",
 			DefaultVertexFormat.POSITION_COLOR_NORMAL,
 			VertexFormat.Mode.LINE_STRIP, 1536, false, true,
 			RenderType.CompositeState.builder()
@@ -153,7 +153,7 @@ public enum NsylRenderLayers
 	 * Similar to {@link RenderType#debugQuads()}, but with culling enabled.
 	 */
 	public static final RenderType.CompositeRenderType QUADS =
-		RenderType.create("wurst:quads", DefaultVertexFormat.POSITION_COLOR,
+		RenderType.create("nsyl:quads", DefaultVertexFormat.POSITION_COLOR,
 			VertexFormat.Mode.QUADS, 1536, false, true,
 			RenderType.CompositeState.builder()
 				.setShaderState(RenderType.POSITION_COLOR_SHADER)
@@ -173,7 +173,7 @@ public enum NsylRenderLayers
 	 *          obstructed).
 	 */
 	public static final RenderType.CompositeRenderType ESP_QUADS =
-		RenderType.create("wurst:esp_quads", DefaultVertexFormat.POSITION_COLOR,
+		RenderType.create("nsyl:esp_quads", DefaultVertexFormat.POSITION_COLOR,
 			VertexFormat.Mode.QUADS, 1536, false, true,
 			RenderType.CompositeState.builder()
 				.setShaderState(RenderType.POSITION_COLOR_SHADER)
@@ -192,7 +192,7 @@ public enum NsylRenderLayers
 	 *          obstructed).
 	 */
 	public static final RenderType.CompositeRenderType ESP_QUADS_NO_CULLING =
-		RenderType.create("wurst:esp_quads_no_culling",
+		RenderType.create("nsyl:esp_quads_no_culling",
 			DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 1536,
 			false, true,
 			RenderType.CompositeState.builder()

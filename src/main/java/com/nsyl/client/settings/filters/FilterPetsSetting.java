@@ -28,12 +28,12 @@ public final class FilterPetsSetting extends EntityFilterCheckbox
 	public static FilterPetsSetting genericCombat(boolean checked)
 	{
 		return new FilterPetsSetting(
-			"description.wurst.setting.generic.filter_pets_combat", checked);
+			"description.nsyl.setting.generic.filter_pets_combat", checked);
 	}
 	
 	public static FilterPetsSetting genericVision(boolean checked)
 	{
 		return new FilterPetsSetting(
-			"description.wurst.setting.generic.filter_pets_vision", checked);
+			"description.nsyl.setting.generic.filter_pets_vision", checked);
 	}
 }

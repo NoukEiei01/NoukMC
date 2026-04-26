@@ -26,7 +26,7 @@ import com.nsyl.client.events.CactusCollisionShapeListener.CactusCollisionShapeE
 @Mixin(CactusBlock.class)
 public abstract class CactusBlockMixin extends Block
 {
-	private CactusBlockMixin(NsylClient wurst, Properties settings)
+	private CactusBlockMixin(NsylClient nsyl, Properties settings)
 	{
 		super(settings);
 	}

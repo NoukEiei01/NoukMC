@@ -39,7 +39,7 @@ public final class AimAssistHack extends Hack
 			ValueDisplay.DEGREES.withSuffix("/s"));
 	
 	private final SliderSetting fov =
-		new SliderSetting("FOV", "description.wurst.setting.aimassist.fov", 120,
+		new SliderSetting("FOV", "description.nsyl.setting.aimassist.fov", 120,
 			30, 360, 10, ValueDisplay.DEGREES);
 	
 	private final AimAtSetting aimAt = new AimAtSetting(
@@ -47,16 +47,16 @@ public final class AimAssistHack extends Hack
 	
 	private final SliderSetting ignoreMouseInput =
 		new SliderSetting("Ignore mouse input",
-			"description.wurst.setting.aimassist.ignore_mouse_input", 0, 0, 1,
+			"description.nsyl.setting.aimassist.ignore_mouse_input", 0, 0, 1,
 			0.01, ValueDisplay.PERCENTAGE);
 	
 	private final CheckboxSetting checkLOS =
 		new CheckboxSetting("Check line of sight",
-			"description.wurst.setting.aimassist.check_line_of_sight", true);
+			"description.nsyl.setting.aimassist.check_line_of_sight", true);
 	
 	private final CheckboxSetting aimWhileBlocking =
 		new CheckboxSetting("Aim while blocking",
-			"description.wurst.setting.aimassist.aim_while_blocking", false);
+			"description.nsyl.setting.aimassist.aim_while_blocking", false);
 	
 	private final EntityFilterList entityFilters =
 		new EntityFilterList(FilterPlayersSetting.genericCombat(false),
@@ -111,15 +111,15 @@ public final class AimAssistHack extends Hack
 	protected void onEnable()
 	{
 		// disable incompatible hacks
-		WURST.getHax().autoFishHack.setEnabled(false);
-		WURST.getHax().clickAuraHack.setEnabled(false);
-		WURST.getHax().crystalAuraHack.setEnabled(false);
-		WURST.getHax().fightBotHack.setEnabled(false);
-		WURST.getHax().killauraHack.setEnabled(false);
-		WURST.getHax().killauraLegitHack.setEnabled(false);
-		WURST.getHax().multiAuraHack.setEnabled(false);
-		WURST.getHax().protectHack.setEnabled(false);
-		WURST.getHax().tpAuraHack.setEnabled(false);
+		CLIENT.getHax().autoFishHack.setEnabled(false);
+		CLIENT.getHax().clickAuraHack.setEnabled(false);
+		CLIENT.getHax().crystalAuraHack.setEnabled(false);
+		CLIENT.getHax().fightBotHack.setEnabled(false);
+		CLIENT.getHax().killauraHack.setEnabled(false);
+		CLIENT.getHax().killauraLegitHack.setEnabled(false);
+		CLIENT.getHax().multiAuraHack.setEnabled(false);
+		CLIENT.getHax().protectHack.setEnabled(false);
+		CLIENT.getHax().tpAuraHack.setEnabled(false);
 		
 		EVENTS.add(UpdateListener.class, this);
 		EVENTS.add(MouseUpdateListener.class, this);
@@ -156,7 +156,7 @@ public final class AimAssistHack extends Hack
 			return;
 		}
 		
-		WURST.getHax().autoSwordHack.setSlot(target);
+		CLIENT.getHax().autoSwordHack.setSlot(target);
 		
 		// get needed rotation
 		Rotation needed = RotationUtils.getNeededRotations(hitVec);

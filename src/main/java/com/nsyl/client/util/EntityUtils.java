@@ -26,7 +26,7 @@ public enum EntityUtils
 {
 	;
 	
-	protected static final NsylClient WURST = NsylClient.INSTANCE;
+	protected static final NsylClient CLIENT = NsylClient.INSTANCE;
 	protected static final Minecraft MC = NsylClient.MC;
 	
 	public static Stream<Entity> getAttackableEntities()
@@ -41,7 +41,7 @@ public enum EntityUtils
 			&& (e instanceof LivingEntity && ((LivingEntity)e).getHealth() > 0
 				|| e instanceof EndCrystal || e instanceof ShulkerBullet)
 			&& e != MC.player && !(e instanceof FakePlayerEntity)
-			&& !WURST.getFriends().isFriend(e);
+			&& !CLIENT.getFriends().isFriend(e);
 	
 	public static Stream<Animal> getValidAnimals()
 	{

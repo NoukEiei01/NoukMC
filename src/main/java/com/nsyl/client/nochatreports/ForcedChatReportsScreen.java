@@ -47,24 +47,24 @@ public final class ForcedChatReportsScreen extends Screen
 	
 	public ForcedChatReportsScreen(Screen prevScreen)
 	{
-		super(Component.literal(ChatUtils.WURST_PREFIX)
+		super(Component.literal(ChatUtils.NSYL_PREFIX)
 			.append(Component.literal(NsylClient.INSTANCE
-				.translate("gui.wurst.nochatreports.unsafe_server.title"))));
+				.translate("gui.nsyl.nochatreports.unsafe_server.title"))));
 		this.prevScreen = prevScreen;
 		
 		reason = Component.literal(NsylClient.INSTANCE
-			.translate("gui.wurst.nochatreports.unsafe_server.message"));
+			.translate("gui.nsyl.nochatreports.unsafe_server.message"));
 		
 		NoChatReportsOtf ncr = NsylClient.INSTANCE.getOtfs().noChatReportsOtf;
 		sigButtonMsg = () -> NsylClient.INSTANCE
-			.translate("button.wurst.nochatreports.signatures_status")
+			.translate("button.nsyl.nochatreports.signatures_status")
 			+ blockedOrAllowed(ncr.isEnabled());
 	}
 	
 	private String blockedOrAllowed(boolean blocked)
 	{
 		return NsylClient.INSTANCE.translate(
-			"gui.wurst.generic.allcaps_" + (blocked ? "blocked" : "allowed"));
+			"gui.nsyl.generic.allcaps_" + (blocked ? "blocked" : "allowed"));
 	}
 	
 	@Override

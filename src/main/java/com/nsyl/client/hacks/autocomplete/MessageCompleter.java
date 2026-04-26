@@ -68,7 +68,7 @@ public abstract class MessageCompleter
 			String message = ChatUtils.getAsString(chatHistory.get(i));
 			
 			// filter out NSYL messages so the model won't admit it's hacking
-			if(message.startsWith(ChatUtils.WURST_PREFIX))
+			if(message.startsWith(ChatUtils.NSYL_PREFIX))
 				continue;
 			
 			// give non-player messages a sender to avoid confusing the model

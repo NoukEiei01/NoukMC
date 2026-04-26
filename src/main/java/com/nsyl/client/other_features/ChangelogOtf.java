@@ -14,7 +14,7 @@ import com.nsyl.client.NsylClient;
 import com.nsyl.client.other_feature.OtherFeature;
 import com.nsyl.client.update.Version;
 
-@SearchTags({"change log", "wurst update", "release notes", "what's new",
+@SearchTags({"change log", "nsyl update", "release notes", "what's new",
 	"what is new", "new features", "recently added features"})
 @DontBlock
 public final class ChangelogOtf extends OtherFeature
@@ -34,7 +34,7 @@ public final class ChangelogOtf extends OtherFeature
 	public void doPrimaryAction()
 	{
 		String link = new Version(NsylClient.VERSION).getChangelogLink()
-			+ "?utm_source=Wurst+Client&utm_medium=ChangelogOtf&utm_content=View+Changelog";
+			+ "?utm_source=NSYL+Client&utm_medium=ChangelogOtf&utm_content=View+Changelog";
 		Util.getPlatform().openUri(link);
 	}
 }

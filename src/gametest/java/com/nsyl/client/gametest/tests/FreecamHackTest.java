@@ -29,7 +29,7 @@ public enum FreecamHackTest
 		TestClientWorldContext world = spContext.getClientWorld();
 		
 		// Enable Freecam with default settings
-		runWurstCommand(context, "setcheckbox Freecam tracer off");
+		runNsylCommand(context, "setcheckbox Freecam tracer off");
 		input.pressKey(GLFW.GLFW_KEY_U);
 		context.waitTick();
 		world.waitForChunksRender();
@@ -46,7 +46,7 @@ public enum FreecamHackTest
 		clearChat(context);
 		
 		// Enable tracer
-		runWurstCommand(context, "setcheckbox Freecam tracer on");
+		runNsylCommand(context, "setcheckbox Freecam tracer on");
 		context.waitTick();
 		assertScreenshotEquals(context, "freecam_tracer",
 			NsylTest.IS_MOD_COMPAT_TEST ? "https://i.imgur.com/teKaxAK.png"
@@ -54,7 +54,7 @@ public enum FreecamHackTest
 		clearChat(context);
 		
 		// Clean up
-		runWurstCommand(context, "setcheckbox Freecam tracer off");
+		runNsylCommand(context, "setcheckbox Freecam tracer off");
 		input.pressKey(GLFW.GLFW_KEY_U);
 		context.waitTick();
 		world.waitForChunksRender();

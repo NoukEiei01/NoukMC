@@ -38,7 +38,7 @@ import com.nsyl.client.hacks.HandNoClipHack;
 public abstract class AbstractBlockStateMixin
 	extends StateHolder<Block, BlockState>
 {
-	private AbstractBlockStateMixin(NsylClient wurst, Block owner,
+	private AbstractBlockStateMixin(NsylClient nsyl, Block owner,
 		Reference2ObjectArrayMap<Property<?>, Comparable<?>> propertyMap,
 		MapCodec<BlockState> codec)
 	{

@@ -56,8 +56,8 @@ public final class CreativeFlightHack extends Hack implements UpdateListener
 	{
 		tickCounter = 0;
 		
-		WURST.getHax().jetpackHack.setEnabled(false);
-		WURST.getHax().flightHack.setEnabled(false);
+		CLIENT.getHax().jetpackHack.setEnabled(false);
+		CLIENT.getHax().flightHack.setEnabled(false);
 		
 		EVENTS.add(UpdateListener.class, this);
 	}

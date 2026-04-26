@@ -116,7 +116,7 @@ public final class BonemealAuraHack extends Hack implements HandleInputListener
 			return;
 		
 		// wait for AutoFarm
-		if(WURST.getHax().autoFarmHack.isBusy())
+		if(CLIENT.getHax().autoFarmHack.isBusy())
 			return;
 		
 		// check held item
@@ -219,7 +219,7 @@ public final class BonemealAuraHack extends Hack implements HandleInputListener
 		
 		// face and right click the block
 		MC.rightClickDelay = 4;
-		WURST.getRotationFaker().faceVectorPacket(params.hitVec());
+		CLIENT.getRotationFaker().faceVectorPacket(params.hitVec());
 		InteractionSimulator.rightClickBlock(params.toHitResult());
 		return true;
 	}

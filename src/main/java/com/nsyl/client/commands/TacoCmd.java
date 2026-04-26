@@ -68,7 +68,7 @@ public final class TacoCmd extends Command
 	@Override
 	public void doPrimaryAction()
 	{
-		WURST.getCmdProcessor().process("taco");
+		CLIENT.getCmdProcessor().process("taco");
 	}
 	
 	@Override
@@ -83,8 +83,8 @@ public final class TacoCmd extends Command
 	@Override
 	public void onRenderGUI(GuiGraphics context, float partialTicks)
 	{
-		if(WURST.getHax().rainbowUiHack.isEnabled())
-			RenderUtils.setShaderColor(WURST.getGui().getAcColor(), 1);
+		if(CLIENT.getHax().rainbowUiHack.isEnabled())
+			RenderUtils.setShaderColor(CLIENT.getGui().getAcColor(), 1);
 		else
 			RenderSystem.setShaderColor(1, 1, 1, 1);
 		

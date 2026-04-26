@@ -31,7 +31,7 @@ public class DisconnectedRealmsScreenMixin extends RealmsScreen
 	@Final
 	private Screen parent;
 	
-	private DisconnectedRealmsScreenMixin(NsylClient wurst, Component title)
+	private DisconnectedRealmsScreenMixin(NsylClient nsyl, Component title)
 	{
 		super(title);
 	}

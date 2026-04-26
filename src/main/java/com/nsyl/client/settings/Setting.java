@@ -52,7 +52,7 @@ public abstract class Setting
 	
 	/**
 	 * Exports this setting's data to a {@link JsonObject} for use in the
-	 * Wurst Wiki. Must always specify the following properties:
+	 * NSYL Wiki. Must always specify the following properties:
 	 * <ul>
 	 * <li>name
 	 * <li>description
