@@ -7,6 +7,7 @@
  */
 package com.nsyl.client.clickgui.components;
 
+import com.nsyl.client.NsylClient;
 import org.joml.Quaternionf;
 
 import com.mojang.blaze3d.vertex.PoseStack;

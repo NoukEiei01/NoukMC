@@ -7,6 +7,7 @@
  */
 package com.nsyl.client.clickgui.components;
 
+import com.nsyl.client.NsylClient;
 import org.lwjgl.glfw.GLFW;
 
 import net.minecraft.client.gui.Font;

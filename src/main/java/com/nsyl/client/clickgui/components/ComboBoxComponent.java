@@ -7,6 +7,7 @@
  */
 package com.nsyl.client.clickgui.components;
 
+import com.nsyl.client.NsylClient;
 import java.util.Arrays;
 
 import org.lwjgl.glfw.GLFW;

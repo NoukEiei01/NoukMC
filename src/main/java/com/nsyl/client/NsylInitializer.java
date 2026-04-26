@@ -7,6 +7,7 @@
  */
 package com.nsyl.client;
 
+import com.nsyl.client.NsylClient;
 import net.fabricmc.api.ModInitializer;
 
 public final class NsylInitializer implements ModInitializer

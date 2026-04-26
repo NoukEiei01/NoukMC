@@ -7,6 +7,7 @@
  */
 package com.nsyl.client;
 
+import com.nsyl.client.NsylClient;
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;

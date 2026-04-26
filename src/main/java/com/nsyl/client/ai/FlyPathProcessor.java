@@ -7,6 +7,7 @@
  */
 package com.nsyl.client.ai;
 
+import com.nsyl.client.NsylClient;
 import java.util.ArrayList;
 
 import net.minecraft.core.BlockPos;
